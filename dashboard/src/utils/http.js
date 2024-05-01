@@ -5,6 +5,7 @@ import { logout } from "@/components/Layout";
 
 // Default API will be your root
 const API_ROOT = process.env.NEXT_PUBLIC_API_URL;
+console.log({ API_ROOT });
 const TIMEOUT = 20000;
 
 const http = (headerType = "json", baseURL = API_ROOT) => {
