@@ -13,6 +13,7 @@ import { Badge } from "../ui/badge";
 import { IndianRupee } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { H6 } from "../ui/typography";
+import { rupee } from "@/lib/Intl";
 
 export default function OrderItemTable({ data }) {
   return (
@@ -27,10 +28,10 @@ export default function OrderItemTable({ data }) {
               <TableHead>Quantity</TableHead>
               <TableHead>Base rate</TableHead>
               <TableHead className="text-right">GST</TableHead>
+              <TableHead>Comment</TableHead>
               <TableHead className="flex items-center justify-end gap-2">
                 <span>Total amount</span>
               </TableHead>
-              <TableHead>Comment</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -67,28 +68,21 @@ export default function OrderItemTable({ data }) {
                 <TableCell className="text-right">
                   {item?.gst_percentage ?? "N/A"}
                 </TableCell>
-                <TableCell className="flex items-center justify-end gap-1">
-                  {isNaN(item?.total_amount) ? (
-                    "N/A"
-                  ) : (
-                    <IndianRupee size={13} />
-                  )}
-                  <span>
-                    {isNaN(item?.total_amount) ? "N/A" : item?.total_amount}
-                  </span>
-                </TableCell>
                 <TableCell>{item?.comment ?? "N/A"}</TableCell>
+                <TableCell className="flex items-center justify-end gap-1">
+                  {rupee.format(item?.total_amount)}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
           <TableFooter>
             <TableRow>
               <TableCell colSpan={6}>Total</TableCell>
-              <TableCell className="flex items-center justify-end gap-1">
-                {isNaN(data?.order_amount) ? "N/A" : <IndianRupee size={13} />}
-                <span>
-                  {isNaN(data?.order_amount) ? "N/A" : data?.order_amount}
-                </span>
+              <TableCell
+                colSpan={1}
+                className="flex items-center justify-end gap-1"
+              >
+                {rupee.format(data?.order_amount)}
               </TableCell>
             </TableRow>
           </TableFooter>

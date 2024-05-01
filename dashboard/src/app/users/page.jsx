@@ -2,7 +2,6 @@
 import Title from "@/components/Title";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useFetchCustomers } from "../../hooks/useFetchCustomers";
 import Spinner from "@/components/Spinner";
 import { useState } from "react";
 import { DataTable } from "./data-table";
@@ -14,7 +13,9 @@ import { endpoints } from "../../utils/endpoints.js";
 import { toast } from "sonner";
 import { isObject } from "@/utils/object";
 import { CustomerForm } from "@/components/Forms/Customer";
-async function deleteCustomer(data) {
+import { useFetchUsers } from "@/hooks/useFetchUsers";
+
+async function deleteUser(data) {
   return http().delete(`${endpoints.users.getAll}/${data.id}`);
 }
 
@@ -23,7 +24,7 @@ export default function Customers() {
   const [isModal, setIsModal] = useState(false);
   const [customerId, setCustomerId] = useState(null);
   const queryClient = useQueryClient();
-  const { data, isLoading, isError, error } = useFetchCustomers();
+  const { data, isLoading, isError, error } = useFetchUsers();
   function openModal() {
     setIsModal(true);
   }
@@ -32,10 +33,10 @@ export default function Customers() {
     setIsModal(false);
   }
 
-  const deleteMutation = useMutation(deleteCustomer, {
+  const deleteMutation = useMutation(deleteUser, {
     onSuccess: () => {
-      toast.success("Customer deleted.");
-      queryClient.invalidateQueries({ queryKey: ["customers"] });
+      toast.success("User deleted.");
+      queryClient.invalidateQueries({ queryKey: ["users"] });
       closeModal();
     },
     onError: (error) => {
@@ -58,7 +59,7 @@ export default function Customers() {
         { is_active: status }
       );
       toast.success(response.message);
-      queryClient.invalidateQueries({ queryKey: ["customers"] });
+      queryClient.invalidateQueries({ queryKey: ["users"] });
     } catch (error) {
       console.log(error);
     }
@@ -75,9 +76,9 @@ export default function Customers() {
   return (
     <div className="container mx-auto bg-white p-8 rounded-lg border-input">
       <div className="flex items-center justify-between">
-        <Title text={"Customers"} />
+        <Title text={"Users"} />
         <Button asChild>
-          <Link href={"/customers/create"}>Create</Link>
+          <Link href={"/users/create"}>Create</Link>
         </Button>
       </div>
 

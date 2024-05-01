@@ -15,19 +15,22 @@ import { cn } from "@/lib/utils";
 import { H6 } from "../ui/typography";
 import { Button } from "../ui/button";
 import { MdDelete } from "react-icons/md";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import http from "@/utils/http";
 import { endpoints } from "@/utils/endpoints";
+import { rupee } from "@/lib/Intl";
 
 const deleteOrderItem = ({ id }) => {
-  return http().delete(`${endpoints.enquiries.getAll}/order-items/${id}`);
+  return http().delete(`${endpoints.enquiries.getAll}/enquiry-items/${id}`);
 };
 
-export default function EnquiryItemTable({ data }) {
+export default function EnquiryItemTable({ data, enquiryId }) {
+  const queryClient = useQueryClient();
   const deleteMutation = useMutation(deleteOrderItem, {
     onSuccess: (data) => {
       toast.success("enquiry deleted");
+      queryClient.invalidateQueries([`enquiry-${enquiryId}`]);
     },
     onError: (error) => {
       toast.error(error.message);
@@ -98,13 +101,10 @@ export default function EnquiryItemTable({ data }) {
                   {item?.comment ?? "N/A"}
                 </TableCell>
                 <TableCell className="flex items-center justify-end gap-1">
-                  {isNaN(item?.total_amount) ? (
-                    "N/A"
-                  ) : (
-                    <IndianRupee size={13} />
-                  )}
                   <span>
-                    {isNaN(item?.total_amount) ? "N/A" : item?.total_amount}
+                    {isNaN(item?.total_amount)
+                      ? "N/A"
+                      : rupee.format(item.total_amount)}
                   </span>
                 </TableCell>
                 <TableCell className="text-right">
@@ -124,10 +124,7 @@ export default function EnquiryItemTable({ data }) {
             <TableRow>
               <TableCell colSpan={6}>Total</TableCell>
               <TableCell className="flex items-center justify-end gap-1">
-                {isNaN(data?.order_amount) ? "N/A" : <IndianRupee size={13} />}
-                <span>
-                  {isNaN(data?.order_amount) ? "N/A" : data?.order_amount}
-                </span>
+                {rupee.format(data?.order_amount)}
               </TableCell>
             </TableRow>
           </TableFooter>

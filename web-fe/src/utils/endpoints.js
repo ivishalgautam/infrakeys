@@ -4,6 +4,7 @@ export const endpoints = {
     signup: "/auth/signup",
     refresh: "/auth/refresh",
     username: "/auth/username",
+    verifyOtp: "/auth/verify",
   },
 
   profile: "/users/me",
@@ -24,6 +25,9 @@ export const endpoints = {
   },
   brands: {
     getAll: "/",
+  },
+  points: {
+    getAll: "/points",
   },
   banners: {
     getAll: "/banners",

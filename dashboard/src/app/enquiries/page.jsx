@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import Modal from "@/components/Modal.js";
 import { EnquiryForm } from "@/components/Forms/Enquiry.js";
+import { useRouter, useSearchParams } from "next/navigation.js";
 
 async function updateEnquiry(data) {
   return http().put(`${endpoints.enquiries.getAll}/${data.id}`, data);
@@ -24,8 +25,9 @@ async function fetchEnquiries() {
   return data;
 }
 
-export default function Products() {
+export default function Products({ searchParams }) {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const [enquiryId, setEnquiryId] = useState("");
   const [type, setType] = useState("");
   const [isModal, setIsModal] = useState(false);
@@ -42,7 +44,7 @@ export default function Products() {
   const updateMutation = useMutation(updateEnquiry, {
     onSuccess: (data) => {
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ["enquiries"] });
+      queryClient.invalidateQueries(["enquiries"]);
       closeModal();
     },
     onError: (error) => {
@@ -52,7 +54,7 @@ export default function Products() {
   const deleteMutation = useMutation(deleteEnquiry, {
     onSuccess: (data) => {
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ["enquiries"] });
+      queryClient.invalidateQueries(["enquiries"]);
     },
     onError: (error) => {
       toast.error(error.message);
@@ -67,12 +69,20 @@ export default function Products() {
     deleteMutation.mutate({ id });
   };
 
+  const handleSearch = async (type, value) => {
+    const url = new URL(window.location.href);
+    const urlParams = new URLSearchParams(url.search);
+
+    urlParams.set(type, value);
+    router.push(`/enquiries?${urlParams.toString()}`);
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
 
   if (isError) {
-    return JSON.stringify(error);
+    return error.message ?? "error";
   }
 
   return (
@@ -85,6 +95,8 @@ export default function Products() {
         <DataTable
           columns={columns(setEnquiryId, setType, handleDelete, openModal)}
           data={data}
+          searchParams={searchParams}
+          handleSearch={handleSearch}
         />
       </div>
 

@@ -29,7 +29,7 @@ export const columns = (
   handleCustomerStatus
 ) => [
   {
-    accessorKey: "fullname",
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <Button
@@ -42,20 +42,20 @@ export const columns = (
       );
     },
     cell: ({ row }) => {
-      const fullname = row.original.fullname;
+      const name = row.original.name;
       const id = row.original.id;
       return (
         <Link
           href={`/customers/${id}/edit`}
           className="hover:text-primary transition-colors capitalize"
         >
-          {fullname}
+          {name}
         </Link>
       );
     },
   },
   {
-    accessorKey: "mobile_number",
+    accessorKey: "phone",
     header: ({ column }) => {
       return (
         <Button

@@ -16,6 +16,7 @@ import {
 const ROLES = {
   ADMIN: "admin",
   USER: "user",
+  SUB_ADMIN: "subadmin",
 };
 
 export const AllRoutes = [
@@ -23,7 +24,7 @@ export const AllRoutes = [
     label: "Dashboard",
     link: "/",
     icon: LayoutDashboard,
-    roles: [ROLES.ADMIN, ROLES.USER],
+    roles: [ROLES.ADMIN, ROLES.USER, ROLES.SUB_ADMIN],
   },
   {
     label: "Products",
@@ -98,8 +99,8 @@ export const AllRoutes = [
     roles: [ROLES.ADMIN],
   },
   {
-    label: "Brands",
-    link: "/brands",
+    label: "Customer points",
+    link: "/points",
     icon: Tag,
     roles: [ROLES.ADMIN],
   },
@@ -122,26 +123,26 @@ export const AllRoutes = [
     roles: [ROLES.ADMIN],
   },
   {
-    label: "Customers",
-    link: "/customers",
+    label: "Users",
+    link: "/users",
     icon: Users,
     roles: [ROLES.ADMIN],
   },
   {
-    label: "Customers",
-    link: "/customers/create",
+    label: "Users",
+    link: "/users/create",
     icon: Users,
     roles: [ROLES.ADMIN],
   },
   {
-    label: "Customers",
-    link: "/customers/[id]/edit",
+    label: "Users",
+    link: "/users/[id]/edit",
     icon: Users,
     roles: [ROLES.ADMIN],
   },
   {
-    label: "Customers",
-    link: "/customers/[id]/view",
+    label: "Users",
+    link: "/users/[id]/view",
     icon: Users,
     roles: [ROLES.ADMIN],
   },
@@ -149,31 +150,31 @@ export const AllRoutes = [
     label: "Enquiries",
     link: "/enquiries",
     icon: MessageCircleQuestion,
-    roles: [ROLES.ADMIN],
+    roles: [ROLES.ADMIN, ROLES.SUB_ADMIN],
   },
   {
     label: "Enquiries",
     link: "/enquiries/[id]",
     icon: MessageCircleQuestion,
-    roles: [ROLES.ADMIN],
+    roles: [ROLES.ADMIN, ROLES.SUB_ADMIN],
   },
   {
     label: "Orders",
     link: "/orders",
     icon: GoChecklist,
-    roles: [ROLES.ADMIN],
+    roles: [ROLES.ADMIN, ROLES.SUB_ADMIN],
   },
   {
     label: "Orders",
     link: "/orders/create",
     icon: GoChecklist,
-    roles: [ROLES.ADMIN],
+    roles: [ROLES.ADMIN, ROLES.SUB_ADMIN],
   },
   {
     label: "Orders",
     link: "/orders/[id]",
     icon: GoChecklist,
-    roles: [ROLES.ADMIN],
+    roles: [ROLES.ADMIN, ROLES.SUB_ADMIN],
   },
   {
     label: "All",

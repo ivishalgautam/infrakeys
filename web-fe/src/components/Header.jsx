@@ -42,7 +42,7 @@ export const HeaderTop = () => {
   const { user, isUserLoading } = useContext(MainContext);
   const { data } = useQuery({
     queryFn: fetchTempCart,
-    queryKey: ["cart-items"],
+    queryKey: ["cart-items", pathname],
     enabled: !!user,
   });
 
@@ -103,7 +103,7 @@ export const HeaderTop = () => {
               </Link>{" "}
             </>
           ) : (
-            <Link href={"/login"} className={buttonVariants("primary")}>
+            <Link href={"/auth/login"} className={buttonVariants("primary")}>
               Login
             </Link>
           )}

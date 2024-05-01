@@ -5,7 +5,6 @@ import { DataTable } from "./data-table";
 import Modal from "@/components/Modal";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { BrandForm } from "@/components/Forms/Brand";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "@/utils/http";
 import { endpoints } from "../../utils/endpoints.js";

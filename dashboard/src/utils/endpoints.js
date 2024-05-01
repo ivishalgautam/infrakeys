@@ -31,6 +31,9 @@ export const endpoints = {
   brands: {
     getAll: "/brands",
   },
+  points: {
+    getAll: "/points",
+  },
   industries: {
     getAll: "/industries",
   },

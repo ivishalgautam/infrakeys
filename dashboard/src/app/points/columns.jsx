@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export const columns = (setType, openModal, setBrandId) => [
+export const columns = (setType, openModal, setPointId) => [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -33,6 +33,32 @@ export const columns = (setType, openModal, setBrandId) => [
     },
     cell: ({ row }) => {
       return <span className="capitalize">{row.getValue("name")}</span>;
+    },
+  },
+  {
+    accessorKey: "phone",
+    header: ({ column }) => {
+      return <Button variant="ghost">Phone</Button>;
+    },
+    cell: ({ row }) => {
+      return <span className="capitalize">{row.getValue("phone")}</span>;
+    },
+  },
+  {
+    accessorKey: "points",
+    header: ({ column }) => {
+      return <Button variant="ghost">Points</Button>;
+    },
+    cell: ({ row }) => {
+      const rupee = new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+      });
+      return (
+        <span className="capitalize">
+          {rupee.format(row.getValue("points"))}
+        </span>
+      );
     },
   },
   {
@@ -53,7 +79,7 @@ export const columns = (setType, openModal, setBrandId) => [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => {
-                setBrandId(id);
+                setPointId(id);
                 setType("view");
                 openModal();
               }}
@@ -63,7 +89,7 @@ export const columns = (setType, openModal, setBrandId) => [
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => {
-                setBrandId(id);
+                setPointId(id);
                 setType("edit");
                 openModal();
               }}
@@ -73,7 +99,7 @@ export const columns = (setType, openModal, setBrandId) => [
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => {
-                setBrandId(id);
+                setPointId(id);
                 setType("delete");
                 openModal();
               }}

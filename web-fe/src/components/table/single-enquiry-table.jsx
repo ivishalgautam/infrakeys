@@ -9,6 +9,7 @@ import {
 } from "../ui/table";
 import moment from "moment";
 import { H6 } from "../ui/typography";
+import { rupee } from "@/lib/Intl";
 
 export default function SingleEnquiryTable({ data }) {
   return (
@@ -27,7 +28,7 @@ export default function SingleEnquiryTable({ data }) {
           <TableBody>
             <TableRow>
               <TableCell>{data?.po_number ?? "N/A"}</TableCell>
-              <TableCell>{data?.order_amount ?? "N/A"}</TableCell>
+              <TableCell>{rupee.format(data?.order_amount)}</TableCell>
               <TableCell>
                 {moment(data?.created_at).format("Do MMMM YYYY, h:mm a")}
               </TableCell>

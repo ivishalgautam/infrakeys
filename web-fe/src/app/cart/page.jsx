@@ -47,11 +47,7 @@ export default function Page() {
   return (
     <section className="rounded-md p-4">
       <div className="container">
-        {!data?.length ? (
-          <H3 className={"text-center"}>Cart empty</H3>
-        ) : (
-          <CartForm data={data} handleCreate={handleCreate} />
-        )}
+        <CartForm data={data} handleCreate={handleCreate} />
       </div>
     </section>
   );

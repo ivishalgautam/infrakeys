@@ -5,34 +5,35 @@ import { DataTable } from "./data-table";
 import Modal from "@/components/Modal";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { BrandForm } from "@/components/Forms/Brand";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "@/utils/http";
 import { endpoints } from "../../utils/endpoints.js";
 import Spinner from "@/components/Spinner";
 import { isObject } from "@/utils/object";
 import { toast } from "sonner";
+import { PointForm } from "@/components/Forms/Points";
 
-async function postBrand(data) {
-  return http().post(endpoints.brands.getAll, data);
+async function postPoints(data) {
+  return http().post(endpoints.points.getAll, data);
 }
 
-async function updateBrand(data) {
-  return http().put(`${endpoints.brands.getAll}/${data.id}`, data);
+async function updatePoints(data) {
+  return http().put(`${endpoints.points.getAll}/${data.id}`, data);
 }
 
-async function deleteBrand(data) {
-  return http().delete(`${endpoints.brands.getAll}/${data.id}`);
+async function deletePoints(data) {
+  return http().delete(`${endpoints.points.getAll}/${data.id}`);
 }
 
-async function fetchBrands() {
-  return http().get(endpoints.brands.getAll);
+async function fetchPoints() {
+  const { data } = await http().get(endpoints.points.getAll);
+  return data;
 }
 
 export default function Brands() {
   const [isModal, setIsModal] = useState(false);
   const [type, setType] = useState("");
-  const [brandId, setBrandId] = useState(null);
+  const [pointId, setPointId] = useState(null);
   const queryClient = useQueryClient();
 
   function openModal() {
@@ -43,14 +44,16 @@ export default function Brands() {
   }
 
   const { data, isLoading, isError, error } = useQuery({
-    queryFn: fetchBrands,
-    queryKey: ["brands"],
+    queryFn: fetchPoints,
+    queryKey: ["points"],
   });
 
-  const createMutation = useMutation(postBrand, {
+  console.log({ data });
+
+  const createMutation = useMutation(postPoints, {
     onSuccess: () => {
-      toast.success("New brand added.");
-      queryClient.invalidateQueries("brands");
+      toast.success("Points added.");
+      queryClient.invalidateQueries(["points"]);
     },
     onError: (error) => {
       if (isObject(error)) {
@@ -61,10 +64,10 @@ export default function Brands() {
     },
   });
 
-  const updateMutation = useMutation(updateBrand, {
+  const updateMutation = useMutation(updatePoints, {
     onSuccess: () => {
-      toast.success("Brand updated.");
-      queryClient.invalidateQueries({ queryKey: ["brands"] });
+      toast.success("Points updated.");
+      queryClient.invalidateQueries({ queryKey: ["points"] });
     },
     onError: (error) => {
       if (isObject(error)) {
@@ -75,10 +78,10 @@ export default function Brands() {
     },
   });
 
-  const deleteMutation = useMutation(deleteBrand, {
+  const deleteMutation = useMutation(deletePoints, {
     onSuccess: () => {
-      toast.success("Category deleted.");
-      queryClient.invalidateQueries({ queryKey: ["brands"] });
+      toast.success("Points deleted.");
+      queryClient.invalidateQueries({ queryKey: ["points"] });
     },
     onError: (error) => {
       if (isObject(error)) {
@@ -94,7 +97,7 @@ export default function Brands() {
   };
 
   const handleUpdate = async (data) => {
-    updateMutation.mutate({ ...data, id: brandId });
+    updateMutation.mutate({ ...data, id: pointId });
   };
 
   const handleDelete = async (id) => {
@@ -106,13 +109,13 @@ export default function Brands() {
   }
 
   if (isError) {
-    return error.message;
+    return error.message ?? "error";
   }
 
   return (
     <div className="container mx-auto bg-white p-8 rounded-lg border-input">
       <div className="flex items-center justify-between">
-        <Title text={"Brands"} />
+        <Title text={"Points"} />
 
         <Button
           onClick={() => {
@@ -125,20 +128,20 @@ export default function Brands() {
       </div>
       <div>
         <DataTable
-          columns={columns(setType, openModal, setBrandId)}
-          data={data?.data?.map(({ id, name }) => ({ id, name }))}
+          columns={columns(setType, openModal, setPointId)}
+          data={data}
         />
       </div>
 
       {isModal && (
         <Modal isOpen={isModal} onClose={closeModal}>
-          <BrandForm
+          <PointForm
             type={type}
             handleCreate={handleCreate}
             handleUpdate={handleUpdate}
             handleDelete={handleDelete}
             closeModal={closeModal}
-            brandId={brandId}
+            pointId={pointId}
           />
         </Modal>
       )}

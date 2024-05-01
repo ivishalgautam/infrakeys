@@ -1,11 +1,9 @@
 "use client";
-import PaginationControls from "@/components/PaginationControls";
-import ProductsWithFilter from "@/components/products-with-filter";
 import { useQuery } from "@tanstack/react-query";
 import http from "@/utils/http";
 import { endpoints } from "@/utils/endpoints";
-import ProductTableWithFilter from "@/components/table/product-table-with-filter";
 import Spinner from "@/components/Spinner";
+import ProductTableWithCategoriesAndFilter from "@/components/table/product-table-with-categories-filter";
 
 const fetchProducts = async () => {
   const url = `${endpoints.products.getAll}`;
@@ -21,13 +19,11 @@ export default function Page() {
 
   if (isLoading) return <Spinner />;
 
-  console.log({ data });
-
   return (
     <section className="py-6">
       <div className="container">
         <div>
-          <ProductTableWithFilter products={data} />
+          <ProductTableWithCategoriesAndFilter products={data} />
         </div>
         <div>{/* <PaginationControls total_page={data?.total_page} /> */}</div>
       </div>

@@ -111,7 +111,7 @@ export function BannerForm({
                   : "Are you sure you want to delete"
           }
         />
-        <div className="space-y-16 p-2">
+        <div className="space-y-8 p-2">
           {image?.length ? (
             <div className="relative h-32 w-full">
               {type === "edit" || type === "create" ? (
@@ -127,7 +127,7 @@ export function BannerForm({
               )}
               <Image
                 src={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${image[0]}`}
-                width={400}
+                width={100}
                 height={100}
                 className="rounded-lg"
                 alt="category image"

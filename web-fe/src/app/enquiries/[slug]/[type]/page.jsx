@@ -3,6 +3,7 @@ import POForm from "@/components/forms/po";
 import ProfileLayout from "@/components/layout/profile-layout";
 import Modal from "@/components/Modal";
 import PurchaseOrder from "@/components/PurchaseOrder";
+import Spinner from "@/components/Spinner";
 import EnquiryItemTable from "@/components/table/enquiry-item-table";
 import SingleEnquiryTable from "@/components/table/single-enquiry-table";
 import { Button } from "@/components/ui/button";
@@ -24,7 +25,7 @@ const convertToOrder = ({ id }) => {
 
 export default function Page({ params: { slug } }) {
   const [isModal, setIsModal] = useState(false);
-  const { data } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
     queryFn: fetchEnquiry,
     queryKey: [`enquiry-${slug}`],
     enabled: !!slug,
@@ -52,7 +53,7 @@ export default function Page({ params: { slug } }) {
     onSuccess: (data) => {
       toast.success(data?.message ?? "Coverted to order.");
       queryClient.invalidateQueries("enquiries");
-      router.push("/enquiries?status=closed");
+      router.push("/profile/enquiries?status=closed");
     },
     onError: (error) => {
       console.log({ error });
@@ -63,7 +64,8 @@ export default function Page({ params: { slug } }) {
     convertToOrderMutation.mutate({ id });
   };
 
-  console.log({ data });
+  if (isLoading) return <Spinner />;
+  if (isError) return error?.message ?? "error";
 
   return (
     <ProfileLayout>
@@ -87,7 +89,7 @@ export default function Page({ params: { slug } }) {
           </div>
         </div>
 
-        <EnquiryItemTable data={data} />
+        <EnquiryItemTable data={data} enquiryId={slug} />
 
         <div className="flex items-center justify-between">
           <Button

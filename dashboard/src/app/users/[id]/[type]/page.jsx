@@ -2,7 +2,7 @@
 
 import http from "@/utils/http";
 import { CustomerForm } from "../../../../components/Forms/Customer.js";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { endpoints } from "@/utils/endpoints";
 import { toast } from "sonner";
 import { isObject } from "@/utils/object";
@@ -18,16 +18,12 @@ export default function Page({ params: { id, type } }) {
 
   const updateMutation = useMutation(updateCustomer, {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["customers"] });
-      toast.success("Customer updated.");
-      router.replace("/customers");
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      toast.success("User updated.");
+      router.push("/users");
     },
     onError: (error) => {
-      if (isObject(error)) {
-        toast.error(error.message);
-      } else {
-        console.error(error);
-      }
+      toast.error(error.message ?? "error");
     },
   });
 

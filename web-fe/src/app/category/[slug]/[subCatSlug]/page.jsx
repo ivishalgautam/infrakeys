@@ -4,8 +4,24 @@ import { endpoints } from "@/utils/endpoints";
 import axios from "axios";
 import React from "react";
 
+const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+
+export async function generateMetadata({ params: { subCatSlug } }) {
+  const { data } = (
+    await axios.get(`${baseUrl}${endpoints.subCategories.getAll}/${subCatSlug}`)
+  )?.data;
+
+  return {
+    title: data?.name,
+    description: data?.meta_description,
+    keywords: data?.meta_keywords,
+    openGraph: {
+      images: data?.image,
+    },
+  };
+}
+
 async function getProductsBySubCategory(slug) {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
   const { data } = await axios.get(
     `${baseUrl}${endpoints.products.getAll}/getBySubCategory/${slug}`,
   );
@@ -13,7 +29,6 @@ async function getProductsBySubCategory(slug) {
 }
 
 async function getSubCategoriesByCategory(slug) {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
   const { data } = await axios.get(
     `${baseUrl}${endpoints.subCategories.getAll}/getByCategory/${slug}`,
   );

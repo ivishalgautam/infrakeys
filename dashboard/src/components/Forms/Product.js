@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useFetchProducts } from "@/hooks/useFetchProducts";
 
 import http from "@/utils/http";
@@ -16,7 +16,6 @@ import { Label } from "../ui/label";
 import { Switch } from "@/components/ui/switch";
 import { debounce } from "lodash";
 import { H4 } from "../ui/typography";
-import ReactSelect from "react-select";
 import {
   Select,
   SelectContent,
@@ -39,6 +38,7 @@ import {
   TableRow,
 } from "../ui/table";
 import { Delete, Plus, Trash } from "lucide-react";
+import ReactSelect from "react-select";
 
 export function ProductForm({
   type,
@@ -81,8 +81,9 @@ export function ProductForm({
   const [quantityTypes, setQuantityTypes] = useState([]);
   const editorRef = useRef(null);
 
-  const { data: subCategories } = useFetchSubCategories();
-  const { data: products } = useFetchProducts();
+  const { data: subCategories, isLoading: isSubCatLoading } =
+    useFetchSubCategories();
+  const { data: products, isLoading: isProductsLoading } = useFetchProducts();
 
   const productStatus = [
     { value: "published", label: "Published" },
@@ -90,17 +91,23 @@ export function ProductForm({
     { value: "pending", label: "Pending" },
   ];
 
-  const formattedSubCategories = subCategories?.map(
-    ({ id: value, name: label }) => ({
-      value,
-      label,
-    })
+  const formattedSubCategories = useMemo(
+    () =>
+      subCategories?.map(({ id: value, name: label }) => ({
+        value,
+        label,
+      })),
+    [isSubCatLoading]
   );
 
-  const formattedProducts = products?.map(({ id: value, title: label }) => ({
-    value,
-    label,
-  }));
+  const formattedProducts = useMemo(
+    () =>
+      products?.map(({ id: value, title: label }) => ({
+        value,
+        label,
+      })),
+    [isProductsLoading, productId]
+  );
 
   const onSubmit = (data) => {
     if (type === "delete") {
@@ -115,7 +122,7 @@ export function ProductForm({
       tags: tags,
       quantity_types: quantityTypes,
       sku: data?.sku,
-      sub_category_id: data?.sub_category_id,
+      sub_category_id: data?.sub_category_id.value,
       status: data?.status?.value,
       is_featured: data?.is_featured,
       related_products: data?.related_products?.map((so) => so.value),
@@ -141,7 +148,13 @@ export function ProductForm({
           `${endpoints.products.getAll}/getById/${productId}`
         );
         data && setValue("name", data?.title);
-        data && setValue("sub_category_id", data?.sub_category_id);
+        data &&
+          setValue(
+            "sub_category_id",
+            formattedSubCategories?.find(
+              (so) => so.value === data?.sub_category_id
+            )
+          );
         data && setValue("status", data?.status);
         data &&
           data.custom_description &&
@@ -180,15 +193,14 @@ export function ProductForm({
       }
     };
 
-    if (productId && (type === "edit" || type === "view")) {
+    if (
+      formattedSubCategories?.length &&
+      productId &&
+      (type === "edit" || type === "view")
+    ) {
       fetchData();
     }
-  }, [
-    productId,
-    type,
-    formattedSubCategories?.length,
-    formattedProducts?.length,
-  ]);
+  }, [productId, type, formattedProducts?.length]);
 
   const addTag = () => {
     if (getValues("tag") === "") {
@@ -304,26 +316,11 @@ export function ProductForm({
                     maxMenuHeight={230}
                     rules={{ required: "Please select sub category" }}
                     render={({ field: { onChange, value } }) => (
-                      <Select
-                        value={value}
-                        onValueChange={onChange}
-                        className="w-full"
-                        disabled={type === "view" || type === "delete"}
-                      >
-                        <SelectTrigger className="">
-                          <SelectValue placeholder="Select a sub category" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>Sub category</SelectLabel>
-                            {formattedSubCategories?.map(({ value, label }) => (
-                              <SelectItem key={value} value={value}>
-                                {label}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
+                      <ReactSelect
+                        options={formattedSubCategories}
+                        onChange={onChange}
+                        defaultValue={value}
+                      />
                     )}
                   />
 

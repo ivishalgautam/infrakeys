@@ -65,10 +65,6 @@ export const allRoutes = [
     roles: [ROLES.USER],
   },
   {
-    link: "/profile/dashboard",
-    roles: [ROLES.USER],
-  },
-  {
     link: "/profile/enquiries",
     roles: [ROLES.USER],
   },

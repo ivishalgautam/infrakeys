@@ -12,6 +12,18 @@ import Link from "next/link";
 // base api url
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
+export async function generateMetadata({ params: { slug } }) {
+  const { data } = await fetchCategory(slug);
+  return {
+    title: data?.name,
+    description: data?.meta_description,
+    keywords: data?.meta_keywords,
+    openGraph: {
+      images: data?.image,
+    },
+  };
+}
+
 async function fetchCategory(slug) {
   const response = await axios.get(
     `${baseUrl}${endpoints.categories.getAll}/${slug}`,

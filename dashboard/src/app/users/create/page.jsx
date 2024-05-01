@@ -16,15 +16,11 @@ export default function Create() {
 
   const createMutation = useMutation(createCustomer, {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["customers"] });
-      toast.success("Customer created.");
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      toast.success("User created.");
     },
     onError: (error) => {
-      if (isObject(error)) {
-        toast.error(error.message);
-      } else {
-        console.error(error);
-      }
+      toast.error(error.message ?? "error");
     },
   });
 

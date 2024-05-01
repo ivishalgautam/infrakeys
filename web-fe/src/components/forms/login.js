@@ -10,13 +10,11 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import http from "@/utils/http";
 import { endpoints } from "@/utils/endpoints";
-import { useRouter } from "next/navigation";
 import { isObject } from "@/utils/object";
 import { toast } from "sonner";
 
-export default function LoginForm() {
+export default function LoginForm({ setIsOtpSent, setPhone }) {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const {
     register,
@@ -31,15 +29,7 @@ export default function LoginForm() {
         `${endpoints.auth.login}/customer`,
         credentials,
       );
-      localStorage.setItem("user", JSON.stringify(response.user_data));
-      localStorage.setItem("token", response.token);
-      localStorage.setItem("refreshToken", response.refresh_token);
-      if (response.user_data.is_verified) {
-        router.push("/");
-      } else {
-        router.push("/verify");
-      }
-      // console.log(response);
+      setIsOtpSent(true);
 
       return response.data;
     } catch (error) {
@@ -55,6 +45,7 @@ export default function LoginForm() {
   }
 
   const onSubmit = async (data) => {
+    setPhone(data.phone);
     await loginUser(data);
   };
   return (
@@ -89,7 +80,7 @@ export default function LoginForm() {
           <div className="translate-y-4">
             <P className={"text-center text-sm font-medium tracking-wide"}>
               Do not have an account?{" "}
-              <Link href={"/signup"} className="text-primary">
+              <Link href={"/auth/signup"} className="text-primary">
                 Create one
               </Link>
             </P>

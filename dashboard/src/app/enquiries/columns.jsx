@@ -27,9 +27,9 @@ export const columns = (setEnquiryId, setType, handleDelete, openModal) => [
     cell: ({ row }) => {
       const id = row.original.id;
       return (
-        <Small className={"bg-primary text-white rounded-full p-1 px-2"}>
+        <Badge className={"text-white"}>
           <Link href={`/enquiries/${id}`}>{id}</Link>
-        </Small>
+        </Badge>
       );
     },
   },
@@ -46,29 +46,8 @@ export const columns = (setEnquiryId, setType, handleDelete, openModal) => [
         </Button>
       );
     },
-  },
-  {
-    accessorKey: "Enquiry status",
-    header: ({ column }) => {
-      return <Button variant="ghost">Status</Button>;
-    },
     cell: ({ row }) => {
-      const status = row.original.status;
-      return (
-        <div>
-          <Button
-            className={cn("capitalize", {
-              "bg-emerald-500 hover:bg-emerald-500/80": status === "available",
-              "bg-orange-500 hover:bg-orange-500/80": status === "pending",
-              "bg-rose-500 hover:bg-rose-500/80": status === "not_available",
-              "bg-blue-500 hover:bg-blue-500/80":
-                status === "partially_available",
-            })}
-          >
-            {status.split("_").join(" ")}
-          </Button>
-        </div>
-      );
+      return <span className="text-xs">{row.getValue("phone")}</span>;
     },
   },
   {
@@ -82,7 +61,7 @@ export const columns = (setEnquiryId, setType, handleDelete, openModal) => [
         <div>
           <Badge
             type="button"
-            className={cn("uppercase cursor-pointer border-[0.1px]", {
+            className={cn("uppercase cursor-pointer border", {
               "bg-emerald-100 text-emerald-500 hover:bg-emerald-200 border-emerald-300":
                 type === "buy",
               "bg-rose-100 text-rose-500 hover:bg-rose-200 border-rose-300":
@@ -103,17 +82,59 @@ export const columns = (setEnquiryId, setType, handleDelete, openModal) => [
     cell: ({ row }) => {
       const is_converted_to_order = row.getValue("is_converted_to_order");
       return (
+        <Badge
+          type="button"
+          className={cn("uppercase cursor-pointer border-[0.1px]", {
+            "bg-emerald-100 text-emerald-500 hover:bg-emerald-200 border-emerald-300":
+              is_converted_to_order,
+            "bg-rose-100 text-rose-500 hover:bg-rose-200 border-rose-300":
+              !is_converted_to_order,
+          })}
+        >
+          {is_converted_to_order ? "Yes" : "No"}
+        </Badge>
+      );
+    },
+  },
+  {
+    accessorKey: "payment_method",
+    header: ({ column }) => {
+      return <Button variant="ghost">Payment method</Button>;
+    },
+    cell: ({ row }) => {
+      const type = row.getValue("payment_method");
+      return (
         <div>
           <Badge
             type="button"
-            className={cn("uppercase cursor-pointer border-[0.1px]", {
-              "bg-emerald-100 text-emerald-500 hover:bg-emerald-200 border-emerald-300":
-                is_converted_to_order,
-              "bg-rose-100 text-rose-500 hover:bg-rose-200 border-rose-300":
-                !is_converted_to_order,
+            className={cn("capitalize cursor-pointer border-[0.1px]")}
+          >
+            {type.split("_").join(" ")}
+          </Badge>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "Enquiry status",
+    header: ({ column }) => {
+      return <Button variant="ghost">Status</Button>;
+    },
+    cell: ({ row }) => {
+      const status = row.original.status;
+      return (
+        <div>
+          <Badge
+            className={cn("capitalize text-white", {
+              "bg-emerald-500 hover:bg-emerald-500/80": status === "available",
+              "bg-orange-500 hover:bg-orange-500/80": status === "pending",
+              "bg-rose-500 hover:bg-rose-500/80": status === "not_available",
+              "bg-blue-500 hover:bg-blue-500/80":
+                status === "partially_available",
+              "bg-red-500 hover:bg-red-500/80": status === "closed",
             })}
           >
-            {is_converted_to_order ? "Yes" : "No"}
+            {status.split("_").join(" ")}
           </Badge>
         </div>
       );

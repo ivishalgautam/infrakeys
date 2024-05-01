@@ -99,11 +99,13 @@ export default function SearchBox() {
               onChange={(e) => setInputVal(e.target.value)}
               value={inputVal}
             />
-            <Button className={"rounded-md"}>Search</Button>
+            <Button className={"rounded-md"} variant="primary">
+              Search
+            </Button>
           </div>
         </form>
       </div>
-      {inputVal && searchResults.length > 0 && (
+      {inputVal && searchResults?.length > 0 && (
         <div className="md-w-4/5 mt-2 w-full">
           <ProductTable products={searchResults} />
         </div>

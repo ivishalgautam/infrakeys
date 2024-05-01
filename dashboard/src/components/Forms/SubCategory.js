@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useForm, Controller, useFieldArray } from "react-hook-form";
+import React, { useEffect, useMemo, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import Title from "../Title";
 import http from "@/utils/http";
 import { Input } from "../ui/input";
@@ -27,6 +27,8 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useFetchSubCatTypes } from "@/hooks/usefetchSubCatTypes";
+import ReactSelect from "react-select";
+import Spinner from "../Spinner";
 
 export function SubCategoryForm({
   type,
@@ -46,19 +48,25 @@ export function SubCategoryForm({
   } = useForm();
   const [token] = useLocalStorage("token");
   const [image, setImage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { data: categories } = useFetchCategories();
+  const { data: categories, isLoading: isCategoryLoading } =
+    useFetchCategories();
   const { data: subCatTypes } = useFetchSubCatTypes();
 
-  const formattedCategories = categories?.map(({ id: value, name: label }) => ({
-    value,
-    label,
-  }));
+  const formattedCategories = useMemo(
+    () =>
+      categories?.map(({ id: value, name: label }) => ({
+        value,
+        label,
+      })),
+    [isCategoryLoading, subCategoryId]
+  );
 
   const onSubmit = (data) => {
     const payload = {
       name: data?.name,
-      category_id: data?.category_id,
+      category_id: data?.category_id.value,
       image: image,
       is_featured: data?.is_featured,
       meta_title: data?.meta_title,
@@ -79,13 +87,18 @@ export function SubCategoryForm({
   useEffect(() => {
     // Fetch data from API and populate the form with prefilled values
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const { data } = await http().get(
           `${endpoints.sub_categories.getAll}/getById/${subCategoryId}`
         );
 
         data && setValue("name", data?.name);
-        data && setValue("category_id", data?.category_id);
+        data &&
+          setValue(
+            "category_id",
+            formattedCategories.find((so) => so.value === data?.category_id)
+          );
         data && setImage(data.image);
         data && setValue("is_featured", data?.is_featured);
         data && setValue("meta_title", data?.meta_title);
@@ -95,15 +108,18 @@ export function SubCategoryForm({
       } catch (error) {
         console.error(error);
         toast.error(error.message ?? "Unable to fetch details!");
+      } finally {
+        setIsLoading(false);
       }
     };
     if (
+      formattedCategories?.length &&
       subCategoryId &&
       (type === "edit" || type === "view" || type === "delete")
     ) {
       fetchData();
     }
-  }, [subCategoryId, type]);
+  }, [subCategoryId, type, formattedCategories?.length]);
 
   const handleFileChange = async (event) => {
     try {
@@ -147,6 +163,8 @@ export function SubCategoryForm({
     }
   };
 
+  if (isLoading) return <Spinner />;
+
   // console.log(watch("items"));
 
   return (
@@ -189,30 +207,17 @@ export function SubCategoryForm({
                 name="category_id"
                 maxMenuHeight={230}
                 rules={{ required: "Please select category" }}
-                render={({ field: { onChange, value } }) => (
-                  <Select
-                    value={value}
-                    onValueChange={onChange}
-                    className="w-full"
-                    disabled={type === "view" || type === "delete"}
-                  >
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="Select a category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Categories</SelectLabel>
-                        {formattedCategories?.map(({ value, label }) => (
-                          <SelectItem key={value} value={value}>
-                            {label}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                )}
+                render={({ field: { onChange, value } }) => {
+                  console.log({ value });
+                  return (
+                    <ReactSelect
+                      options={formattedCategories}
+                      defaultValue={value}
+                      onChange={onChange}
+                    />
+                  );
+                }}
               />
-
               {errors.category_id && (
                 <span className="text-red-600">
                   {errors.category_id.message}

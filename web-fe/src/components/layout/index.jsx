@@ -15,26 +15,22 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     if (
-      pathname === "/login" ||
-      pathname === "/signup" ||
-      pathname === "/verify"
+      pathname === "/auth/login" ||
+      pathname === "/auth/signup" ||
+      pathname === "/auth/verify"
     ) {
       return;
     }
-
     if (isUserLoading) return;
+
     // Find the current route in the AllRoutes array
     const currentRoute = allRoutes?.find(
-      (route) => route.link === pathname.replace(slug, "[slug]"),
+      (route) => route.link === pathname.replace("[slug]", slug),
     );
-    // const currentRoute = allRoutes?.find((route) => route.link === pathname);
-    // if (!currentRoute) {
-    //   return router.replace("/");
-    // }
 
-    if (user && currentRoute?.roles?.length && !user?.is_verified) {
-      return router.push("/verify");
-    }
+    // if (user && currentRoute?.roles?.length && !user?.is_verified) {
+    //   return router.push("/auth/verify");
+    // }
 
     // If the current route is not found in the array or the user's role is not allowed for this route
     if (
@@ -43,9 +39,11 @@ export default function Layout({ children }) {
       !currentRoute?.roles?.includes(user?.role)
     ) {
       localStorage.clear();
-      router.replace("/login");
+      router.replace("/auth/login");
     }
   }, [pathname, user, isUserLoading, slug]);
+
+  if (isUserLoading) return <Spinner />;
 
   return (
     <div>

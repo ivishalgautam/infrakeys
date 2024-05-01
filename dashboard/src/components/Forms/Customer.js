@@ -9,17 +9,17 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { FaRegEye } from "react-icons/fa";
 import { Checkbox } from "../ui/checkbox";
-import ReactSelect from "react-select";
 
 import "react-phone-number-input/style.css";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { countries } from "../../data/countryCodes";
 import Spinner from "../Spinner";
 
 export function CustomerForm({
@@ -46,25 +46,18 @@ export function CustomerForm({
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const formattedCountries = countries.map(({ code, name }) => ({
-    label: `${code} ${name}`,
-    value: code,
-  }));
-
   const onSubmit = (data) => {
     if (type === "delete") {
       return handleDelete({ id: customerId });
     }
 
     const payload = {
-      fullname: data.fullname,
-      mobile_number: data.mobile_number,
-      country_code: data.country_code.value,
+      role: data.role,
+      name: data.name,
+      phone: data.phone,
       email: data.email,
       username: data.username,
       password: data.password,
-      city: data.city,
-      state: data.state,
     };
 
     if (type === "create") {
@@ -73,7 +66,7 @@ export function CustomerForm({
       handleUpdate(payload);
     }
 
-    reset();
+    // reset();
   };
 
   useEffect(() => {
@@ -84,13 +77,11 @@ export function CustomerForm({
         const { data } = await http().get(
           `${endpoints.users.getAll}/${customerId}`
         );
-        data && setValue("fullname", data?.fullname);
-        data && setValue("country_code", data?.country_code);
-        data && setValue("mobile_number", data?.mobile_number);
+        data && setValue("role", data?.role);
+        data && setValue("name", data?.name);
+        data && setValue("phone", data?.phone);
         data && setValue("email", data?.email);
         data && setValue("username", data?.username);
-        data && setValue("city", data?.city);
-        data && setValue("state", data?.state);
       } catch (error) {
         console.error(error);
       } finally {
@@ -126,64 +117,62 @@ export function CustomerForm({
             </div>
 
             {/* product info */}
-            <div
-              id="product-information"
-              className="bg-white p-8 rounded-lg border-input shadow-lg space-y-4"
-            >
+            <div className="bg-white p-8 rounded-lg border-input shadow-lg space-y-4">
               <div className="grid grid-cols-2 gap-2">
-                {/* fullname */}
+                {/* role */}
                 <div>
-                  <Label htmlFor="fullname">Fullname</Label>
-                  <Input
-                    type="text"
-                    disabled={type === "view" || type === "delete"}
-                    placeholder="Enter fullname"
-                    {...register("fullname", {
-                      required: "required",
-                    })}
+                  <Label htmlFor="name">Role</Label>
+                  <Controller
+                    control={control}
+                    name="role"
+                    rules={{ required: "required*" }}
+                    render={({ field: { onChange, value } }) => (
+                      <Select onValueChange={onChange} value={value}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a Role" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>ROLES</SelectLabel>
+                            <SelectItem value="user">Customer</SelectItem>
+                            <SelectItem value="subadmin">Sub Admin</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
                   />
-                  {errors.fullname && (
-                    <span className="text-red-600">
-                      {errors.fullname.message}
-                    </span>
+                  {errors.role && (
+                    <span className="text-red-600">{errors.role.message}</span>
                   )}
                 </div>
 
-                {/* mobile number */}
+                {/* name */}
                 <div>
-                  <Label htmlFor="mobile_number">Mobile number</Label>
+                  <Label htmlFor="name">Fullname</Label>
+                  <Input
+                    type="text"
+                    disabled={type === "view" || type === "delete"}
+                    placeholder="Enter Fullname"
+                    {...register("name", {
+                      required: "required",
+                    })}
+                  />
+                  {errors.name && (
+                    <span className="text-red-600">{errors.name.message}</span>
+                  )}
+                </div>
 
-                  <div className="flex gap-2">
-                    <div className="flex-1">
-                      <Controller
-                        control={control}
-                        rules={{ required: true }}
-                        name="country_code"
-                        render={({ field }) => (
-                          <ReactSelect
-                            onChange={field.onChange}
-                            value={formattedCountries.find(
-                              (so) => so.value === field.value
-                            )}
-                            options={formattedCountries}
-                            placeholder="Country"
-                          />
-                        )}
-                      />
-                    </div>
-                    <div className="flex-3">
-                      <Input
-                        {...register("mobile_number", {
-                          required: "required",
-                        })}
-                        placeholder="Enter mobile number"
-                      />
-                    </div>
-                  </div>
-                  {errors.mobile_number && (
-                    <span className="text-red-600">
-                      {errors.mobile_number.message}
-                    </span>
+                {/* phone */}
+                <div>
+                  <Label htmlFor="phone">Phone</Label>
+                  <Input
+                    {...register("phone", {
+                      required: "required",
+                    })}
+                    placeholder="Enter phone number"
+                  />
+                  {errors.phone && (
+                    <span className="text-red-600">{errors.phone.message}</span>
                   )}
                 </div>
 
@@ -207,57 +196,27 @@ export function CustomerForm({
                   )}
                 </div>
 
-                {/* city */}
-                <div>
-                  <Label htmlFor="city">City</Label>
-                  <Input
-                    type="text"
-                    disabled={type === "view" || type === "delete"}
-                    placeholder="City"
-                    {...register("city", {
-                      required: "required",
-                    })}
-                  />
-                  {errors.city && (
-                    <span className="text-red-600">{errors.city.message}</span>
-                  )}
-                </div>
-
-                {/* state */}
-                <div>
-                  <Label htmlFor="state">State</Label>
-                  <Input
-                    type="text"
-                    disabled={type === "view" || type === "delete"}
-                    placeholder="State"
-                    {...register("state", {
-                      required: "required",
-                    })}
-                  />
-                  {errors.state && (
-                    <span className="text-red-600">{errors.state.message}</span>
-                  )}
-                </div>
-
                 {/* username */}
-                <div>
-                  <Label htmlFor="username">Username</Label>
-                  <Input
-                    type="text"
-                    disabled={type === "view" || type === "delete"}
-                    placeholder="Username"
-                    {...register("username", {
-                      required: "required",
-                    })}
-                  />
-                  {errors.username && (
-                    <span className="text-red-600">
-                      {errors.username.message}
-                    </span>
-                  )}
-                </div>
+                {watch("role") === "subadmin" && (
+                  <div>
+                    <Label htmlFor="username">Username</Label>
+                    <Input
+                      type="text"
+                      disabled={type === "view" || type === "delete"}
+                      placeholder="Username"
+                      {...register("username", {
+                        required: "required",
+                      })}
+                    />
+                    {errors.username && (
+                      <span className="text-red-600">
+                        {errors.username.message}
+                      </span>
+                    )}
+                  </div>
+                )}
 
-                {type === "edit" && (
+                {type === "edit" && watch("role") === "subadmin" && (
                   <div className="col-span-3 flex items-center justify-start mt-4 gap-2">
                     <Label htmlFor="change_password">Change password</Label>
                     <Controller
@@ -271,75 +230,78 @@ export function CustomerForm({
                 )}
 
                 {/* passwords */}
-                {(type === "create" || watch("change_password")) && (
-                  <div className="col-span-2 grid grid-cols-2 gap-2">
-                    <div>
-                      <Label htmlFor="password">Password</Label>
-                      <div className="relative">
-                        <Input
-                          type={showPasswords.password ? "text" : "password"}
-                          disabled={type === "view" || type === "delete"}
-                          placeholder="Password"
-                          {...register("password", {
-                            required: "required",
-                          })}
-                        />
-                        <div
-                          className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
-                          onClick={() =>
-                            setShowPasswords((prev) => ({
-                              ...prev,
-                              password: !prev.password,
-                            }))
-                          }
-                        >
-                          <FaRegEye />
+                {(type === "create" || watch("change_password")) &&
+                  watch("role") === "subadmin" && (
+                    <div className="col-span-2 grid grid-cols-2 gap-2">
+                      <div>
+                        <Label htmlFor="password">Password</Label>
+                        <div className="relative">
+                          <Input
+                            type={showPasswords.password ? "text" : "password"}
+                            disabled={type === "view" || type === "delete"}
+                            placeholder="Password"
+                            {...register("password", {
+                              required: "required",
+                            })}
+                          />
+                          <div
+                            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+                            onClick={() =>
+                              setShowPasswords((prev) => ({
+                                ...prev,
+                                password: !prev.password,
+                              }))
+                            }
+                          >
+                            <FaRegEye />
+                          </div>
                         </div>
+                        {errors.password && (
+                          <span className="text-red-600">
+                            {errors.password.message}
+                          </span>
+                        )}
                       </div>
-                      {errors.password && (
-                        <span className="text-red-600">
-                          {errors.password.message}
-                        </span>
-                      )}
-                    </div>
 
-                    {/* confirm password */}
-                    <div className="relative">
-                      <Label htmlFor="confirm_password">Confirm password</Label>
+                      {/* confirm password */}
                       <div className="relative">
-                        <Input
-                          type={showPasswords.cpassword ? "text" : "password"}
-                          disabled={type === "view" || type === "delete"}
-                          placeholder="Confirm password"
-                          {...register("confirm_password", {
-                            required: "required",
-                            validate: (val) => {
-                              if (watch("password") != val) {
-                                return "Your passwords do not match";
-                              }
-                            },
-                          })}
-                        />
-                        <div
-                          className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
-                          onClick={() =>
-                            setShowPasswords((prev) => ({
-                              ...prev,
-                              cpassword: !showPasswords.cpassword,
-                            }))
-                          }
-                        >
-                          <FaRegEye />
+                        <Label htmlFor="confirm_password">
+                          Confirm password
+                        </Label>
+                        <div className="relative">
+                          <Input
+                            type={showPasswords.cpassword ? "text" : "password"}
+                            disabled={type === "view" || type === "delete"}
+                            placeholder="Confirm password"
+                            {...register("confirm_password", {
+                              required: "required",
+                              validate: (val) => {
+                                if (watch("password") != val) {
+                                  return "Your passwords do not match";
+                                }
+                              },
+                            })}
+                          />
+                          <div
+                            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+                            onClick={() =>
+                              setShowPasswords((prev) => ({
+                                ...prev,
+                                cpassword: !showPasswords.cpassword,
+                              }))
+                            }
+                          >
+                            <FaRegEye />
+                          </div>
                         </div>
+                        {errors.confirm_password && (
+                          <span className="text-red-600">
+                            {errors.confirm_password.message}
+                          </span>
+                        )}
                       </div>
-                      {errors.confirm_password && (
-                        <span className="text-red-600">
-                          {errors.confirm_password.message}
-                        </span>
-                      )}
                     </div>
-                  </div>
-                )}
+                  )}
               </div>
             </div>
           </div>

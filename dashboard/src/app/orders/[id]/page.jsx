@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import http from "@/utils/http";
 import { endpoints } from "@/utils/endpoints";
@@ -10,7 +10,9 @@ import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -21,6 +23,11 @@ import { Eye } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { useRouter } from "next/navigation";
+import { useFetchUsers } from "@/hooks/useFetchUsers";
+import { MainContext } from "@/store/context";
+import Spinner from "@/components/Spinner";
+import ReactSelect from "react-select";
 
 const updateOrder = (data) => {
   return http().put(`${endpoints.orders.getAll}/${data.order_id}`, data);
@@ -52,12 +59,23 @@ export default function Page({ params: { id } }) {
     control,
     name: "items",
   });
+  const router = useRouter();
   const queryClient = useQueryClient();
   const [token] = useLocalStorage("token");
+  const { user } = useContext(MainContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const { data: subAdmins, isLoading: isSubAdminLoading } =
+    useFetchUsers("subadmin");
+  const formattedSubAdmins = subAdmins?.map(({ id, name, username }) => ({
+    value: id,
+    label: `${name} (@${username})`,
+  }));
 
   const updateMutation = useMutation(updateOrder, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries("orders");
+      toast.success("Updated");
+      queryClient.invalidateQueries(["orders"]);
+      router.push("/orders");
     },
     onError: (error) => {
       console.log({ error });
@@ -88,28 +106,40 @@ export default function Page({ params: { id } }) {
 
   useEffect(() => {
     const fetchOrderById = async () => {
-      const { data } = await http().get(`${endpoints.orders.getAll}/${id}`);
-      if (data) {
-        setValue("status", data.status);
-        setValue("po_number", data.po_number);
-        setValue("po_file", data.po_file);
-        setValue("quotation_file", data.quotation_file);
-        setValue(
-          "items",
-          data?.items.map((item) => ({ ...item, _id: item.id }))
-        );
+      setIsLoading(true);
+      try {
+        const { data } = await http().get(`${endpoints.orders.getAll}/${id}`);
+        if (data) {
+          setValue("status", data.status);
+          setValue("po_number", data.po_number);
+          setValue("po_file", data.po_file);
+          setValue("quotation_file", data.quotation_file);
+          formattedSubAdmins.length &&
+            setValue(
+              "assigned_to",
+              formattedSubAdmins.find((so) => so.value === data.assigned_to)
+            );
+          setValue(
+            "items",
+            data?.items.map((item) => ({ ...item, _id: item.id }))
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     if (id) fetchOrderById();
-  }, [id]);
+  }, [id, formattedSubAdmins?.length]);
 
   const onSubmit = (data) => {
     const payload = {
       status: data.status,
       items: data.items,
+      assigned_to: data.assigned_to,
     };
     handleUpdate(payload);
-    toast.success("Updated");
   };
 
   const handleFileChange = async (event) => {
@@ -152,6 +182,8 @@ export default function Page({ params: { id } }) {
 
   const itemStatus = (key) => watch(`items.${key}.status`);
 
+  if (isLoading || isSubAdminLoading) return <Spinner />;
+
   return (
     <div className="bg-white rounded-md p-4">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -163,7 +195,7 @@ export default function Page({ params: { id } }) {
                 {/* name */}
                 <div>
                   <Label>Product</Label>
-                  <Input value={field.title} disabled />
+                  <Input value={field.product_title} disabled />
                 </div>
 
                 {/* quantity */}
@@ -196,6 +228,7 @@ export default function Page({ params: { id } }) {
                         valueAsNumber: true,
                       })}
                       placeholder="Enter available quantity"
+                      disabled
                     />
                     {errors?.items?.[key] && (
                       <Small className={"text-red-500"}>
@@ -270,6 +303,7 @@ export default function Page({ params: { id } }) {
                       valueAsNumber: true,
                     })}
                     placeholder="Enter base rate"
+                    disabled
                   />
                   {errors?.items?.[key] && (
                     <Small className={"text-red-500"}>
@@ -288,6 +322,7 @@ export default function Page({ params: { id } }) {
                       valueAsNumber: true,
                     })}
                     placeholder="Enter gst"
+                    disabled
                   />
                   {errors?.items?.[key] && (
                     <Small className={"text-red-500"}>
@@ -343,6 +378,24 @@ export default function Page({ params: { id } }) {
 
         {/* Order status */}
         <div className="grid grid-cols-2 my-6 gap-2">
+          {/* assign order */}
+          {user?.role === "admin" && (
+            <div>
+              <Label>Assign Order to</Label>
+              <Controller
+                control={control}
+                name={`assigned_to`}
+                render={({ field: { value, onChange } }) => (
+                  <ReactSelect
+                    options={formattedSubAdmins}
+                    defaultValue={value}
+                    onChange={onChange}
+                  />
+                )}
+              />
+            </div>
+          )}
+
           <div>
             <Label>Order status</Label>
             <Controller

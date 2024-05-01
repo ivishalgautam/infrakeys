@@ -1,9 +1,22 @@
-import ImageSlider from "@/components/ImageSlider";
 import ProductCard from "@/components/cards/product";
 import AddToCart from "@/components/forms/add-to-cart";
+import ProductTable from "@/components/table/product-table";
 import { Button } from "@/components/ui/button";
 import { H3, P } from "@/components/ui/typography";
 import { fetchProduct } from "@/utils/api";
+
+export async function generateMetadata({ params: { slug } }) {
+  const { data } = await fetchProduct(slug);
+  console.log(data);
+  return {
+    title: data?.title,
+    description: data?.meta_description,
+    keywords: data?.meta_keywords,
+    openGraph: {
+      images: data?.image,
+    },
+  };
+}
 
 export default async function Page({ params: { slug } }) {
   const { data } = await fetchProduct(slug);
@@ -12,9 +25,6 @@ export default async function Page({ params: { slug } }) {
       <div className="container space-y-10">
         <div className="rounded-md bg-white p-8">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div className="">
-              <ImageSlider pictures={data?.pictures} />
-            </div>
             {/* description */}
             <div className="space-y-10 divide-y">
               <div className="space-y-4">
@@ -54,30 +64,32 @@ export default async function Page({ params: { slug } }) {
         </div>
 
         {/* description */}
-        <div className="rounded-md bg-white p-8">
-          <div className="border-b">
-            <Button className="rounded-none border-b-2 border-primary bg-transparent p-0 pb-2 text-lg text-primary hover:bg-transparent">
-              Description
-            </Button>
+        {data?.description ? (
+          <div className="rounded-md bg-white p-8">
+            <div className="border-b">
+              <Button className="rounded-none border-b-2 border-primary bg-transparent p-0 pb-2 text-lg text-primary hover:bg-transparent">
+                Description
+              </Button>
+            </div>
+            <div
+              className="py-6"
+              dangerouslySetInnerHTML={{ __html: data?.description }}
+            ></div>
           </div>
-          <div
-            className="py-6"
-            dangerouslySetInnerHTML={{ __html: data?.description }}
-          ></div>
-        </div>
+        ) : (
+          <></>
+        )}
 
         {/* related products */}
-        <div>
+        <div className="space-y-2">
           <div className="border-b">
             <Button className="relative rounded-none bg-transparent p-0 pb-2 text-2xl font-semibold text-black before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-1/2 before:bg-primary hover:bg-transparent">
               Related products
             </Button>
           </div>
           {data?.related_products?.length ? (
-            <div className="grid grid-cols-1 gap-4 py-6 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
-              {data?.related_products?.map((product) => (
-                <ProductCard key={product.id} {...product} />
-              ))}
+            <div className="">
+              <ProductTable products={data?.related_products} />
             </div>
           ) : (
             <P>No related products.</P>

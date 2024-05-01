@@ -46,6 +46,7 @@ export default function SellForm({ data, handleCreate }) {
 
   const onSubmit = (data) => {
     console.log({ data });
+    return;
     handleCreate(Object.assign(data, { enquiry_type: "sell" }));
   };
 
@@ -53,7 +54,7 @@ export default function SellForm({ data, handleCreate }) {
     setValue(
       "items",
       data?.map((item) => {
-        return { _id: item.id, ...item };
+        return { _id: item.id, quantity_type: item.quantity_types[0], ...item };
       }),
     );
   }, [data]);

@@ -87,7 +87,7 @@ export default function POForm({
         <div>
           {poFile && (
             <div className="flex items-center justify-between rounded-md border p-2 text-xs">
-              <span className="truncate">{poFile}</span>
+              <span className="truncate">{poFile?.split("/").pop()}</span>
               <div className="flex items-center justify-center gap-2">
                 <Button type="button" variant="outline" size="icon">
                   <a

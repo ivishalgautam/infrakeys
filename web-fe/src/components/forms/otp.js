@@ -14,16 +14,14 @@ import http from "@/utils/http";
 import { endpoints } from "@/utils/endpoints";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const sendOtp = async () => {
   return await http().post(endpoints.otp.send);
 };
 
-const verifyOtp = async ({ otp }) => {
-  return await http().post(`${endpoints.otp.verify}/${otp}`);
-};
-
-export default function OTPForm() {
+export default function OTPForm({ phone }) {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const {
     control,
@@ -53,15 +51,26 @@ export default function OTPForm() {
     },
   });
 
-  const verifyMutation = useMutation(verifyOtp, {
-    onSuccess: (data) => {
-      toast.success(data.message);
-      router.replace("/");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
+  async function verifyOtp({ phone, otp }) {
+    setLoading(true);
+    try {
+      const response = await http().post(`${endpoints.auth.verifyOtp}`, {
+        phone,
+        otp,
+      });
+      localStorage.setItem("user", JSON.stringify(response.user_data));
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("refreshToken", response.refresh_token);
+      router.push("/");
+      toast.success("Logged in.");
+      return response;
+    } catch (error) {
+      console.log(error);
+      return toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     if (isResendDisabled) {
@@ -82,12 +91,12 @@ export default function OTPForm() {
     sendMutation.mutate();
   };
 
-  const handleVerifyOtp = (otp) => {
-    verifyMutation.mutate({ otp });
+  const handleVerifyOtp = (otp, phone) => {
+    verifyOtp({ otp, phone });
   };
 
   const onSubmit = ({ otp }) => {
-    handleVerifyOtp(otp);
+    handleVerifyOtp(otp, phone);
   };
 
   return (
@@ -122,10 +131,15 @@ export default function OTPForm() {
           <Small className={"text-center"}>Enter your one-time password.</Small>
         </div>
         <div className="space-x-2">
-          <Button>Submit</Button>
+          <Button variant="primary">
+            {loading && (
+              <span className="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white/30 border-t-white"></span>
+            )}
+            Submit
+          </Button>
           <Button
             type="button"
-            variant="secondary"
+            variant="default"
             onClick={handleSendOtp}
             disabled={isResendDisabled}
           >

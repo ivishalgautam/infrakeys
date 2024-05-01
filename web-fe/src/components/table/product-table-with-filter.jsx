@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Table,
   TableBody,
@@ -35,7 +35,7 @@ export default function ProductTableWithFilter({ products }) {
   });
   const { fields } = useFieldArray({ control, name: "products" });
   const [filters, setFilters] = useState({});
-  console.log({ products });
+  // console.log({ products, customProperties, filters });
 
   const handleCheckChange = (check, name, value) => {
     setFilters((prev) => {
@@ -49,7 +49,7 @@ export default function ProductTableWithFilter({ products }) {
     });
   };
 
-  const getFilteredProducts = () => {
+  const getFilteredProducts = useCallback(() => {
     if (Object.keys(filters).every((i) => filters[i].length === 0))
       return products;
 
@@ -73,7 +73,7 @@ export default function ProductTableWithFilter({ products }) {
 
       return true;
     });
-  };
+  }, [filters]);
 
   useEffect(() => {
     if (!(products?.length === 1 && products?.[0] === null)) {
@@ -82,7 +82,7 @@ export default function ProductTableWithFilter({ products }) {
         products?.map((product) => ({ ...product, _id: product.id })),
       );
 
-      for (const { custom_properties } of products) {
+      for (const { sub_category_name, custom_properties } of products) {
         for (const cp of custom_properties) {
           const name = String(cp.name).toLowerCase();
           setCustomProperties((prev) => ({

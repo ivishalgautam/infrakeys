@@ -62,7 +62,7 @@ export function Card({ item, ind }) {
       <div
         key={ind}
         className={cn(
-          "group flex h-full cursor-pointer flex-col gap-4 rounded-lg p-4 transition-colors hover:bg-primary hover:text-white",
+          "group flex h-full w-full cursor-pointer flex-col gap-4 rounded-lg p-4 transition-colors hover:bg-primary hover:text-white",
           {
             "sm:col-span-2 md:col-span-2 lg:col-span-1":
               ind === data.length - 1,

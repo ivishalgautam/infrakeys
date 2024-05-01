@@ -1,7 +1,6 @@
 import axios from "axios";
 import { getHeader } from "./header";
 import { endpoints } from "./endpoints";
-import { logout } from "@/components/Navbar";
 
 // Default API will be your root
 const API_ROOT = process.env.NEXT_PUBLIC_API_URL;
@@ -32,7 +31,6 @@ const http = (headerType = "json", baseURL = API_ROOT) => {
 
       if (!refreshToken) {
         // Refresh token is missing, logout the user
-        // typeof logout === "function" && logout();
         return Promise.reject(error.response.data);
       }
       // Refresh access token
@@ -57,7 +55,6 @@ const http = (headerType = "json", baseURL = API_ROOT) => {
           console.log({ refreshError });
           if (refreshError.response?.status === 401) {
             // Refresh token is expired or invalid, logout the user
-            // logout();
           } else {
             // Unable to refresh the token
             console.log("Error refreshing token:", refreshError);

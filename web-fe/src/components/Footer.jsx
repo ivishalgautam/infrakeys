@@ -9,7 +9,7 @@ import { Mail, MapPin, Phone, PhoneCall } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="divide-y-2 divide-gray-100 border-t bg-gray-100">
+    <footer className="divide-y-2 divide-gray-100 border-t bg-white">
       <div className="container space-y-4 py-10">
         <div className="flex flex-col items-center justify-center">
           <figure className="inline-block rounded-lg p-2">

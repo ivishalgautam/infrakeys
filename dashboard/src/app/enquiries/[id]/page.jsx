@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import http from "@/utils/http";
 import { useFieldArray, useForm, Controller } from "react-hook-form";
@@ -9,7 +9,9 @@ import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -22,6 +24,12 @@ import { Eye } from "lucide-react";
 import axios from "axios";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { Textarea } from "@/components/ui/textarea";
+import { useFetchUsers } from "@/hooks/useFetchUsers";
+import { MainContext } from "@/store/context";
+import Modal from "@/components/Modal";
+import POForm from "@/components/Forms/po";
+import Spinner from "@/components/Spinner";
+import ReactSelect from "react-select";
 
 const updateEnquiry = (data) => {
   return http().put(`${endpoints.enquiries.getAll}/${data.enquiry_id}`, data);
@@ -32,7 +40,7 @@ const convertToOrder = ({ id }) => {
 };
 
 const deleteOrderItem = ({ id }) => {
-  return http().delete(`${endpoints.enquiries.getAll}/order-items/${id}`);
+  return http().delete(`${endpoints.enquiries.getAll}/enquiry-items/${id}`);
 };
 
 export default function Page({ params: { id } }) {
@@ -45,14 +53,24 @@ export default function Page({ params: { id } }) {
     getValues,
     formState: { errors },
   } = useForm();
+  const [isModal, setIsModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { fields, remove } = useFieldArray({
     control,
     name: "items",
   });
+  const router = useRouter();
   const queryClient = useQueryClient();
   const [token] = useLocalStorage("token");
-
-  const router = useRouter();
+  const { user } = useContext(MainContext);
+  const { data: subAdmins, isLoading: isSubAdminsLoading } =
+    useFetchUsers("subadmin");
+  const formattedSubAdmins = isSubAdminsLoading
+    ? []
+    : subAdmins?.map(({ id, name, username }) => ({
+        value: id,
+        label: `${name} (@${username})`,
+      }));
 
   const updateMutation = useMutation(updateEnquiry, {
     onSuccess: (data) => {
@@ -99,23 +117,40 @@ export default function Page({ params: { id } }) {
 
   useEffect(() => {
     const fetchData = async (id) => {
-      const { data } = await http().get(`${endpoints.enquiries.getAll}/${id}`);
-      console.log({ data });
-      data && setValue("status", data.status);
-      data && setValue("user_id", data.user_id);
-      data && setValue("quotation_file", data.quotation_file);
-      data && setValue("po_number", data.po_number);
-      data && setValue("po_file", data.po_file);
-      data && setValue("delivery_summary", data.delivery_summary);
-      data &&
-        setValue(
-          "items",
-          data?.items?.map((item) => ({ ...item, _id: item.id }))
+      setIsLoading(true);
+      try {
+        const { data } = await http().get(
+          `${endpoints.enquiries.getAll}/${id}`
         );
+        console.log({ data });
+        data && setValue("status", data.status);
+        data && setValue("user_id", data.user_id);
+        data && setValue("quotation_file", data.quotation_file);
+        data && setValue("po_number", data.po_number);
+        data && setValue("po_file", data.po_file);
+        data && setValue("delivery_summary", data.delivery_summary);
+        data &&
+          formattedSubAdmins.length &&
+          setValue(
+            "assigned_to",
+            formattedSubAdmins.find((so) => so.value === data.assigned_to)
+          );
+        data &&
+          setValue(
+            "items",
+            data?.items?.map((item) => ({ ...item, _id: item.id }))
+          );
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchData(id);
-  }, [id]);
+  }, [id, formattedSubAdmins.length]);
+
+  if (isLoading || isSubAdminsLoading) return <Spinner />;
 
   const handleFileChange = async (event) => {
     try {
@@ -146,13 +181,13 @@ export default function Page({ params: { id } }) {
     }
   };
 
-  const deleteFile = async (filePath) => {
+  const deleteFile = async (filePath, file) => {
     try {
       const resp = await http().delete(
         `${endpoints.files.getFiles}?file_path=${filePath}`
       );
-      setValue("quotation_file", "");
-      updateMutation.mutate({ quotation_file: "", id: id });
+      setValue(file, "");
+      updateMutation.mutate({ [file]: "", enquiry_id: id });
     } catch (error) {
       console.log(error);
       toast.error("error deleting image");
@@ -163,6 +198,7 @@ export default function Page({ params: { id } }) {
     const payload = {
       status: data.status,
       user_id: data.user_id,
+      assigned_to: data.assigned_to.value,
       items: data.items,
     };
     handleUpdate(payload);
@@ -358,8 +394,25 @@ export default function Page({ params: { id } }) {
           ))}
         </div>
 
-        {/* enquiry status */}
-        <div className="grid grid-cols-2 my-6 gap-2">
+        <div className="grid grid-cols-2 my-6 gap-2 border-t-2 pt-4 border-primary">
+          {/* Assign Enquiry */}
+          {user?.role === "admin" && (
+            <div>
+              <Label>Assign Enquiry to</Label>
+              <Controller
+                control={control}
+                name={`assigned_to`}
+                render={({ field: { onChange, value } }) => (
+                  <ReactSelect
+                    options={formattedSubAdmins}
+                    defaultValue={value}
+                    onChange={onChange}
+                  />
+                )}
+              />
+            </div>
+          )}
+
           <div>
             <Label>Enquiry status</Label>
             <Controller
@@ -392,6 +445,7 @@ export default function Page({ params: { id } }) {
               </Small>
             )}
           </div>
+
           <div>
             <Label>Quotation</Label>
             {!watch("quotation_file") ? (
@@ -414,7 +468,9 @@ export default function Page({ params: { id } }) {
                     type="button"
                     variant="destructive"
                     size="icon"
-                    onClick={() => deleteFile(getValues("quotation_file"))}
+                    onClick={() =>
+                      deleteFile(getValues("quotation_file"), "quotation_file")
+                    }
                   >
                     <MdDelete size={20} />
                   </Button>
@@ -422,10 +478,12 @@ export default function Page({ params: { id } }) {
               </div>
             )}
           </div>
+
           <div className="col-span-4">
             <Label>Address</Label>
             <Textarea {...register(`delivery_summary`)} disabled />
           </div>
+
           <div>
             <Label>PO Number</Label>
             <Input
@@ -434,29 +492,40 @@ export default function Page({ params: { id } }) {
               disabled
             />
           </div>
+
           <div>
             <Label>PO File</Label>
-            <div className="flex items-center justify-between rounded-md border px-2 text-xs">
-              {!getValues("po_file") ? (
-                <Input className="w-full" disabled placeholder="Not found!" />
-              ) : (
-                <>
-                  <span className="truncate">{getValues("po_file")}</span>
-                  <div className="flex items-center justify-center gap-2">
-                    <Button type="button" variant="outline" size="icon">
-                      <a
-                        target="_vishal"
-                        href={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${getValues("po_file")}`}
-                      >
-                        <Eye />
-                      </a>
-                    </Button>
-                    <Button type="button" variant="destructive" size="icon">
-                      <MdDelete size={20} />
-                    </Button>
-                  </div>
-                </>
-              )}
+            <div className="flex items-center justify-between rounded-md px-2 border text-xs space-x-2">
+              <span className="truncate">
+                {getValues("po_file")
+                  ? getValues("po_file")?.split("/").pop()
+                  : "Not found!"}
+              </span>
+              <div className="flex items-center justify-center gap-2">
+                {watch("po_file") && (
+                  <Button type="button" variant="outline" size="icon">
+                    <a
+                      target="_vishal"
+                      href={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${getValues("po_file")}`}
+                    >
+                      <Eye />
+                    </a>
+                  </Button>
+                )}
+                {watch("po_file") && (
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="icon"
+                    onClick={() => deleteFile(getValues("po_file"), "po_file")}
+                  >
+                    <MdDelete size={20} />
+                  </Button>
+                )}
+                <Button type="button" onClick={() => setIsModal(true)}>
+                  Upload po file
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -478,6 +547,16 @@ export default function Page({ params: { id } }) {
           </div>
         )}
       </form>
+
+      <Modal isOpen={isModal} onClose={() => setIsModal(false)}>
+        <POForm
+          id={id}
+          poFile={watch("po_file")}
+          poNumber={watch("po_number")}
+          updateMutation={updateMutation}
+          closeModal={() => setIsModal(false)}
+        />
+      </Modal>
     </div>
   );
 }
