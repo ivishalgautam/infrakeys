@@ -80,7 +80,7 @@ export default function SignUpForm({ setIsOtpSent, setPhone }) {
               {loading && (
                 <span className="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white/30 border-t-white"></span>
               )}
-              LOGIN
+              Sign Up
             </Button>
           </div>
 
