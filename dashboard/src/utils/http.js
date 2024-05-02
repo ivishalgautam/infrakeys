@@ -5,7 +5,6 @@ import { logout } from "@/components/Layout";
 
 // Default API will be your root
 const API_ROOT = process.env.NEXT_PUBLIC_API_URL;
-console.log({ API_ROOT });
 const TIMEOUT = 20000;
 
 const http = (headerType = "json", baseURL = API_ROOT) => {
@@ -27,6 +26,7 @@ const http = (headerType = "json", baseURL = API_ROOT) => {
    * status 401 means either accessToken is expired or invalid
    * dispatch logout action accordingly **/
   function handleError(error) {
+    console.log({ error });
     if (error.response?.status === 401) {
       // Access token is expired or invalid, refresh the token
       const refreshToken = localStorage.getItem("refreshToken");

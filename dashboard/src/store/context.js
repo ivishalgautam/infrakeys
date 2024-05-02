@@ -3,6 +3,7 @@ import { useEffect, createContext, useState } from "react";
 import http from "@/utils/http";
 import { endpoints } from "@/utils/endpoints";
 import { toast } from "react-hot-toast";
+import Spinner from "@/components/Spinner";
 
 export const MainContext = createContext(null);
 
@@ -24,6 +25,8 @@ function Context({ children }) {
     }
     fetchData();
   }, []);
+
+  if (isUserLoading) return <Spinner />;
 
   return (
     <MainContext.Provider

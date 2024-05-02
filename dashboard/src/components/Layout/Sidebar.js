@@ -4,6 +4,9 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { AllRoutes } from "@/data/sidebarData";
 import { MainContext } from "@/store/context";
+import { Button } from "../ui/button";
+import { LogOut } from "lucide-react";
+import { logout } from ".";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -56,6 +59,19 @@ export default function Sidebar() {
             </Link>
           </li>
         ))}
+
+        <li>
+          <Button
+            variant="primary"
+            className="w-full space-x-4"
+            onClick={() => logout()}
+          >
+            <span>Logout</span>
+            <span>
+              <LogOut size={15} />
+            </span>
+          </Button>
+        </li>
       </ul>
     </div>
   );
