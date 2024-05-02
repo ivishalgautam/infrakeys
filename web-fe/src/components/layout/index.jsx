@@ -28,10 +28,6 @@ export default function Layout({ children }) {
       (route) => route.link === pathname.replace("[slug]", slug),
     );
 
-    // if (user && currentRoute?.roles?.length && !user?.is_verified) {
-    //   return router.push("/auth/verify");
-    // }
-
     // If the current route is not found in the array or the user's role is not allowed for this route
     if (
       currentRoute &&

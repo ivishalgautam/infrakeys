@@ -21,11 +21,12 @@ import axios from "axios";
 import { endpoints } from "@/utils/endpoints";
 import { toast } from "sonner";
 import { MainContext } from "@/store/context";
+import { Textarea } from "../ui/textarea";
 
-const createEnquiry = async (data) => {
+const createQuery = async (data) => {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
   const { data: response } = await axios.post(
-    `${baseUrl}${endpoints.enquiries.getAll}`,
+    `${baseUrl}${endpoints.queries.getAll}`,
     data,
   );
   return response;
@@ -45,20 +46,19 @@ export default function QueryForm({ type, enquirytype = "buy", productId }) {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      product_id: "",
-      quantity: "",
-      quantity_type: "",
       company: "",
       company_gst: "",
       pincode: "",
       email: "",
       phone: "",
-      enquiry_type: enquirytype,
+      name: "",
+      message: "",
+      type: enquirytype,
     },
   });
   const [quantityTypes, setQuantityTypes] = useState([]);
 
-  const createMutation = useMutation(createEnquiry, {
+  const createMutation = useMutation(createQuery, {
     onSuccess: (data) => {
       console.log({ data });
       toast.success("Enquiry sent");
@@ -72,15 +72,13 @@ export default function QueryForm({ type, enquirytype = "buy", productId }) {
   const onSubmit = (data) => {
     console.log({ data });
     const payload = {
-      product_id: data?.product_id,
-      quantity: data?.quantity,
-      quantity_type: data?.quantity_type,
       company: data?.company,
       company_gst: data?.company_gst,
       pincode: data?.pincode,
       email: data?.email,
       phone: data?.phone,
-      enquiry_type: data?.enquiry_type,
+      type: data?.type,
+      message: data?.message,
     };
 
     handleCreate(payload);
@@ -108,6 +106,8 @@ export default function QueryForm({ type, enquirytype = "buy", productId }) {
   useEffect(() => {
     if (user) {
       setValue("phone", user.phone);
+      setValue("email", user.email);
+      setValue("name", user.name);
     }
   }, [user]);
 
@@ -124,10 +124,7 @@ export default function QueryForm({ type, enquirytype = "buy", productId }) {
       })}
     >
       <div className="flex flex-col items-center justify-start gap-4 text-white md:flex-row">
-        <H3>Tell Us Your Requirement</H3>
-        <p className={cn("m-0 p-0", { hidden: type === "vertical" })}>
-          Best Rates | Working Capital | Delivery Anywhere
-        </p>
+        <H3>Tell Us Your Query</H3>
       </div>
       <div
         className={cn("rounded-md bg-white p-4", {
@@ -139,187 +136,123 @@ export default function QueryForm({ type, enquirytype = "buy", productId }) {
             <RadioButtons control={control} watch={watch} />
           </div>
 
-          <div
-            className={cn("grid grid-cols-1 gap-2", {
-              "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7":
-                type === "horizontal",
-            })}
-          >
-            {/* product */}
-            <div className="relative">
-              <Label>Product</Label>
-              <Controller
-                control={control}
-                name="product_id"
-                rules={{ required: "required*" }}
-                render={({ field }) => (
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={products && productId ? productId : ""}
-                  >
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="Select product" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {products?.map(({ id: value, title: label }) => (
-                        <SelectItem value={value} key={value}>
-                          {label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-              {errors.product_id && (
-                <span className="absolute left-0 top-full text-sm text-red-600">
-                  {errors.product_id.message}
-                </span>
-              )}
-            </div>
-
-            <div className="relative">
-              {/* quantity */}
-              <div className="relative">
-                <Label>Quantity</Label>
-                <Input
-                  {...register("quantity", {
-                    required: "required*",
-                    valueAsNumber: true,
-                  })}
-                  placeholder="Quantity"
-                />
-                {errors.quantity && (
-                  <span className="absolute left-0 top-full text-sm text-red-600">
-                    {errors.quantity.message}
-                  </span>
-                )}
-              </div>
-
-              {/* quantity type*/}
-              {watch("product_id") && quantityTypes.length ? (
-                <div className="absolute bottom-0 right-0 z-10">
-                  <Controller
-                    control={control}
-                    name="quantity_type"
-                    rules={{ required: "required*" }}
-                    render={({ field }) => (
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <SelectTrigger className="bg-black uppercase text-white">
-                          <SelectValue placeholder="Select quantity type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {quantityTypes?.map((qt) => (
-                            <SelectItem
-                              value={qt}
-                              key={qt}
-                              className="uppercase"
-                            >
-                              {qt}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    )}
-                  />
-                </div>
-              ) : (
-                <></>
-              )}
-            </div>
-
-            {/* company */}
-            <div className="relative">
-              <Label>Company</Label>
-              <Input
-                {...register("company", { required: "required*" })}
-                placeholder="Enter company name"
-              />
-              {errors.company && (
-                <span className="absolute left-0 top-full text-sm text-red-600">
-                  {errors.company.message}
-                </span>
-              )}
-            </div>
-
-            {/* company gst or pincode */}
-            {watch("enquiry_type") === "sell" ? (
-              <div className="relative">
-                <Label>Company GST</Label>
-                <Input
-                  {...register("company_gst", {
-                    required: "required*",
-                  })}
-                  placeholder="Company GST"
-                />
-                {errors.company_gst && (
-                  <span className="absolute left-0 top-full text-sm text-red-600">
-                    {errors.company_gst.message}
-                  </span>
-                )}
-              </div>
-            ) : (
-              <div className="relative">
-                <Label>Pincode</Label>
-                <Input
-                  type="number"
-                  {...register("pincode", {
-                    required: "required*",
-                    valueAsNumber: true,
-                  })}
-                  placeholder="Pincode"
-                />
-                {errors.pincode && (
-                  <span className="absolute left-0 top-full text-sm text-red-600">
-                    {errors.pincode.message}
-                  </span>
-                )}
-              </div>
-            )}
-
-            {/* Email */}
-            <div className="relative">
-              <Label>Email</Label>
-              <Input
-                {...register("email", {
-                  required: "required*",
-                })}
-                placeholder="Email"
-              />
-              {errors.email && (
-                <span className="absolute left-0 top-full text-sm text-red-600">
-                  {errors.email.message}
-                </span>
-              )}
-            </div>
-
-            {/* phone */}
-            <div className="relative">
-              <Label>Phone</Label>
-              <Input
-                {...register("phone", {
-                  required: "required*",
-                })}
-                disabled={user}
-                placeholder="Phone"
-              />
-              {errors.phone && (
-                <span className="absolute left-0 top-full text-sm text-red-600">
-                  {errors.phone.message}
-                </span>
-              )}
-            </div>
-
-            {/* submit */}
+          <div className="space-y-4">
             <div
-              className={cn({
-                "flex items-end sm:col-span-2 md:col-start-3 md:col-end-4 lg:col-span-1":
+              className={cn("grid grid-cols-1 gap-2", {
+                "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5":
                   type === "horizontal",
               })}
             >
-              <Button className="w-full">Submit</Button>
+              {/* name */}
+              <div className="relative">
+                <Label>Name</Label>
+                <Input
+                  {...register("name", { required: "required*" })}
+                  placeholder="Enter name"
+                  disabled={user}
+                />
+                {errors.name && (
+                  <span className="absolute left-0 top-full text-sm text-red-600">
+                    {errors.name.message}
+                  </span>
+                )}
+              </div>
+
+              {/* company */}
+              <div className="relative">
+                <Label>Company</Label>
+                <Input
+                  {...register("company", { required: "required*" })}
+                  placeholder="Enter company name"
+                />
+                {errors.company && (
+                  <span className="absolute left-0 top-full text-sm text-red-600">
+                    {errors.company.message}
+                  </span>
+                )}
+              </div>
+
+              {/* company gst or pincode */}
+              {watch("type") === "sell" ? (
+                <div className="relative">
+                  <Label>Company GST</Label>
+                  <Input
+                    {...register("company_gst", {
+                      required: "required*",
+                    })}
+                    placeholder="Company GST"
+                  />
+                  {errors.company_gst && (
+                    <span className="absolute left-0 top-full text-sm text-red-600">
+                      {errors.company_gst.message}
+                    </span>
+                  )}
+                </div>
+              ) : (
+                <div className="relative">
+                  <Label>Pincode</Label>
+                  <Input
+                    type="number"
+                    {...register("pincode", {
+                      required: "required*",
+                      valueAsNumber: true,
+                    })}
+                    placeholder="Pincode"
+                  />
+                  {errors.pincode && (
+                    <span className="absolute left-0 top-full text-sm text-red-600">
+                      {errors.pincode.message}
+                    </span>
+                  )}
+                </div>
+              )}
+
+              {/* Email */}
+              <div className="relative">
+                <Label>Email</Label>
+                <Input
+                  {...register("email", {
+                    required: "required*",
+                  })}
+                  placeholder="Email"
+                  disabled={watch("email") && user}
+                />
+                {errors.email && (
+                  <span className="absolute left-0 top-full text-sm text-red-600">
+                    {errors.email.message}
+                  </span>
+                )}
+              </div>
+
+              {/* phone */}
+              <div className="relative">
+                <Label>Phone</Label>
+                <Input
+                  {...register("phone", {
+                    required: "required*",
+                  })}
+                  disabled={user}
+                  placeholder="Phone"
+                />
+                {errors.phone && (
+                  <span className="absolute left-0 top-full text-sm text-red-600">
+                    {errors.phone.message}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <Label>Query</Label>
+              <Textarea
+                {...register("message", { required: "required*" })}
+                placeholder="Enter your query"
+              />
+            </div>
+
+            {/* submit */}
+            <div className={"text-end"}>
+              <Button variant="primary">Submit</Button>
             </div>
           </div>
         </form>
@@ -332,7 +265,7 @@ export function RadioButtons({ control, watch }) {
   return (
     <Controller
       control={control}
-      name="enquiry_type"
+      name="type"
       render={({ field }) => (
         <RadioGroup
           defaultValue={field.value}
@@ -345,8 +278,7 @@ export function RadioButtons({ control, watch }) {
               className={cn(
                 "flex items-center space-x-2 rounded-xl border p-2 transition-colors",
                 {
-                  "border-primary/50 bg-primary/20":
-                    watch("enquiry_type") === type,
+                  "border-primary/50 bg-primary/20": watch("type") === type,
                 },
               )}
             >
