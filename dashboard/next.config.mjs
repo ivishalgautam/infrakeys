@@ -10,7 +10,7 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "api.infrakeysapp.in",
-        port: "3001",
+        port: "",
       },
     ],
   },
