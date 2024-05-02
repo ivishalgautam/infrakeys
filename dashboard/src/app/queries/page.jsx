@@ -14,11 +14,12 @@ import { isObject } from "@/utils/object";
 import { toast } from "sonner";
 
 async function deleteQuery({ id }) {
-  return http().delete(`${endpoints.queries.getAll}/${id}`);
+  return await http().delete(`${endpoints.queries.getAll}/${id}`);
 }
 
 async function fetchQueries() {
-  return http().get(endpoints.queries.getAll);
+  const { data } = await http().get(endpoints.queries.getAll);
+  return data;
 }
 
 export default function Queries() {
@@ -71,7 +72,7 @@ export default function Queries() {
         <Title text={"Queries"} />
       </div>
       <div>
-        <DataTable columns={columns(openModal, setQueryId)} data={data?.data} />
+        <DataTable columns={columns(openModal, setQueryId)} data={data} />
       </div>
 
       {isModal && (

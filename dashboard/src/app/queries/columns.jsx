@@ -17,6 +17,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import moment from "moment";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export const columns = (openModal, setQueryId) => [
   {
@@ -58,6 +60,34 @@ export const columns = (openModal, setQueryId) => [
           Email
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "type",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Query For
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const type = row.getValue("type");
+      return (
+        <Badge
+          className={cn("uppercase", {
+            "bg-rose-100 text-rose-500 border-rose-200": type === "sell",
+            "bg-emerald-100 text-emerald-500 border-emerald-200":
+              type === "buy",
+          })}
+        >
+          {type}
+        </Badge>
       );
     },
   },
