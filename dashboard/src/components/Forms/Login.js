@@ -10,6 +10,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import { isObject } from "@/utils/object";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import axios from "axios";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -25,8 +26,12 @@ export default function LoginForm() {
 
   async function loginUser(credentials) {
     setLoading(true);
+    const baseUrl = process.env.NEXT_PUBLIC_IMAGE_DOMAIN;
     try {
-      const response = await http().post(endpoints.auth.login, credentials);
+      const { data: response } = await axios.post(
+        `${baseUrl}/v1${endpoints.auth.login}`,
+        credentials
+      );
       localStorage.setItem("user", JSON.stringify(response.user_data));
       localStorage.setItem("token", response.token);
       localStorage.setItem("refreshToken", response.refresh_token);
