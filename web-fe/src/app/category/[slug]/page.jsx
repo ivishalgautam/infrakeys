@@ -1,6 +1,7 @@
 import CategorySlider from "@/components/category-slider";
 import FAQAccordion from "@/components/faq-accordion";
 import ProductTable from "@/components/table/product-table";
+import ProductTableWithFilter from "@/components/table/product-table-with-filter";
 import TellUsRequirement from "@/components/tell-us-requirement";
 import { H2, H4 } from "@/components/ui/typography";
 import { endpoints } from "@/utils/endpoints";
@@ -81,7 +82,7 @@ export default async function CategoryPage({ params: { slug } }) {
             <H4>Products</H4>
           </div>
           <div>
-            <ProductTable products={products} />
+            <ProductTableWithFilter products={products} />
           </div>
         </div>
 

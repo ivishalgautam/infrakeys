@@ -24,9 +24,9 @@ export default function Page({ params: { slug } }) {
       {slug === "details" && (
         <div className="rounded-lg border p-4">
           <H4>details</H4>
+          <ProfileForm />
         </div>
       )}
-      {slug === "profile" && <ProfileForm />}
     </ProfileLayout>
   );
 }

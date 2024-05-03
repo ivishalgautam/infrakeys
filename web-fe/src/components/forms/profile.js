@@ -1,7 +1,7 @@
 "use client";
 import { MainContext } from "@/store/context";
-import { useContext, useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { H4 } from "../ui/typography";
 import { Label } from "../ui/label";
@@ -10,8 +10,6 @@ import { useMutation } from "@tanstack/react-query";
 import http from "@/utils/http";
 import { endpoints } from "@/utils/endpoints";
 import { toast } from "sonner";
-import { DatePicker } from "../ui/date-picker";
-import moment from "moment";
 
 const update = async (data) => {
   return await http().put(`${endpoints.users.getAll}/${data.id}`, data);
@@ -27,11 +25,9 @@ export default function ProfileForm() {
   } = useForm({
     defaultValues: {
       id: user?.id,
-      first_name: user?.first_name,
-      last_name: user?.last_name,
-      birth_date: user?.birth_date,
+      name: user?.name,
       email: user?.email,
-      mobile_number: user?.mobile_number,
+      phone: user?.phone,
     },
   });
 
@@ -47,11 +43,9 @@ export default function ProfileForm() {
   const onSubmit = (data) => {
     const payload = {
       id: data.id,
-      first_name: data.first_name,
-      last_name: data.last_name,
-      birth_date: data.birth_date,
+      name: data.name,
       email: data.email,
-      mobile_number: data.mobile_number,
+      phone: data.phone,
     };
 
     handleUpdate(payload);
@@ -68,26 +62,14 @@ export default function ProfileForm() {
 
         <div className="space-y-2">
           <div>
-            <Label>Firstname</Label>
+            <Label>Name</Label>
             <Input
               type="text"
-              {...register("first_name", { required: "required" })}
-              placeholder="Firstname"
+              {...register("name", { required: "required" })}
+              placeholder="Enter your name"
             />
-            {errors.first_name && (
-              <span className="text-red-600">{errors.first_name.message}</span>
-            )}
-          </div>
-
-          <div>
-            <Label>Lastname</Label>
-            <Input
-              type="text"
-              {...register("last_name", { required: "required" })}
-              placeholder="Lastname"
-            />
-            {errors.last_name && (
-              <span className="text-red-600">{errors.last_name.message}</span>
+            {errors.name && (
+              <span className="text-red-600">{errors.name.message}</span>
             )}
           </div>
 
@@ -105,19 +87,17 @@ export default function ProfileForm() {
           </div>
 
           <div>
-            <Label>Mobile number</Label>
+            <Label>Phone</Label>
             <Input
               type="number"
-              {...register("mobile_number", {
+              {...register("phone", {
                 required: "required",
                 valueAsNumber: true,
               })}
-              placeholder="Mobile number"
+              placeholder="Enter phone number"
             />
-            {errors.mobile_number && (
-              <span className="text-red-600">
-                {errors.mobile_number.message}
-              </span>
+            {errors.phone && (
+              <span className="text-red-600">{errors.phone.message}</span>
             )}
           </div>
         </div>
