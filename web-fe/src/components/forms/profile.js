@@ -21,6 +21,7 @@ export default function ProfileForm() {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -79,7 +80,7 @@ export default function ProfileForm() {
               type="email"
               {...register("email", { required: "required" })}
               placeholder="Email"
-              disabled
+              disabled={watch("email") && user}
             />
             {errors.email && (
               <span className="text-red-600">{errors.email.message}</span>
