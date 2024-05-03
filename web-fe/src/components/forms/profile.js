@@ -80,7 +80,6 @@ export default function ProfileForm() {
               type="email"
               {...register("email", { required: "required" })}
               placeholder="Email"
-              disabled={watch("email") && user}
             />
             {errors.email && (
               <span className="text-red-600">{errors.email.message}</span>
