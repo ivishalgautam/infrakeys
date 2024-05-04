@@ -33,9 +33,7 @@ export default function ProductTableWithCategoriesAndFilter({ products }) {
   const { watch, control, getValues, setValue } = useForm({
     defaultValues: { products: [] },
   });
-  const { fields } = useFieldArray({ control, name: "products" });
   const [filters, setFilters] = useState({});
-  // console.log({ products, customProperties, filters });
 
   const handleCheckChange = (check, name, value) => {
     setFilters((prev) => {
@@ -264,6 +262,7 @@ export default function ProductTableWithCategoriesAndFilter({ products }) {
                       <AddToCart
                         id={product.id}
                         type={watch(`products.${key}.item_type`)}
+                        filters={JSON.stringify(filters)}
                       />
                       <Button
                         size="icon"

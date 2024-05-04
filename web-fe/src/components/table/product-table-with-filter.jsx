@@ -82,7 +82,7 @@ export default function ProductTableWithFilter({ products }) {
         products?.map((product) => ({ ...product, _id: product.id })),
       );
 
-      for (const { sub_category_name, custom_properties } of products) {
+      for (const { custom_properties } of products) {
         for (const cp of custom_properties) {
           const name = String(cp.name).toLowerCase();
           setCustomProperties((prev) => ({
@@ -243,6 +243,7 @@ export default function ProductTableWithFilter({ products }) {
                       <AddToCart
                         id={product.id}
                         type={watch(`products.${key}.item_type`)}
+                        filters={filters}
                       />
                       <Button
                         size="icon"

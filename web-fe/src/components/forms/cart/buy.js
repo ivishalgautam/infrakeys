@@ -13,6 +13,7 @@ const deleteCartItem = ({ id }) => {
 };
 
 export default function BuyForm({ data, handleCreate }) {
+  console.log({ data });
   const queryClient = useQueryClient();
 
   const {
@@ -45,6 +46,7 @@ export default function BuyForm({ data, handleCreate }) {
   };
 
   const onSubmit = (data) => {
+    console.log({ data });
     handleCreate(Object.assign(data, { enquiry_type: "buy" }));
   };
 
