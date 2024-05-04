@@ -91,23 +91,17 @@ export function ProductForm({
     { value: "pending", label: "Pending" },
   ];
 
-  const formattedSubCategories = useMemo(
-    () =>
-      subCategories?.map(({ id: value, name: label }) => ({
-        value,
-        label,
-      })),
-    [isSubCatLoading]
+  const formattedSubCategories = subCategories?.map(
+    ({ id: value, name: label }) => ({
+      value,
+      label,
+    })
   );
 
-  const formattedProducts = useMemo(
-    () =>
-      products?.map(({ id: value, title: label }) => ({
-        value,
-        label,
-      })),
-    [isProductsLoading, productId]
-  );
+  const formattedProducts = products?.map(({ id: value, title: label }) => ({
+    value,
+    label,
+  }));
 
   const onSubmit = (data) => {
     if (type === "delete") {
@@ -117,7 +111,7 @@ export function ProductForm({
     const payload = {
       title: data.name,
       description: text,
-      custom_description: data.descriptions,
+      custom_description: data?.custom_description,
       custom_properties: data.items,
       tags: tags,
       quantity_types: quantityTypes,
@@ -193,14 +187,15 @@ export function ProductForm({
       }
     };
 
-    if (
-      formattedSubCategories?.length &&
-      productId &&
-      (type === "edit" || type === "view")
-    ) {
+    if (productId && (type === "edit" || type === "view")) {
       fetchData();
     }
-  }, [productId, type, formattedProducts?.length]);
+  }, [
+    productId,
+    type,
+    formattedProducts?.length,
+    formattedSubCategories?.length,
+  ]);
 
   const addTag = () => {
     if (getValues("tag") === "") {
