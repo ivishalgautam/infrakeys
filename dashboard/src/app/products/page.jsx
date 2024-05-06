@@ -10,7 +10,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "@/utils/http";
 import { endpoints } from "../../utils/endpoints.js";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 async function deleteProduct({ id }) {
   return http().delete(`${endpoints.products.getAll}/${id}`);
@@ -22,8 +22,10 @@ const fetchProducts = async (page = 1, limit = 10) => {
   );
 };
 
-export default function Products({ searchParams: { page, limit } }) {
-  console.log({ page, limit });
+export default function Products() {
+  const searchParams = useSearchParams();
+  const page = searchParams.get("page");
+  const limit = searchParams.get("limit");
   const queryClient = useQueryClient();
   const { data, isLoading, isError, error } = useQuery({
     queryFn: () => fetchProducts(page, limit),
@@ -31,7 +33,7 @@ export default function Products({ searchParams: { page, limit } }) {
   });
   const router = useRouter();
 
-  console.log({ data });
+  console.log({ paginatedproducts: data, searchParams });
 
   const deleteMutation = useMutation(deleteProduct, {
     onSuccess: () => {
