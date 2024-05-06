@@ -19,7 +19,7 @@ import {
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
-export const columns = (handleDelete) => [
+export const columns = (handleDelete, handleNavigate) => [
   {
     accessorKey: "pictures",
     header: ({ column }) => {
@@ -98,12 +98,16 @@ export const columns = (handleDelete) => [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>
-              <Link href={`/categories/view/${id}`}>View</Link>
+            <DropdownMenuItem
+              onClick={() => handleNavigate(`/categories/view/${id}`)}
+            >
+              View
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Link href={`/categories/edit/${id}`}>Edit</Link>
+            <DropdownMenuItem
+              onClick={() => handleNavigate(`/categories/edit/${id}`)}
+            >
+              Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => handleDelete(id)}>

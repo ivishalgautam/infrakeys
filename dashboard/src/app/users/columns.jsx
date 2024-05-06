@@ -26,7 +26,8 @@ export const columns = (
   setType,
   openModal,
   setCustomerId,
-  handleCustomerStatus
+  handleCustomerStatus,
+  handleNavigate
 ) => [
   {
     accessorKey: "name",
@@ -123,12 +124,16 @@ export const columns = (
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>
-              <Link href={`/customers/${id}/view`}>View</Link>
+            <DropdownMenuItem
+              onClick={() => handleNavigate(`/users/${id}/view`)}
+            >
+              View
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Link href={`/customers/${id}/edit`}>Edit</Link>
+            <DropdownMenuItem
+              onClick={() => handleNavigate(`/users/${id}/edit`)}
+            >
+              Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem

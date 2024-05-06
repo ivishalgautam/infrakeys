@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { isObject } from "@/utils/object";
 import { CustomerForm } from "@/components/Forms/Customer";
 import { useFetchUsers } from "@/hooks/useFetchUsers";
+import { useRouter } from "next/navigation";
 
 async function deleteUser(data) {
   return http().delete(`${endpoints.users.getAll}/${data.id}`);
@@ -24,6 +25,8 @@ export default function Customers() {
   const [isModal, setIsModal] = useState(false);
   const [customerId, setCustomerId] = useState(null);
   const queryClient = useQueryClient();
+  const router = useRouter();
+
   const { data, isLoading, isError, error } = useFetchUsers();
   function openModal() {
     setIsModal(true);
@@ -40,16 +43,16 @@ export default function Customers() {
       closeModal();
     },
     onError: (error) => {
-      if (isObject(error)) {
-        toast.error(error.message);
-      } else {
-        toast.error(error);
-      }
+      toast.error(error.message ?? "error");
     },
   });
 
   const handleDelete = async (data) => {
     deleteMutation.mutate(data);
+  };
+
+  const handleNavigate = (href) => {
+    router.push(href);
   };
 
   async function handleCustomerStatus(customerId, status) {
@@ -88,7 +91,8 @@ export default function Customers() {
             setType,
             openModal,
             setCustomerId,
-            handleCustomerStatus
+            handleCustomerStatus,
+            handleNavigate
           )}
           data={data}
         />

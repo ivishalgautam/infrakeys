@@ -166,27 +166,6 @@ export const columns = (setEnquiryId, setType, handleDelete, openModal) => [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => {
-                setType("edit");
-                setEnquiryId(id);
-                openModal();
-              }}
-              className="cursor-pointer"
-            >
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => {
-                setType("view");
-                setEnquiryId(id);
-                openModal();
-              }}
-              className="cursor-pointer"
-            >
-              View
-            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => handleDelete({ id })}>
               Delete

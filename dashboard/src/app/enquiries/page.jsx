@@ -77,6 +77,10 @@ export default function Products({ searchParams }) {
     router.push(`/enquiries?${urlParams.toString()}`);
   };
 
+  const handleNavigate = (href) => {
+    router.push(href);
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -93,7 +97,13 @@ export default function Products({ searchParams }) {
 
       <div>
         <DataTable
-          columns={columns(setEnquiryId, setType, handleDelete, openModal)}
+          columns={columns(
+            setEnquiryId,
+            setType,
+            handleDelete,
+            openModal,
+            handleNavigate
+          )}
           data={data}
           searchParams={searchParams}
           handleSearch={handleSearch}

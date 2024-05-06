@@ -116,12 +116,12 @@ export const AllRoutes = [
     icon: Image,
     roles: [ROLES.ADMIN],
   },
-  {
-    label: "Industries",
-    link: "/industries",
-    icon: Factory,
-    roles: [ROLES.ADMIN],
-  },
+  // {
+  //   label: "Industries",
+  //   link: "/industries",
+  //   icon: Factory,
+  //   roles: [ROLES.ADMIN],
+  // },
   {
     label: "Users",
     link: "/users",

@@ -13,6 +13,7 @@ import Spinner from "@/components/Spinner";
 import { isObject } from "@/utils/object";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 async function deleteSubCategory(data) {
   return http().delete(`${endpoints.sub_categories.getAll}/${data.id}`);
@@ -26,6 +27,7 @@ async function fetchSubCategories() {
 export default function Categories() {
   const [categoryId, setCategoryId] = useState(null);
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const { data, isLoading, isError, error } = useQuery({
     queryFn: fetchSubCategories,
@@ -51,6 +53,10 @@ export default function Categories() {
     deleteMutation.mutate({ id: id });
   };
 
+  const handleNavigate = (href) => {
+    router.push(href);
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -74,7 +80,7 @@ export default function Categories() {
       </div>
       <div>
         <DataTable
-          columns={columns(handleDelete)}
+          columns={columns(handleDelete, handleNavigate)}
           data={data?.map((subCategory) => subCategory)}
         />
       </div>

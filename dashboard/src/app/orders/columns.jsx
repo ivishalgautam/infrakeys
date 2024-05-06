@@ -16,7 +16,7 @@ import moment from "moment";
 import { cn } from "@/lib/utils";
 import { Small } from "@/components/ui/typography";
 
-export const columns = (handleDelete) => [
+export const columns = (handleDelete, handleNavigate) => [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -98,8 +98,8 @@ export const columns = (handleDelete) => [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>
-              <Link href={`/orders/${id}`}>View</Link>
+            <DropdownMenuItem onClick={() => handleNavigate(`/orders/${id}`)}>
+              View
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => handleDelete({ id })}>

@@ -10,6 +10,7 @@ import http from "@/utils/http";
 import { endpoints } from "../../utils/endpoints.js";
 import { toast } from "sonner";
 import { isObject } from "@/utils/object";
+import { useRouter } from "next/navigation";
 
 async function deleteOrder({ id }) {
   return http().delete(`${endpoints.orders.getAll}/${id}`);
@@ -21,6 +22,8 @@ async function fetchOrders() {
 
 export default function Products() {
   const queryClient = useQueryClient();
+  const router = useRouter();
+
   const { data, isLoading, isError, error } = useQuery({
     queryFn: fetchOrders,
     queryKey: ["orders"],
@@ -44,6 +47,10 @@ export default function Products() {
     deleteMutation.mutate({ id });
   };
 
+  const handleNavigate = (href) => {
+    router.push(href);
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -62,7 +69,10 @@ export default function Products() {
       </div>
 
       <div>
-        <DataTable columns={columns(handleDelete)} data={data?.data} />
+        <DataTable
+          columns={columns(handleDelete, handleNavigate)}
+          data={data?.data}
+        />
       </div>
     </div>
   );

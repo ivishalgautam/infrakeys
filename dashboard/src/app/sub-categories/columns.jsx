@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 
-export const columns = (handleDelete) => [
+export const columns = (handleDelete, handleNavigate) => [
   {
     accessorKey: "pictures",
     header: ({ column }) => {
@@ -105,12 +105,16 @@ export const columns = (handleDelete) => [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>
-              <Link href={`/sub-categories/view/${id}`}>View</Link>
+            <DropdownMenuItem
+              onClick={() => handleNavigate(`/sub-categories/view/${id}`)}
+            >
+              View
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Link href={`/sub-categories/edit/${id}`}>Edit</Link>
+            <DropdownMenuItem
+              onClick={() => handleNavigate(`/sub-categories/edit/${id}`)}
+            >
+              Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem

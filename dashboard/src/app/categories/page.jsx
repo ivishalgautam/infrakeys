@@ -13,6 +13,7 @@ import Spinner from "@/components/Spinner";
 import { isObject } from "@/utils/object";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 async function deleteCategory(data) {
   return http().delete(`${endpoints.categories.getAll}/${data.id}`);
@@ -25,6 +26,7 @@ async function fetchCategories() {
 
 export default function Categories() {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   function openModal() {
     setIsModal(true);
@@ -57,6 +59,10 @@ export default function Categories() {
     deleteMutation.mutate({ id: id });
   };
 
+  const handleNavigate = (href) => {
+    router.push(href);
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -77,7 +83,7 @@ export default function Categories() {
       </div>
       <div>
         <DataTable
-          columns={columns(handleDelete)}
+          columns={columns(handleDelete, handleNavigate)}
           data={data?.map((category) => category)}
         />
       </div>
