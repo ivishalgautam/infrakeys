@@ -24,8 +24,10 @@ const fetchProducts = async (page = 1, limit = 10) => {
 
 export default function Products() {
   const searchParams = useSearchParams();
-  const page = searchParams.get("page");
-  const limit = searchParams.get("limit");
+  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
+  const limit = searchParams.get("limit")
+    ? Number(searchParams.get("limit"))
+    : 10;
   const queryClient = useQueryClient();
   const { data, isLoading, isError, error } = useQuery({
     queryFn: () => fetchProducts(page, limit),
