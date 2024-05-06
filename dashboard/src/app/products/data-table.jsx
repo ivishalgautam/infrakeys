@@ -117,7 +117,7 @@ export function DataTable({ columns, data, total_page }) {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => router.push(`?page=${page - 1}`)}
+          onClick={() => router.push(`?page=${page - 1}&limit=10`)}
           disabled={page === 1}
         >
           Previous
@@ -125,7 +125,7 @@ export function DataTable({ columns, data, total_page }) {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => router.push(`?page=${page + 1}`)}
+          onClick={() => router.push(`?page=${page + 1}&limit=10`)}
           disabled={page === total_page}
         >
           Next

@@ -23,10 +23,11 @@ const fetchProducts = async (page = 1, limit = 10) => {
 };
 
 export default function Products({ searchParams: { page, limit } }) {
+  console.log({ page, limit });
   const queryClient = useQueryClient();
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["products", page, limit],
     queryFn: () => fetchProducts(page, limit),
+    queryKey: ["products", page, limit],
   });
   const router = useRouter();
 
