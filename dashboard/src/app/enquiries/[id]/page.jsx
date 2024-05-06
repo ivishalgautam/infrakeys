@@ -160,7 +160,7 @@ export default function Page({ params: { id } }) {
       selectedFiles.forEach((file) => {
         formData.append("file", file);
       });
-      console.log("formData=>", formData);
+      // console.log("formData=>", formData);
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}${endpoints.files.upload}`,
         formData,
@@ -176,7 +176,7 @@ export default function Page({ params: { id } }) {
 
       updateMutation.mutate({ quotation_file: data?.path[0], id: id });
 
-      console.log("Upload successful:", data.path);
+      // console.log("Upload successful:", data.path);
     } catch (error) {
       console.error("Error uploading image:", error);
     }

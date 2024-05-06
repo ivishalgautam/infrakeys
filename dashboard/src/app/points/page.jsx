@@ -48,8 +48,6 @@ export default function Brands() {
     queryKey: ["points"],
   });
 
-  console.log({ data });
-
   const createMutation = useMutation(postPoints, {
     onSuccess: () => {
       toast.success("Points added.");

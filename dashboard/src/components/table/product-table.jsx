@@ -28,7 +28,7 @@ export default function ProductTable({ products }) {
     );
   }, [products?.length]);
 
-  console.log({ fields });
+  // console.log({ fields });
   return (
     <Table>
       <TableHeader>

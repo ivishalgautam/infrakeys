@@ -16,7 +16,6 @@ export default function useFileUpload() {
       selectedFiles.forEach((file) => {
         formData.append("file", file);
       });
-      console.log("formData=>", formData);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}${endpoints.files.upload}`,
         formData,
@@ -29,8 +28,6 @@ export default function useFileUpload() {
       );
 
       setFilePath((prev) => [...prev, ...response.data?.path]);
-
-      console.log("Upload successful:", response.data.path);
     } catch (error) {
       console.error("Error uploading image:", error);
     }

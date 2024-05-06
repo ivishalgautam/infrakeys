@@ -33,7 +33,6 @@ import {
 import { Label } from "@/components/ui/label";
 
 export function DataTable({ columns, data, searchParams, handleSearch }) {
-  console.log({ data });
   const [sorting, setSorting] = React.useState([]);
   const router = useRouter();
   const [columnFilters, setColumnFilters] = React.useState([]);

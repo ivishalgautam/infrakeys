@@ -50,7 +50,6 @@ export function EnquiryForm({ type, handleUpdate, enquiryId }) {
   } = useForm({ defaultValues });
 
   const onSubmit = (data) => {
-    console.log({ data });
     const payload = {
       status: data?.status,
       quantity: data?.quantity,

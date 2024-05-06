@@ -42,7 +42,6 @@ const http = (headerType = "json", baseURL = API_ROOT) => {
           refresh_token: refreshToken,
         })
         .then((response) => {
-          console.log({ response });
           const { token } = response.data;
 
           // Update the access token in the headers

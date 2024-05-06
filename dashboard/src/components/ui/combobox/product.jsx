@@ -46,14 +46,10 @@ export function ProductCombobox({ setValue, fieldName, value }) {
   const [open, setOpen] = React.useState(false);
   const { data, isLoading } = useFetchProducts();
 
-  console.log({ setValue, fieldName, value });
-
   const filteredProducts = data?.map(({ id, title }) => ({
     value: id,
     label: title,
   }));
-
-  console.log({ filteredProducts });
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

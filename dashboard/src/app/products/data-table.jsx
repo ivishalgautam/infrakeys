@@ -117,16 +117,20 @@ export function DataTable({ columns, data, total_page }) {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => router.push(`?page=${page - 1}&limit=10`)}
-          disabled={page === 1}
+          // onClick={() => router.push(`?page=${page - 1}&limit=10`)}
+          // disabled={page === 1}
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
         >
           Previous
         </Button>
         <Button
           variant="outline"
           size="sm"
-          onClick={() => router.push(`?page=${page + 1}&limit=10`)}
-          disabled={page === total_page}
+          // onClick={() => router.push(`?page=${page + 1}&limit=10`)}
+          // disabled={page === total_page}
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
         >
           Next
         </Button>

@@ -35,7 +35,7 @@ export default function Products() {
   });
   const router = useRouter();
 
-  console.log({ paginatedproducts: data, searchParams });
+  // console.log({ paginatedproducts: data, searchParams });
 
   const deleteMutation = useMutation(deleteProduct, {
     onSuccess: () => {
@@ -56,7 +56,7 @@ export default function Products() {
   }
 
   if (isError) {
-    return error.message ?? "Error";
+    return error?.message ?? "Error";
   }
 
   return (

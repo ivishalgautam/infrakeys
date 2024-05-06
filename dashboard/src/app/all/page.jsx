@@ -15,7 +15,7 @@ const addToCart = (data) => {
 export default function Page() {
   const [token] = useLocalStorage("token");
   const { data: products } = useFetchProducts();
-  console.log({ products });
+  // console.log({ products });
 
   const createMutation = useMutation(addToCart, {
     onSuccess: (data) => {

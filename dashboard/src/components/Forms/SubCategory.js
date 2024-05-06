@@ -126,7 +126,7 @@ export function SubCategoryForm({
       const selectedFiles = event.target.files[0];
       const formData = new FormData();
       formData.append("file", selectedFiles);
-      console.log("formData=>", formData);
+      // console.log("formData=>", formData);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}${endpoints.files.upload}`,
         formData,
@@ -208,7 +208,6 @@ export function SubCategoryForm({
                 maxMenuHeight={230}
                 rules={{ required: "Please select category" }}
                 render={({ field: { onChange, value } }) => {
-                  console.log({ value });
                   return (
                     <ReactSelect
                       options={formattedCategories}

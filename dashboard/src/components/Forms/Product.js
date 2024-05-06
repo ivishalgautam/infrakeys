@@ -85,7 +85,6 @@ export function ProductForm({
   const { data: subCategories, isLoading: isSubCatLoading } =
     useFetchSubCategories();
   const { data: products, isLoading: isProductsLoading } = useFetchProducts();
-  console.log({ products });
 
   const productStatus = [
     { value: "published", label: "Published" },

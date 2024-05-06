@@ -89,7 +89,6 @@ export default function Page({ params: { id } }) {
 
   const deleteMutation = useMutation(deleteOrderItem, {
     onSuccess: (data) => {
-      console.log({ data });
       const index = fields.findIndex((so) => so._id === data.data.id);
       remove(index);
       toast.success(data.message);

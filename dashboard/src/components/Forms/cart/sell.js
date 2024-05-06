@@ -45,7 +45,7 @@ export default function SellForm({ data, handleCreate }) {
   };
 
   const onSubmit = (data) => {
-    console.log({ data });
+    // console.log({ data });
     handleCreate(Object.assign(data, { enquiry_type: "sell" }));
   };
 
