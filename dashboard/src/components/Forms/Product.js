@@ -85,6 +85,7 @@ export function ProductForm({
   const { data: subCategories, isLoading: isSubCatLoading } =
     useFetchSubCategories();
   const { data: products, isLoading: isProductsLoading } = useFetchProducts();
+  console.log({ products });
 
   const productStatus = [
     { value: "published", label: "Published" },
@@ -99,10 +100,12 @@ export function ProductForm({
     })
   );
 
-  const formattedProducts = products?.map(({ id: value, title: label }) => ({
-    value,
-    label,
-  }));
+  const formattedProducts = products?.data?.map(
+    ({ id: value, title: label }) => ({
+      value,
+      label,
+    })
+  );
 
   const onSubmit = (data) => {
     if (type === "delete") {

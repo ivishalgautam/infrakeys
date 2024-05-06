@@ -6,7 +6,7 @@ import { useFetchProducts } from "../../hooks/useFetchProducts";
 import Spinner from "@/components/Spinner";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "@/utils/http";
 import { endpoints } from "../../utils/endpoints.js";
 import { toast } from "sonner";
@@ -16,10 +16,21 @@ async function deleteProduct({ id }) {
   return http().delete(`${endpoints.products.getAll}/${id}`);
 }
 
-export default function Products() {
+const fetchProducts = async (page = 1, limit = 10) => {
+  return await http().get(
+    `${endpoints.products.getAll}/dashboard/getAll?page=${page}&limit=${limit}`
+  );
+};
+
+export default function Products({ searchParams: { page, limit } }) {
   const queryClient = useQueryClient();
-  const { data, isLoading, isError, error } = useFetchProducts();
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["products", page, limit],
+    queryFn: () => fetchProducts(page, limit),
+  });
   const router = useRouter();
+
+  console.log({ data });
 
   const deleteMutation = useMutation(deleteProduct, {
     onSuccess: () => {
@@ -53,7 +64,11 @@ export default function Products() {
       </div>
 
       <div>
-        <DataTable columns={columns(handleDelete, router)} data={data} />
+        <DataTable
+          columns={columns(handleDelete, router)}
+          data={data?.data}
+          total_page={data?.total_page}
+        />
       </div>
     </div>
   );
