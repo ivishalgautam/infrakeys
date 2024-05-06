@@ -16,7 +16,7 @@ const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 export async function generateMetadata({ params: { slug } }) {
   const { data } = await fetchCategory(slug);
   return {
-    title: data?.name,
+    title: data?.meta_title ?? data?.name,
     description: data?.meta_description,
     keywords: data?.meta_keywords,
     openGraph: {
@@ -51,7 +51,7 @@ export default async function CategoryPage({ params: { slug } }) {
             {/* top sub categories */}
             <div className="col-span-12 rounded-lg bg-white p-6 sm:col-span-5 md:col-span-4 lg:col-span-3 ">
               <H4>Top Categories</H4>
-              <div className="mt-2 space-y-2">
+              <div className="mt-2 max-h-72 space-y-2 overflow-y-scroll">
                 {category?.top_sub_categories?.length &&
                 category?.top_sub_categories?.[0] === null
                   ? "No sub categories found!"
