@@ -457,7 +457,7 @@ export function ProductForm({
                       {quantityTypes?.map((type, key) => (
                         <span
                           key={key}
-                          className="bg-primary rounded-lg p-1 px-2 text-white cursor-pointer"
+                          className="bg-primary rounded-lg p-1 px-2 text-white cursor-pointer text-xs"
                           onClick={() => {
                             if (type === "view") return;
                             const types = quantityTypes?.filter(
@@ -504,7 +504,7 @@ export function ProductForm({
                       {tags?.map((tag, key) => (
                         <span
                           key={key}
-                          className="bg-primary rounded-lg p-1 px-2 text-white cursor-pointer"
+                          className="bg-primary rounded-lg p-1 px-2 text-white cursor-pointer text-xs"
                           onClick={() => {
                             if (type === "view") return;
                             const updatedTags = tags?.filter(
@@ -562,12 +562,12 @@ export function ProductForm({
                               placeholder="Name"
                             />
                           </TableCell>
-                          <TableCell className="flex items-center justify-start">
-                            <div className="flex items-center justify-start gap-2">
+                          <TableCell className="flex items-center flex-wrap justify-start">
+                            <div className="flex items-center justify-start gap-2 flex-wrap">
                               {item.values?.map((val) => (
                                 <span
                                   key={val}
-                                  className="bg-primary text-white px-2 py-1 rounded-md cursor-pointer"
+                                  className="bg-primary text-white px-2 py-1 rounded-md cursor-pointer text-xs"
                                   onClick={() => removeFieldValues(val, ind)}
                                 >
                                   {val} x
