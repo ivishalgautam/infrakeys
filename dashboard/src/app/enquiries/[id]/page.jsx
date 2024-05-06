@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { H5, Small } from "@/components/ui/typography";
+import { H5, Muted, Small } from "@/components/ui/typography";
 import { MdDelete } from "react-icons/md";
 import { endpoints } from "../../../utils/endpoints";
 import { useRouter } from "next/navigation";
@@ -30,6 +30,7 @@ import Modal from "@/components/Modal";
 import POForm from "@/components/Forms/po";
 import Spinner from "@/components/Spinner";
 import ReactSelect from "react-select";
+import { Badge } from "@/components/ui/badge";
 
 const updateEnquiry = (data) => {
   return http().put(`${endpoints.enquiries.getAll}/${data.enquiry_id}`, data);
@@ -122,12 +123,12 @@ export default function Page({ params: { id } }) {
         const { data } = await http().get(
           `${endpoints.enquiries.getAll}/${id}`
         );
-        console.log({ data });
         data && setValue("status", data.status);
         data && setValue("user_id", data.user_id);
         data && setValue("quotation_file", data.quotation_file);
         data && setValue("po_number", data.po_number);
         data && setValue("po_file", data.po_file);
+        data && setValue("pincode", data.pincode);
         data && setValue("delivery_summary", data.delivery_summary);
         data &&
           formattedSubAdmins.length &&
@@ -196,10 +197,10 @@ export default function Page({ params: { id } }) {
 
   const onSubmit = (data) => {
     const payload = {
-      status: data.status,
-      user_id: data.user_id,
-      assigned_to: data.assigned_to.value,
-      items: data.items,
+      status: data?.status,
+      user_id: data?.user_id,
+      assigned_to: data?.assigned_to?.value,
+      items: data?.items,
     };
     handleUpdate(payload);
     router.push("/enquiries");
@@ -210,6 +211,10 @@ export default function Page({ params: { id } }) {
   }
 
   const itemStatus = (key) => watch(`items.${key}.status`);
+
+  const getFilters = (key) => {
+    return watch(`items.${key}.filters`);
+  };
 
   return (
     <div className="bg-white rounded-md p-4">
@@ -364,6 +369,25 @@ export default function Page({ params: { id } }) {
                     </div>
                   )}
 
+                {/* filters */}
+                <div className="col-span-4">
+                  <Label>Filters</Label>
+                  <div className="flex items-start justify-start gap-2">
+                    {Object.keys(getFilters(key))?.map((keyVal, ind) => (
+                      <div key={ind} className="border p-1 rounded-md">
+                        <Muted className={"text-xs capitalize"}>{keyVal}</Muted>
+                        <div className="space-x-1">
+                          {getFilters(key)[keyVal].map((val, ind) => (
+                            <Badge key={ind} className={"uppercase"}>
+                              {val}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
                 {/* comment */}
                 <div className="col-span-4">
                   <Label>Comment</Label>
@@ -477,6 +501,11 @@ export default function Page({ params: { id } }) {
                 </div>
               </div>
             )}
+          </div>
+
+          <div className="">
+            <Label>Pincode</Label>
+            <Input {...register(`pincode`)} disabled />
           </div>
 
           <div className="col-span-4">

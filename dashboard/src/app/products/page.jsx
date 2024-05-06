@@ -40,7 +40,7 @@ export default function Products() {
   }
 
   if (isError) {
-    return JSON.stringify(error);
+    return error.message ?? "Error";
   }
 
   return (

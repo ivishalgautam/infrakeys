@@ -93,15 +93,29 @@ export const columns = (handleDelete) => [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem>
-              <Link href={`/products/${id}/view`}>View</Link>
+              <Button variant="ghost" className="p-0 h-auto w-full text-start">
+                <Link href={`/products/${id}/view`} className="w-full h-full">
+                  View
+                </Link>
+              </Button>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Link href={`/products/${id}/edit`}>Edit</Link>
+              <Button variant="ghost" className="p-0 h-auto w-full text-start">
+                <Link href={`/products/${id}/edit`} className="w-full h-full">
+                  Edit
+                </Link>
+              </Button>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => handleDelete(id)}>
-              Delete
+            <DropdownMenuItem>
+              <Button
+                variant="ghost"
+                className="p-0 h-auto w-full text-start"
+                onClick={() => handleDelete(id)}
+              >
+                Delete
+              </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

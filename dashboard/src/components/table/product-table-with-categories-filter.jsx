@@ -74,7 +74,6 @@ export default function ProductTableWithCategoriesAndFilter({ products }) {
               )
           )
         ) {
-          console.log(false);
           return false;
         }
       }

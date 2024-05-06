@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFetchProducts } from "@/hooks/useFetchProducts";
 
 import http from "@/utils/http";
@@ -37,7 +37,7 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Delete, Plus, Trash } from "lucide-react";
+import { Plus, Trash } from "lucide-react";
 import ReactSelect from "react-select";
 
 export function ProductForm({
@@ -54,6 +54,7 @@ export function ProductForm({
     setValue,
     reset,
     getValues,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -117,7 +118,7 @@ export function ProductForm({
       quantity_types: quantityTypes,
       sku: data?.sku,
       sub_category_id: data?.sub_category_id.value,
-      status: data?.status?.value,
+      status: data?.status,
       is_featured: data?.is_featured,
       related_products: data?.related_products?.map((so) => so.value),
       meta_title: data?.meta_title,
@@ -187,15 +188,70 @@ export function ProductForm({
       }
     };
 
-    if (productId && (type === "edit" || type === "view")) {
+    if (
+      productId &&
+      !isSubCatLoading &&
+      !isProductsLoading &&
+      (type === "edit" || type === "view")
+    ) {
       fetchData();
     }
-  }, [
-    productId,
-    type,
-    formattedProducts?.length,
-    formattedSubCategories?.length,
-  ]);
+  }, [productId, type, isSubCatLoading, isProductsLoading]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await http().get(
+          `${endpoints.products.getAll}/getById/${watch("copy_product").value}`
+        );
+        data && setValue("name", data?.title);
+        data &&
+          setValue(
+            "sub_category_id",
+            formattedSubCategories?.find(
+              (so) => so.value === data?.sub_category_id
+            )
+          );
+        data && setValue("status", data?.status);
+        data &&
+          data.custom_description &&
+          setValue("custom_description", data.custom_description);
+        data &&
+          data.custom_properties &&
+          setValue("items", data.custom_properties);
+        data && setTags(data?.tags);
+        data &&
+          setQuantityTypes(
+            typeof data?.quantity_types === "object"
+              ? data?.quantity_types
+              : JSON.parse(data?.quantity_types)
+          );
+        if (!editorRef.current) {
+          data && setText(data?.description);
+          editorRef.current = true;
+        }
+        // data && setValue("description", data?.description);
+        data && setValue("is_featured", data?.is_featured);
+        data && setValue("sku", data?.sku);
+        data && setValue("meta_title", data?.meta_title);
+        data && setValue("meta_description", data?.meta_description);
+        data && setValue("meta_keywords", data?.meta_keywords);
+        data?.related_products &&
+          setValue(
+            "related_products",
+            formattedProducts?.filter((so) =>
+              data?.related_products?.includes(so.value)
+            )
+          );
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (watch("copy_product")) {
+      fetchData();
+    }
+  }, [watch("copy_product")]);
 
   const addTag = () => {
     if (getValues("tag") === "") {
@@ -260,7 +316,7 @@ export function ProductForm({
     setInputVal((prev) => ({ ...prev, [`inputVal.${ind}`]: "" }));
   };
 
-  if (isLoading) return <Spinner />;
+  if (isLoading || isSubCatLoading || isProductsLoading) return <Spinner />;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -281,6 +337,23 @@ export function ProductForm({
                 }
               />
             </div>
+
+            {type === "create" && (
+              <div>
+                <Label>Copy from</Label>
+                <Controller
+                  control={control}
+                  name="copy_product"
+                  render={({ field: { value, onChange } }) => (
+                    <ReactSelect
+                      options={formattedProducts}
+                      onChange={onChange}
+                      defaultValue={value}
+                    />
+                  )}
+                />
+              </div>
+            )}
 
             {/* product info */}
             <div className="space-y-4">
@@ -372,13 +445,8 @@ export function ProductForm({
                     type="text"
                     disabled={type === "view" || type === "delete"}
                     placeholder="SKU"
-                    {...register("sku", {
-                      required: "SKU is required",
-                    })}
+                    {...register("sku")}
                   />
-                  {errors.sku && (
-                    <span className="text-red-600">{errors.sku.message}</span>
-                  )}
                 </div>
 
                 {/* quantity types */}
@@ -685,16 +753,9 @@ export function ProductForm({
                   <Input
                     type="text"
                     placeholder="Enter title tag"
-                    {...register("meta_title", {
-                      required: "Please enter title tag.",
-                    })}
+                    {...register("meta_title")}
                     disabled={type === "view"}
                   />
-                  {errors.meta_title && (
-                    <span className="text-red-600">
-                      {errors.meta_title.message}
-                    </span>
-                  )}
                 </div>
 
                 {/* meta descrition */}
@@ -706,11 +767,6 @@ export function ProductForm({
                     {...register("meta_description")}
                     disabled={type === "view"}
                   />
-                  {errors.meta_description && (
-                    <span className="text-red-600">
-                      {errors.meta_description.message}
-                    </span>
-                  )}
                 </div>
 
                 {/* meta keyword */}
@@ -722,11 +778,6 @@ export function ProductForm({
                     {...register("meta_keywords")}
                     disabled={type === "view"}
                   />
-                  {errors.meta_keywords && (
-                    <span className="text-red-600">
-                      {errors.meta_keywords.message}
-                    </span>
-                  )}
                 </div>
               </div>
             </div>

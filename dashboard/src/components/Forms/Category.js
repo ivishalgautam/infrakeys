@@ -332,9 +332,6 @@ export function CategoryForm({
               />
             )}
           />
-          {errors.is_featured && (
-            <span className="text-red-600">{errors.is_featured.message}</span>
-          )}
         </div>
 
         <div className="text-right">

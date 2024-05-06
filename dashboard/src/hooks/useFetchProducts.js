@@ -3,7 +3,9 @@ import { endpoints } from "../utils/endpoints.js";
 import http from "../utils/http.js";
 
 const fetchProducts = async () => {
-  const { data } = await http().get(endpoints.products.getAll);
+  const { data } = await http().get(
+    `${endpoints.products.getAll}/dashboard/getAll`
+  );
   return data;
 };
 
