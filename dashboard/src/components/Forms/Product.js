@@ -204,7 +204,6 @@ export function ProductForm({
         const { data } = await http().get(
           `${endpoints.products.getAll}/getById/${watch("copy_product").value}`
         );
-        data && setValue("name", data?.title);
         data &&
           setValue(
             "sub_category_id",
@@ -231,7 +230,6 @@ export function ProductForm({
           editorRef.current = true;
         }
         // data && setValue("description", data?.description);
-        data && setValue("is_featured", data?.is_featured);
         data && setValue("sku", data?.sku);
         data && setValue("meta_title", data?.meta_title);
         data && setValue("meta_description", data?.meta_description);
@@ -251,7 +249,7 @@ export function ProductForm({
     if (watch("copy_product")) {
       fetchData();
     }
-  }, [watch("copy_product")]);
+  }, [watch("copy_product"), isSubCatLoading]);
 
   const addTag = () => {
     if (getValues("tag") === "") {

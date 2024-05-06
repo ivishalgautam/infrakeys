@@ -19,10 +19,10 @@ async function deleteProduct({ id }) {
 export default function Products() {
   const queryClient = useQueryClient();
   const { data, isLoading, isError, error } = useFetchProducts();
+  const router = useRouter();
 
   const deleteMutation = useMutation(deleteProduct, {
     onSuccess: () => {
-      toast.success("Product deleted.");
       queryClient.invalidateQueries({ queryKey: ["products"] });
       toast.success("Product deleted.");
     },
@@ -53,7 +53,7 @@ export default function Products() {
       </div>
 
       <div>
-        <DataTable columns={columns(handleDelete)} data={data} />
+        <DataTable columns={columns(handleDelete, router)} data={data} />
       </div>
     </div>
   );

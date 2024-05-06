@@ -16,7 +16,7 @@ import {
 import moment from "moment";
 import { cn } from "@/lib/utils";
 
-export const columns = (handleDelete) => [
+export const columns = (handleDelete, router) => [
   {
     accessorKey: "title",
     header: ({ column }) => {
@@ -92,30 +92,20 @@ export const columns = (handleDelete) => [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>
-              <Button variant="ghost" className="p-0 h-auto w-full text-start">
-                <Link href={`/products/${id}/view`} className="w-full h-full">
-                  View
-                </Link>
-              </Button>
+            <DropdownMenuItem
+              onClick={() => router.push(`/products/${id}/view`)}
+            >
+              View
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Button variant="ghost" className="p-0 h-auto w-full text-start">
-                <Link href={`/products/${id}/edit`} className="w-full h-full">
-                  Edit
-                </Link>
-              </Button>
+            <DropdownMenuItem
+              onClick={() => router.push(`/products/${id}/edit`)}
+            >
+              Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Button
-                variant="ghost"
-                className="p-0 h-auto w-full text-start"
-                onClick={() => handleDelete(id)}
-              >
-                Delete
-              </Button>
+            <DropdownMenuItem onClick={() => handleDelete(id)}>
+              Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
