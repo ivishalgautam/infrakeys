@@ -1,4 +1,3 @@
-import ProductCard from "@/components/cards/product";
 import AddToCart from "@/components/forms/add-to-cart";
 import ProductTable from "@/components/table/product-table";
 import { Button } from "@/components/ui/button";
@@ -7,9 +6,8 @@ import { fetchProduct } from "@/utils/api";
 
 export async function generateMetadata({ params: { slug } }) {
   const { data } = await fetchProduct(slug);
-  console.log(data);
   return {
-    title: data?.title,
+    title: data?.meta_title ?? data?.title,
     description: data?.meta_description,
     keywords: data?.meta_keywords,
     openGraph: {
@@ -43,20 +41,10 @@ export default async function Page({ params: { slug } }) {
 
               <div className="py-6">
                 <div>
-                  <span className="text-sm font-bold capitalize">SKU: </span>
-                  <span className="text-sm">{data?.sku}</span>
-                </div>
-                <div>
                   <span className="text-sm font-bold capitalize">
                     Categories:{" "}
                   </span>
                   <span className="text-sm">{data?.category_name}</span>
-                </div>
-                <div>
-                  <div>
-                    <span className="text-sm font-bold capitalize">Tags: </span>
-                    <span className="text-sm">{data?.tags.join(", ")}</span>
-                  </div>
                 </div>
               </div>
             </div>
