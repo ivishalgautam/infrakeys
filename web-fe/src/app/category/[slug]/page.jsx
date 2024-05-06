@@ -108,16 +108,15 @@ export function CategoryCell({ name, image, subCatSlug, catSlug }) {
   const domain = process.env.NEXT_PUBLIC_IMAGE_DOMAIN;
 
   return (
-    <div className="group rounded-md bg-gray-100">
+    <div className="group rounded-md bg-gray-100 p-1">
       <Link href={`/category/${catSlug}/${subCatSlug}`}>
         <div className="flex items-center justify-start gap-2">
-          <figure>
+          <figure className="relative size-10">
             <Image
               src={`${domain}/${image}`}
               alt={name}
-              width={50}
-              height={50}
-              className="rounded-full"
+              fill
+              className="rounded-full object-cover object-center"
             />
           </figure>
           <div className="mr-auto text-sm font-medium capitalize">{name}</div>
