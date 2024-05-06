@@ -149,7 +149,7 @@ export default function ProductTableWithFilter({ products }) {
                 <ChevronDown size={20} />
               </span>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent className="max-h-60 overflow-scroll">
               <DropdownMenuLabel className="capitalize">
                 {val}
               </DropdownMenuLabel>

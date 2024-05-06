@@ -2,12 +2,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { H1 } from "./ui/typography";
-import { useFetchSubCategories } from "@/hooks/useFetchSubCategories";
+import { useFetchFeaturedSubCategories } from "@/hooks/useFetchFeaturedSubCat";
 import SearchBox from "./Search";
 
 export default function Hero() {
   const { data: subCategories, isLoading: isSubCatLoading } =
-    useFetchSubCategories();
+    useFetchFeaturedSubCategories();
   const imageDomain = process.env.NEXT_PUBLIC_IMAGE_DOMAIN;
 
   return (
@@ -41,7 +41,7 @@ export default function Hero() {
               </div>
             ) : (
               <div className="flex flex-wrap items-center justify-start gap-2">
-                {subCategories?.map((cat) => (
+                {subCategories?.slice(0, 5).map((cat) => (
                   <Link
                     href={`/category/${cat.category_slug}/${cat.slug}`}
                     key={cat.id}

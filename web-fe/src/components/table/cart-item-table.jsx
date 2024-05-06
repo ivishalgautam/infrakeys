@@ -25,6 +25,7 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
 import { Boxes, DivideIcon, Scale } from "lucide-react";
+import { Badge } from "../ui/badge";
 
 export default function CartItemTable({
   fields,
@@ -33,27 +34,26 @@ export default function CartItemTable({
   control,
   handleDelete,
 }) {
+  console.log({ fields });
   return (
     <div>
       <Table>
         <TableCaption>{fields?.length === 0 && "Empty"}</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[200px]">Name</TableHead>
-            <TableHead className="w-[300px]">Quantity</TableHead>
-            {/* <TableHead className="w-[250px]">Measurement</TableHead> */}
-            <TableHead>Action</TableHead>
+            <TableHead className="w-[150px]">Name</TableHead>
+            <TableHead className="w-[280px]">Quantity</TableHead>
+            <TableHead className="">Filters</TableHead>
+            <TableHead className="text-right">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {fields?.map((field, key) => (
             <TableRow key={field.id}>
               <TableCell className="p-2">
-                <div>{field.title}</div>
-                <Muted className={"text-xs capitalize"}>
-                  {field.brand_name}
-                </Muted>
+                <Small className={"text-xs"}>{field.title}</Small>
               </TableCell>
+
               <TableCell className="p-2">
                 <div className="flex items-center justify-start rounded-lg border bg-[#efefef] p-1 py-0.5">
                   <div className="rounded-lg bg-white p-2 text-black">
@@ -78,9 +78,9 @@ export default function CartItemTable({
                         <Select
                           value={value}
                           onValueChange={onChange}
-                          className="w-auto bg-white"
+                          className=" bg-white"
                         >
-                          <SelectTrigger className="w-auto bg-white uppercase">
+                          <SelectTrigger className="w-[100px] bg-white uppercase">
                             <SelectValue placeholder="" />
                           </SelectTrigger>
                           <SelectContent>
@@ -115,7 +115,26 @@ export default function CartItemTable({
                 </div>
               </TableCell>
 
-              <TableCell className="p-2">
+              <TableCell>
+                <div className="flex flex-wrap items-start justify-start gap-2">
+                  {Object.keys(field?.filters)?.map((key, ind) => (
+                    <div key={ind} className="rounded-md border p-1">
+                      <Muted className={"text-xs uppercase"}>{key}:</Muted>
+                      <div className="space-x-1">
+                        {field.filters[key]?.map((value, ind) => {
+                          return (
+                            <Badge key={ind} className={"uppercase"}>
+                              {value}
+                            </Badge>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </TableCell>
+
+              <TableCell className="p-2 text-right">
                 <Button
                   type="button"
                   variant="destructive"
@@ -131,7 +150,7 @@ export default function CartItemTable({
       </Table>
 
       {fields?.length ? (
-        <div className="space-y-2">
+        <div className="space-y-2 border-t-2 border-primary pt-8">
           <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
             <div>
               <Label>Pincode</Label>

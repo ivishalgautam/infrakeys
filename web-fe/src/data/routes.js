@@ -14,11 +14,11 @@ export const allRoutes = [
   },
   {
     link: "/products",
-    roles: [ROLES.USER],
+    roles: [],
   },
   {
     link: "/products/[slug]",
-    roles: [ROLES.USER],
+    roles: [],
   },
   {
     link: "/cart",
