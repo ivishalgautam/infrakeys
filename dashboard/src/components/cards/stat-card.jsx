@@ -15,7 +15,7 @@ export default function StatCard({ status, count }) {
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
-          <span className="text-sm capitalize">Total {status} products</span>
+          <span className="text-sm capitalize">{status}</span>
           <span>
             <IoIosStats />
           </span>

@@ -22,15 +22,21 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-5 gap-4">
         {data &&
           Object.keys(data?.products)?.map((status, ind) => (
             <StatCard
               key={ind}
-              status={status}
+              status={`total ${status} products`}
               count={data?.products[status]}
             />
           ))}
+        {data && (
+          <>
+            <StatCard status={"total enquiries"} count={data.total_enquiries} />
+            <StatCard status={"total orders"} count={data.total_orders} />
+          </>
+        )}
       </div>
       <div>
         <Chart />
