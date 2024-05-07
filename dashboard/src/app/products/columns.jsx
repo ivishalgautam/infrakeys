@@ -34,10 +34,7 @@ export const columns = (handleDelete, router) => [
       const id = row.original.id;
       return (
         <div className={`capitalize`}>
-          <Link
-            href={`/products/${id}/edit`}
-            className="hover:text-primary transition-colors"
-          >
+          <Link href={`/products/${id}/edit`} className="capitalize">
             {row.original.title}
           </Link>
         </div>

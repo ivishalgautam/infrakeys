@@ -54,10 +54,7 @@ export const columns = (handleDelete, handleNavigate) => [
       const name = row.original.name;
       const id = row.original.id;
       return (
-        <Link
-          href={`/sub-categories/edit/${id}`}
-          className="hover:text-primary transition-colors capitalize"
-        >
+        <Link href={`/sub-categories/edit/${id}`} className="capitalize">
           {name}
         </Link>
       );
@@ -80,10 +77,7 @@ export const columns = (handleDelete, handleNavigate) => [
       const category_id = row.original.category_id;
       const category_name = row.original.category_name;
       return (
-        <Link
-          href={`/categories/edit/${category_id}`}
-          className="hover:text-primary transition-colors capitalize"
-        >
+        <Link href={`/categories/edit/${category_id}`} className="capitalize">
           {category_name}
         </Link>
       );

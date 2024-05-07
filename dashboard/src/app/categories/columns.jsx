@@ -55,10 +55,7 @@ export const columns = (handleDelete, handleNavigate) => [
       const name = row.original.name;
       const id = row.original.id;
       return (
-        <Link
-          href={`/categories/edit/${id}`}
-          className="hover:text-primary transition-colors"
-        >
+        <Link href={`/categories/edit/${id}`} className="capitalize">
           {name}
         </Link>
       );
