@@ -1,6 +1,9 @@
 "use client";
 import { AreaChart } from "@tremor/react";
 import { Card } from "./ui/card";
+import http from "@/utils/http";
+import { endpoints } from "@/utils/endpoints";
+import { useQuery } from "@tanstack/react-query";
 
 const chartdata = [
   { date: "Jan 22", SemiAnalysis: 2890, "The Pragmatic Engineer": 2338 },
@@ -17,7 +20,19 @@ const chartdata = [
   { date: "Dec 22", SemiAnalysis: 3239, "The Pragmatic Engineer": 3736 },
 ];
 
+const fetchStats = async () => {
+  const { data } = await http().get(endpoints.dashboard.stats);
+  return data;
+};
+
 export default function Chart() {
+  const { data, isLoading, isError, error } = useQuery({
+    queryFn: fetchStats,
+    queryKey: ["dashboard-stats"],
+  });
+
+  console.log(data);
+
   return (
     <Card>
       <div className="p-8">

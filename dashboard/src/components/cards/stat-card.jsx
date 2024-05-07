@@ -9,20 +9,21 @@ import {
 } from "../ui/card.jsx";
 import { IoIosStats } from "react-icons/io";
 
-export default function StatCard() {
+export default function StatCard({ status, count }) {
+  const numberFormat = new Intl.NumberFormat("en-IN");
   return (
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
-          <span className="text-sm">Total revenue</span>
+          <span className="text-sm capitalize">Total {status} products</span>
           <span>
             <IoIosStats />
           </span>
         </div>
       </CardHeader>
       <CardContent>
-        <CardTitle>$45,231.89</CardTitle>
-        <CardDescription>+20.1% from last month</CardDescription>
+        <CardTitle>{numberFormat.format(count)}</CardTitle>
+        {/* <CardDescription>+20.1% from last month</CardDescription> */}
       </CardContent>
     </Card>
   );

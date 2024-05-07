@@ -58,4 +58,8 @@ export const endpoints = {
     getAll: "/carts",
     temp: "/carts/temp-cart",
   },
+  dashboard: {
+    getAll: "/dashboard",
+    stats: "/dashboard/stats",
+  },
 };

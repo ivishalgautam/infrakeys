@@ -56,7 +56,7 @@ export const columns = (handleDelete, handleNavigate) => [
       return (
         <Link
           href={`/sub-categories/edit/${id}`}
-          className="hover:text-primary transition-colors"
+          className="hover:text-primary transition-colors capitalize"
         >
           {name}
         </Link>
@@ -82,7 +82,7 @@ export const columns = (handleDelete, handleNavigate) => [
       return (
         <Link
           href={`/categories/edit/${category_id}`}
-          className="hover:text-primary transition-colors"
+          className="hover:text-primary transition-colors capitalize"
         >
           {category_name}
         </Link>

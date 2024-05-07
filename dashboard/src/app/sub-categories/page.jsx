@@ -25,7 +25,6 @@ async function fetchSubCategories() {
 }
 
 export default function Categories() {
-  const [categoryId, setCategoryId] = useState(null);
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -81,7 +80,7 @@ export default function Categories() {
       <div>
         <DataTable
           columns={columns(handleDelete, handleNavigate)}
-          data={data?.map((subCategory) => subCategory)}
+          data={data}
         />
       </div>
     </div>
