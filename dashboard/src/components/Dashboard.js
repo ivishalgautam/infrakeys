@@ -27,7 +27,7 @@ export default function Dashboard() {
           Object.keys(data?.products)?.map((status, ind) => (
             <StatCard
               key={ind}
-              status={`total ${status} products`}
+              status={`${status} products`}
               count={data?.products[status]}
             />
           ))}
