@@ -20,45 +20,46 @@ export default function Hero() {
       </div>
 
       <div className="absolute inset-0 z-20 flex items-center justify-start p-4 lg:p-24">
-        <div className="space-y-4">
-          <H1 className={"text-white"}>
-            India&apos;s Largest B2B <br />
-            Raw Materials Procurement
-            <br /> & Credit Platform
-          </H1>
-          <div>
-            <SearchBox />
-          </div>
-          <div className="space-x-2">
-            {isSubCatLoading ? (
-              <div className="flex gap-2">
-                {Array.from({ length: 5 }).map((_, key) => (
-                  <div
-                    key={key}
-                    className="h-6 w-20 animate-pulse rounded-full bg-gray-100/20"
-                  ></div>
-                ))}
-              </div>
-            ) : (
-              <div className="flex flex-wrap items-center justify-start gap-2">
-                {subCategories?.slice(0, 5).map((cat) => (
-                  <Link
-                    href={`/category/${cat.category_slug}/${cat.slug}`}
-                    key={cat.id}
-                    className="flex items-center gap-1 rounded-full border border-white/40 bg-white/90 p-1 pr-3 text-xs text-gray-500 backdrop-blur-sm transition-colors hover:bg-white"
-                  >
-                    <Image
-                      width={20}
-                      height={20}
-                      src={`${imageDomain}/${cat.image}`}
-                      alt={cat.name}
-                      className="rounded-full"
-                    />
-                    <span className="capitalize">{cat.name}</span>
-                  </Link>
-                ))}
-              </div>
-            )}
+        <div className="grid grid-cols-12">
+          <div className="col-span-12 space-y-4 sm:col-span-10 md:col-span-8 lg:col-span-6">
+            <H1 className={"text-white lg:text-4xl"}>
+              India&apos;s Largest B2B Raw Materials Procurement & Credit
+              Platform
+            </H1>
+            <div>
+              <SearchBox />
+            </div>
+            <div className="space-x-2">
+              {isSubCatLoading ? (
+                <div className="flex gap-2">
+                  {Array.from({ length: 5 }).map((_, key) => (
+                    <div
+                      key={key}
+                      className="h-6 w-20 animate-pulse rounded-full bg-gray-100/20"
+                    ></div>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex flex-wrap items-center justify-start gap-2">
+                  {subCategories?.slice(0, 5).map((cat) => (
+                    <Link
+                      href={`/category/${cat.category_slug}/${cat.slug}`}
+                      key={cat.id}
+                      className="flex items-center gap-1 rounded-full border border-white/40 bg-white/90 p-1 pr-3 text-xs text-gray-500 backdrop-blur-sm transition-colors hover:bg-white"
+                    >
+                      <Image
+                        width={20}
+                        height={20}
+                        src={`${imageDomain}/${cat.image}`}
+                        alt={cat.name}
+                        className="rounded-full"
+                      />
+                      <span className="capitalize">{cat.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

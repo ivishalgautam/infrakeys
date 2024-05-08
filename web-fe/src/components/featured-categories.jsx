@@ -75,7 +75,7 @@ export default function FeaturedCategories() {
                         slug={slug}
                         name={name}
                         image={image}
-                        subCategories={sub_categories}
+                        subCategories={sub_categories.slice(0, 5)}
                       />
                     </SwiperSlide>
                   )),

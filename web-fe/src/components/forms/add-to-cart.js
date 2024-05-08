@@ -7,6 +7,7 @@ import { endpoints } from "@/utils/endpoints";
 import { MainContext } from "@/store/context";
 import { Button } from "../ui/button";
 import { removeEmptyKeys } from "@/lib/removeEmptyKeys";
+import { ShoppingCart } from "lucide-react";
 
 const addToCart = (data) => {
   return http().post(`${endpoints.cart.getAll}`, data);
@@ -40,7 +41,7 @@ export default function AddToCart({ id, type, filters }) {
 
   return (
     <Button variant="primary" onClick={() => handleAddToCart(id, type)}>
-      Add to Cart
+      <ShoppingCart size={16} /> &nbsp; Add
     </Button>
   );
 }

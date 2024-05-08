@@ -10,10 +10,22 @@ import http from "@/utils/http";
 import { endpoints } from "@/utils/endpoints";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import Spinner from "./Spinner";
-import { Box, Home, Info, SquareUserRound } from "lucide-react";
+import { Box, Home, Info, Menu, SquareUserRound } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 
 const size = 20;
 
@@ -48,67 +60,113 @@ export const HeaderTop = () => {
 
   return (
     <div className="container block">
-      <div className="flex items-center justify-between py-2">
-        <div className="">
-          <Link href={"/"}>
-            <Image
-              width={70}
-              height={70}
-              src={"/logo.webp"}
-              alt="logo"
-              className="h-full w-full object-contain object-center"
-            />
-          </Link>
-        </div>
-
-        <nav className="ml-auto mr-10 hidden md:block">
-          <ul className="flex items-center justify-start gap-2">
-            {navList.map(({ title, href, icon }) => (
-              <li key={title}>
-                <Link
-                  href={href}
-                  className={cn(
-                    `flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-200`,
-                    {
-                      "bg-primary text-white hover:bg-primary":
-                        pathname === href,
-                    },
-                  )}
-                >
-                  <span>{icon}</span>
-                  <span>{title}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div className="flex items-center justify-center gap-4">
-          {isUserLoading ? (
-            <ProfileLoading />
-          ) : user ? (
-            <>
-              <Link href={"/cart"} className="relative">
-                {data?.length ? (
-                  <span className="absolute -right-4 -top-4 flex size-6 items-center justify-center rounded-full bg-primary text-sm text-white">
-                    {data?.length}
-                  </span>
-                ) : (
-                  <></>
-                )}
-                <MdOutlineShoppingCart size={25} />
-              </Link>
-              <Link href={"/profile/enquiries?status=pending_enquiry"}>
-                <FiUser size={25} />
-              </Link>{" "}
-            </>
-          ) : (
-            <Link href={"/auth/login"} className={buttonVariants("primary")}>
-              Login
+      <Sheet>
+        <div className="flex items-center justify-between py-2">
+          <div className="">
+            <Link href={"/"}>
+              <Image
+                width={70}
+                height={70}
+                src={"/logo.webp"}
+                alt="logo"
+                className="h-full w-full object-contain object-center"
+              />
             </Link>
-          )}
+          </div>
+
+          <nav className="ml-auto mr-10 hidden md:block">
+            <ul className="flex items-center justify-start gap-2">
+              {navList.map(({ title, href, icon }) => (
+                <li key={title}>
+                  <Link
+                    href={href}
+                    className={cn(
+                      `flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-200`,
+                      {
+                        "bg-primary text-white hover:bg-primary":
+                          pathname === href,
+                      },
+                    )}
+                  >
+                    <span>{icon}</span>
+                    <span>{title}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="ml-auto flex items-center justify-center gap-4 md:ml-0">
+            {isUserLoading ? (
+              <ProfileLoading />
+            ) : user ? (
+              <>
+                <Link href={"/cart"} className="relative">
+                  {data?.length ? (
+                    <span className="absolute -right-4 -top-4 flex size-6 items-center justify-center rounded-full bg-primary text-sm text-white">
+                      {data?.length}
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                  <MdOutlineShoppingCart size={25} />
+                </Link>
+                <Link href={"/profile/enquiries?status=pending_enquiry"}>
+                  <FiUser size={25} />
+                </Link>{" "}
+              </>
+            ) : (
+              <Link href={"/auth/login"} className={buttonVariants("primary")}>
+                Login
+              </Link>
+            )}
+          </div>
+
+          <SheetTrigger asChild className="ml-2 block md:hidden">
+            <Button
+              variant="outline"
+              size="icon"
+              className="flex items-center justify-center"
+            >
+              <Menu />
+            </Button>
+          </SheetTrigger>
         </div>
-      </div>
+        <SheetContent>
+          <SheetHeader>
+            <Link href={"/"}>
+              <Image
+                width={150}
+                height={150}
+                src={"/logo.webp"}
+                alt="logo"
+                className="object-contain object-center"
+              />
+            </Link>
+          </SheetHeader>
+          <div className="grid gap-4 py-4">
+            <ul className="space-y-2">
+              {navList.map(({ href, icon, title }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className={cn(
+                      `flex items-center justify-start gap-2 rounded-lg px-3 py-3 transition-colors hover:bg-gray-200`,
+                      {
+                        "bg-primary text-white hover:bg-primary":
+                          pathname === href,
+                      },
+                    )}
+                  >
+                    <span>{icon}</span>
+                    <span>{title}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };

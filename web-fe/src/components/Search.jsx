@@ -89,9 +89,20 @@ export default function SearchBox() {
 
   return (
     <div className="h-full w-full">
-      <div className="relative">
+      <div
+        className={cn("relative", {
+          "rounded-lg bg-white": searchResults?.length,
+        })}
+      >
         <form>
-          <div className="flex w-full items-center justify-between rounded-md bg-white p-2 md:w-4/5">
+          <div
+            className={cn(
+              "flex w-full items-center justify-between rounded-md bg-white p-2",
+              {
+                "rounded-bl-none rounded-br-none": searchResults?.length,
+              },
+            )}
+          >
             <Search className="ml-2 text-xl text-primary" size={30} />
             <Input
               placeholder="Search..."
@@ -104,12 +115,12 @@ export default function SearchBox() {
             </Button>
           </div>
         </form>
+        {inputVal && searchResults?.length > 0 && (
+          <div className="absolute left-0 top-full z-10 h-48 w-full overflow-y-scroll rounded-bl-lg rounded-br-lg">
+            <ProductTable products={searchResults} />
+          </div>
+        )}
       </div>
-      {inputVal && searchResults?.length > 0 && (
-        <div className="md-w-4/5 mt-2 w-full">
-          <ProductTable products={searchResults} />
-        </div>
-      )}
     </div>
   );
 }
@@ -135,7 +146,7 @@ export function ProductTable({ products }) {
             key={product.id}
             className="text-xs *:bg-white *:py-1 *:font-medium hover:bg-primary/5"
           >
-            <TableCell className="rounded-bl-md rounded-tl-md  capitalize">
+            <TableCell className="capitalize">
               <Link
                 href={`/products/${product.slug}`}
                 className="transition-colors hover:text-primary"
@@ -143,7 +154,7 @@ export function ProductTable({ products }) {
                 {product.title}
               </Link>
             </TableCell>
-            <TableCell className="flex items-center justify-end gap-4 space-x-2 rounded-br-md rounded-tr-md">
+            <TableCell className="flex items-center justify-end gap-4 space-x-2">
               <div className="flex items-center justify-center sm:justify-start">
                 <Controller
                   control={control}
@@ -182,12 +193,6 @@ export function ProductTable({ products }) {
                 id={product._id}
                 type={watch(`products.${key}.item_type`)}
               />
-              <Button
-                size="icon"
-                className="bg-[#00a884] text-white hover:bg-[#00a884]"
-              >
-                <FaWhatsapp size={20} />
-              </Button>
             </TableCell>
           </TableRow>
         ))}

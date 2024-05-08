@@ -11,7 +11,9 @@ export default function CategoryCard({ slug, image, name, subCategories }) {
       <Link href={`/category/${slug}`} className="w-full ">
         <div className="flex min-h-[330px] flex-col justify-between rounded-xl border border-primary bg-white p-4 shadow-lg">
           <div>
-            <H4 className={"text-center tracking-wide"}>{name}</H4>
+            <H4 className={"mb-1 text-center text-lg leading-5 tracking-wide"}>
+              {name}
+            </H4>
             <div className="text-center leading-3">
               {subCategories?.length === 1 && subCategories[0] === null
                 ? ""
@@ -37,7 +39,7 @@ export default function CategoryCard({ slug, image, name, subCategories }) {
               height={500}
               src={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${image}`}
               alt={name}
-              className="rounded bg-blend-screen transition-transform hover:scale-110"
+              className="rounded object-contain bg-blend-screen transition-transform"
             />
           </div>
 
