@@ -20,11 +20,11 @@ export default function SubCategoriesSheet({ children }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" size="icon" className="md:hidden">
+        <Button variant="outline" size="icon" className="lg:hidden">
           <AlignLeft />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="overflow-y-scroll md:hidden">
+      <SheetContent side="left" className="overflow-y-scroll lg:hidden">
         <div className="grid gap-4 py-4">{children}</div>
       </SheetContent>
     </Sheet>
