@@ -35,7 +35,8 @@ export default function ProductTableWithFilter({ products }) {
   });
   const { fields } = useFieldArray({ control, name: "products" });
   const [filters, setFilters] = useState({});
-  // console.log({ products, customProperties, filters });
+
+  console.log({ customProperties, filters });
 
   const handleCheckChange = (check, name, value) => {
     setFilters((prev) => {
@@ -85,17 +86,22 @@ export default function ProductTableWithFilter({ products }) {
       for (const { custom_properties } of products) {
         for (const cp of custom_properties) {
           const name = String(cp.name).toLowerCase();
-          setCustomProperties((prev) => ({
-            ...prev,
-            [name]: prev[name]
-              ? [
-                  ...prev[name],
-                  ...cp.values
-                    .filter((item) => !prev[name].includes(item.toLowerCase()))
-                    .map((item) => item.toLowerCase()),
-                ]
-              : [...cp.values.map((item) => item.toLowerCase())],
-          }));
+
+          if (name) {
+            setCustomProperties((prev) => ({
+              ...prev,
+              [name]: prev[name]
+                ? [
+                    ...prev[name],
+                    ...cp.values
+                      .filter(
+                        (item) => !prev[name].includes(item.toLowerCase()),
+                      )
+                      .map((item) => item.toLowerCase()),
+                  ]
+                : [...cp.values.map((item) => item.toLowerCase())],
+            }));
+          }
         }
       }
     }
