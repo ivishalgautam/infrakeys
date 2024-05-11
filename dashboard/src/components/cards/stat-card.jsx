@@ -9,13 +9,13 @@ import {
 } from "../ui/card.jsx";
 import { IoIosStats } from "react-icons/io";
 
-export default function StatCard({ status, count }) {
+export default function StatCard({ title, count }) {
   const numberFormat = new Intl.NumberFormat("en-IN");
   return (
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
-          <span className="text-sm capitalize">{status}</span>
+          <span className="text-sm capitalize">{title}</span>
           <span>
             <IoIosStats />
           </span>

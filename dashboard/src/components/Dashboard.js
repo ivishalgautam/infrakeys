@@ -27,14 +27,14 @@ export default function Dashboard() {
           Object.keys(data?.products)?.map((status, ind) => (
             <StatCard
               key={ind}
-              status={`${status} products`}
+              title={`${status} products`}
               count={data?.products[status]}
             />
           ))}
         {data && (
           <>
-            <StatCard status={"total enquiries"} count={data.total_enquiries} />
-            <StatCard status={"total orders"} count={data.total_orders} />
+            <StatCard title={"total enquiries"} count={data.total_enquiries} />
+            <StatCard title={"total orders"} count={data.total_orders} />
           </>
         )}
       </div>

@@ -15,6 +15,7 @@ import {
 
 import moment from "moment";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 export const columns = (handleDelete, router) => [
   {
@@ -38,6 +39,46 @@ export const columns = (handleDelete, router) => [
             {row.original.title}
           </Link>
         </div>
+      );
+    },
+  },
+  {
+    accessorKey: "category_name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Category
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <Badge className={`capitalize`}>{row.getValue("category_name")}</Badge>
+      );
+    },
+  },
+  {
+    accessorKey: "sub_category_name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Sub category
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <Badge className={`capitalize`}>
+          {row.getValue("sub_category_name")}
+        </Badge>
       );
     },
   },
