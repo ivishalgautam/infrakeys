@@ -236,7 +236,7 @@ export default function ProductTableWithFilter({ products }) {
                                   <RadioGroupItem value={type} id={type} />
                                   <Label
                                     htmlFor={type}
-                                    className="cursor-pointer capitalize"
+                                    className="cursor-pointer text-xs capitalize"
                                   >
                                     {type}
                                   </Label>

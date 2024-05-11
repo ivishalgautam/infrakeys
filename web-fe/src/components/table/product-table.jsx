@@ -28,7 +28,6 @@ export default function ProductTable({ products }) {
     );
   }, [products?.length]);
 
-  console.log({ fields });
   return (
     <Table>
       <TableHeader>
@@ -80,7 +79,7 @@ export default function ProductTable({ products }) {
                           <RadioGroupItem value={type} id={type} />
                           <Label
                             htmlFor={type}
-                            className="cursor-pointer capitalize"
+                            className="cursor-pointer text-xs capitalize"
                           >
                             {type}
                           </Label>

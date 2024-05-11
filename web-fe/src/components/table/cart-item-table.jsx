@@ -24,8 +24,9 @@ import { MdDelete } from "react-icons/md";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
-import { Boxes, DivideIcon, Scale } from "lucide-react";
+import { Boxes } from "lucide-react";
 import { Badge } from "../ui/badge";
+import { isObject } from "@/utils/object";
 
 export default function CartItemTable({
   fields,
@@ -34,7 +35,6 @@ export default function CartItemTable({
   control,
   handleDelete,
 }) {
-  console.log({ fields });
   return (
     <div>
       <Table>
@@ -117,20 +117,21 @@ export default function CartItemTable({
 
               <TableCell>
                 <div className="flex flex-wrap items-start justify-start gap-2">
-                  {Object.keys(field?.filters)?.map((key, ind) => (
-                    <div key={ind} className="rounded-md border p-1">
-                      <Muted className={"text-xs uppercase"}>{key}:</Muted>
-                      <div className="space-x-1">
-                        {field.filters[key]?.map((value, ind) => {
-                          return (
-                            <Badge key={ind} className={"uppercase"}>
-                              {value}
-                            </Badge>
-                          );
-                        })}
+                  {isObject(field.filters) &&
+                    Object.keys(field?.filters)?.map((key, ind) => (
+                      <div key={ind} className="rounded-md border p-1">
+                        <Muted className={"text-xs uppercase"}>{key}:</Muted>
+                        <div className="space-x-1">
+                          {field.filters[key]?.map((value, ind) => {
+                            return (
+                              <Badge key={ind} className={"uppercase"}>
+                                {value}
+                              </Badge>
+                            );
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               </TableCell>
 
