@@ -31,6 +31,7 @@ import POForm from "@/components/Forms/po";
 import Spinner from "@/components/Spinner";
 import ReactSelect from "react-select";
 import { Badge } from "@/components/ui/badge";
+import { isObject } from "@/utils/object";
 
 const updateEnquiry = (data) => {
   return http().put(`${endpoints.enquiries.getAll}/${data.enquiry_id}`, data);
@@ -370,23 +371,29 @@ export default function Page({ params: { id } }) {
                   )}
 
                 {/* filters */}
-                <div className="col-span-4">
-                  <Label>Filters</Label>
-                  <div className="flex items-start justify-start gap-2">
-                    {Object.keys(getFilters(key))?.map((keyVal, ind) => (
-                      <div key={ind} className="border p-1 rounded-md">
-                        <Muted className={"text-xs capitalize"}>{keyVal}</Muted>
-                        <div className="space-x-1">
-                          {getFilters(key)[keyVal].map((val, ind) => (
-                            <Badge key={ind} className={"uppercase"}>
-                              {val}
-                            </Badge>
-                          ))}
+                {isObject(getFilters(key)) ? (
+                  <div className="col-span-4">
+                    <Label>Filters</Label>
+                    <div className="flex items-start justify-start gap-2">
+                      {Object.keys(getFilters(key))?.map((keyVal, ind) => (
+                        <div key={ind} className="border p-1 rounded-md">
+                          <Muted className={"text-xs capitalize"}>
+                            {keyVal}
+                          </Muted>
+                          <div className="space-x-1">
+                            {getFilters(key)[keyVal].map((val, ind) => (
+                              <Badge key={ind} className={"uppercase"}>
+                                {val}
+                              </Badge>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <></>
+                )}
 
                 {/* comment */}
                 <div className="col-span-4">

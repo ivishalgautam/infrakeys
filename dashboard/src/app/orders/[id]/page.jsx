@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { H5, Small } from "@/components/ui/typography";
+import { H5, Muted, Small } from "@/components/ui/typography";
 import { MdDelete } from "react-icons/md";
 import { Eye } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
@@ -28,6 +28,8 @@ import { useFetchUsers } from "@/hooks/useFetchUsers";
 import { MainContext } from "@/store/context";
 import Spinner from "@/components/Spinner";
 import ReactSelect from "react-select";
+import { Badge } from "@/components/ui/badge";
+import { isObject } from "@/utils/object";
 
 const updateOrder = (data) => {
   return http().put(`${endpoints.orders.getAll}/${data.order_id}`, data);
@@ -113,7 +115,7 @@ export default function Page({ params: { id } }) {
           setValue("po_number", data.po_number);
           setValue("po_file", data.po_file);
           setValue("quotation_file", data.quotation_file);
-          formattedSubAdmins.length &&
+          formattedSubAdmins?.length &&
             setValue(
               "assigned_to",
               formattedSubAdmins.find((so) => so.value === data.assigned_to)
@@ -180,6 +182,10 @@ export default function Page({ params: { id } }) {
   };
 
   const itemStatus = (key) => watch(`items.${key}.status`);
+
+  const getFilters = (key) => {
+    return watch(`items.${key}.filters`);
+  };
 
   if (isLoading || isSubAdminLoading) return <Spinner />;
 
@@ -331,7 +337,7 @@ export default function Page({ params: { id } }) {
                 </div>
 
                 {/* total amount */}
-                {watch(`items.${key}.total_amount`) && (
+                {watch(`items.${key}.total_amount`) ? (
                   <div>
                     <Label>Total amount</Label>
                     <Input
@@ -343,6 +349,33 @@ export default function Page({ params: { id } }) {
                       disabled
                     />
                   </div>
+                ) : (
+                  <></>
+                )}
+
+                {/* filters */}
+                {isObject(getFilters(key)) ? (
+                  <div className="col-span-4">
+                    <Label>Filters</Label>
+                    <div className="flex items-start justify-start gap-2">
+                      {Object.keys(getFilters(key))?.map((keyVal, ind) => (
+                        <div key={ind} className="border p-1 rounded-md">
+                          <Muted className={"text-xs capitalize"}>
+                            {keyVal}
+                          </Muted>
+                          <div className="space-x-1">
+                            {getFilters(key)[keyVal].map((val, ind) => (
+                              <Badge key={ind} className={"uppercase"}>
+                                {val}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <></>
                 )}
 
                 {/* comment */}
