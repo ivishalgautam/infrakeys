@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Input } from "./ui/input";
 import { searchProducts } from "@/hooks/useSearchProducts";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
-import { MainContext } from "@/store/context";
 import { cn } from "@/lib/utils";
 import { Search } from "lucide-react";
 import { Table, TableBody, TableCell, TableRow } from "./ui/table";
@@ -14,7 +13,6 @@ import { Label } from "./ui/label";
 import AddToCart from "./forms/add-to-cart";
 
 export default function SearchBox() {
-  const [isInputFocused, setIsInputFocused] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [inputVal, setInputVal] = useState("");
   const throttleTimeoutRef = useRef(null);
@@ -61,7 +59,7 @@ export default function SearchBox() {
     <div className="h-full w-full">
       <div
         className={cn("relative", {
-          "rounded-lg bg-white": searchResults?.length && isInputFocused,
+          "rounded-lg bg-white": searchResults?.length,
         })}
       >
         <form>
@@ -69,8 +67,7 @@ export default function SearchBox() {
             className={cn(
               "flex w-full items-center justify-between rounded-md bg-white p-2",
               {
-                "rounded-bl-none rounded-br-none":
-                  searchResults?.length && isInputFocused,
+                "rounded-bl-none rounded-br-none": searchResults?.length,
               },
             )}
           >
@@ -80,15 +77,13 @@ export default function SearchBox() {
               className="border-none bg-transparent"
               onChange={(e) => setInputVal(e.target.value)}
               value={inputVal}
-              onFocus={() => setIsInputFocused(true)}
-              onBlur={() => setIsInputFocused(false)}
             />
             <Button className={"rounded-md"} variant="primary">
               Search
             </Button>
           </div>
         </form>
-        {inputVal && isInputFocused && searchResults?.length > 0 && (
+        {inputVal && searchResults?.length > 0 && (
           <div className="absolute left-0 top-full z-10 h-48 w-full overflow-y-scroll rounded-bl-lg rounded-br-lg">
             <ProductTable products={searchResults} />
           </div>
