@@ -119,11 +119,14 @@ export default function QueryForm({ type, enquirytype = "buy", productId }) {
 
   return (
     <div
-      className={cn("space-y-4 rounded-lg bg-primary p-4", {
-        "w-full pt-6 sm:w-96": type === "vertical",
-      })}
+      className={cn(
+        "space-y-4 rounded-lg border border-primary bg-white p-4 shadow-md",
+        {
+          "w-full pt-6 sm:w-96": type === "vertical",
+        },
+      )}
     >
-      <div className="flex flex-col items-center justify-start gap-4 text-white md:flex-row">
+      <div className="flex flex-col items-center justify-start gap-4 md:flex-row">
         <H3>Tell Us Your Query</H3>
       </div>
       <div
@@ -273,20 +276,19 @@ export function RadioButtons({ control, watch }) {
           onValueChange={field.onChange}
         >
           {["buy", "sell"].map((type) => (
-            <div
+            <Label
+              htmlFor={type}
               key={type}
               className={cn(
-                "flex items-center space-x-2 rounded-xl border p-2 transition-colors",
+                "flex cursor-pointer items-center gap-1 space-x-2 rounded-xl border p-2 capitalize transition-colors",
                 {
                   "border-primary/50 bg-primary/20": watch("type") === type,
                 },
               )}
             >
               <RadioGroupItem value={type} id={type} />
-              <Label htmlFor={type} className="cursor-pointer capitalize">
-                {type}
-              </Label>
-            </div>
+              {type}
+            </Label>
           ))}
         </RadioGroup>
       )}

@@ -62,27 +62,29 @@ const data = {
 
 export default function WhyChooseUs() {
   return (
-    <div className="bg-primary py-8">
+    <div className="bg-primary/5 py-8">
       <div className="container">
-        <H2 className={"text-center text-white"}>Why Choose Us</H2>
+        <H2 className={"text-center"}>Why Choose Us</H2>
         <div className="mt-2">
           <Tabs defaultValue="buyer" className="w-full">
             <div className="mb-8 flex items-center justify-center">
               <TabsList className="mx-auto w-full text-center md:w-2/3 lg:w-1/4">
-                <TabsTrigger value="buyer" className="w-full">
-                  Buyer
-                </TabsTrigger>
-                <TabsTrigger value="seller" className="w-full">
-                  Seller
-                </TabsTrigger>
+                {Object.keys(data).map((key) => (
+                  <TabsTrigger
+                    key={key}
+                    value={key}
+                    className="w-full capitalize"
+                  >
+                    {key}
+                  </TabsTrigger>
+                ))}
               </TabsList>
             </div>
-            <TabsContent value="buyer">
-              <Cards data={data.buyer} />
-            </TabsContent>
-            <TabsContent value="seller">
-              <Cards data={data.seller} />
-            </TabsContent>
+            {Object.keys(data).map((key) => (
+              <TabsContent key={key} value={key}>
+                <Cards data={data[key]} />
+              </TabsContent>
+            ))}
           </Tabs>
         </div>
         <div className="relative z-10 -mb-20 mt-10">
@@ -156,7 +158,7 @@ export function Clientele() {
 
   return (
     <div>
-      <H4 className={"text-white"}>1 Million+ SMEs & Corporates Served</H4>
+      <H4>1 Million+ SMEs & Corporates Served</H4>
       <div className="mt-2 rounded-lg bg-white shadow-md">
         <Swiper
           spaceBetween={10}

@@ -50,7 +50,8 @@ export default function FeaturedCategories() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-primary/10 to-transparent py-8">
+    // <div className="bg-gradient-to-b from-primary/10 to-transparent py-8">
+    <div className="bg-primary/5 py-8">
       <div className="container space-y-4">
         <H2 className={"text-center"}>Featured categories</H2>
         <div className="mt-2">
