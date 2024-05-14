@@ -104,17 +104,22 @@ export default function ProductTableWithCategoriesAndFilter({ products }) {
         }));
         for (const cp of custom_properties) {
           const name = String(cp.name).toLowerCase();
-          setCustomProperties((prev) => ({
-            ...prev,
-            [name]: prev[name]
-              ? [
-                  ...prev[name],
-                  ...cp.values
-                    .filter((item) => !prev[name].includes(item.toLowerCase()))
-                    .map((item) => item.toLowerCase()),
-                ]
-              : [...cp.values.map((item) => item.toLowerCase())],
-          }));
+
+          if (name) {
+            setCustomProperties((prev) => ({
+              ...prev,
+              [name]: prev[name]
+                ? [
+                    ...prev[name],
+                    ...cp.values
+                      .filter(
+                        (item) => !prev[name].includes(item.toLowerCase()),
+                      )
+                      .map((item) => item.toLowerCase()),
+                  ]
+                : [...cp.values.map((item) => item.toLowerCase())],
+            }));
+          }
         }
       }
     }
@@ -168,7 +173,7 @@ export default function ProductTableWithCategoriesAndFilter({ products }) {
                 <ChevronDown size={20} />
               </span>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent className="h-96 overflow-y-scroll">
               <DropdownMenuLabel className="capitalize">
                 {val.split("_").join(" ")}
               </DropdownMenuLabel>

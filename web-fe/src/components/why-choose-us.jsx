@@ -97,7 +97,10 @@ export function Cards({ data }) {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
       {data.map((item, key) => (
-        <CardContainer className={"h-full w-full cursor-pointer"} key={key}>
+        <CardContainer
+          className={"h-full w-full cursor-pointer shadow-md"}
+          key={key}
+        >
           <div className="h-full w-full space-y-4 rounded-lg border border-primary bg-white p-8 text-black">
             <div className="flex size-14 items-center justify-end overflow-hidden rounded-md bg-primary text-white">
               <div

@@ -1,54 +1,24 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { FiSearch } from "react-icons/fi";
 import { Input } from "./ui/input";
 import { searchProducts } from "@/hooks/useSearchProducts";
 import Link from "next/link";
-import Image from "next/image";
 import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
 import { MainContext } from "@/store/context";
-import http from "@/utils/http";
-import { endpoints } from "@/utils/endpoints";
-import { H6 } from "./ui/typography";
 import { cn } from "@/lib/utils";
 import { Search } from "lucide-react";
-import { Table, TableBody, TableCell, TableHeader, TableRow } from "./ui/table";
+import { Table, TableBody, TableCell, TableRow } from "./ui/table";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import AddToCart from "./forms/add-to-cart";
-import { FaWhatsapp } from "react-icons/fa";
-
-const addToCart = (data) => {
-  return http().post(`${endpoints.cart.getAll}/temp-cart`, data);
-};
 
 export default function SearchBox() {
+  const [isInputFocused, setIsInputFocused] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [inputVal, setInputVal] = useState("");
   const throttleTimeoutRef = useRef(null);
   const pathname = usePathname();
-
-  const { user } = useContext(MainContext);
-  const queryClient = useQueryClient();
-  const createMutation = useMutation(addToCart, {
-    onSuccess: (data) => {
-      toast.success(data.message);
-      queryClient.invalidateQueries("cart");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-      console.log({ error });
-    },
-  });
-
-  const handleAddTocart = async (id) => {
-    if (!user) return toast.warning("Please login first");
-    if (!user.is_verified) return toast.warning("You are not verified!");
-    createMutation.mutate({ product_id: id });
-  };
 
   const handleSearch = async (value) => {
     if (!value.trim()) return setSearchResults([]);
@@ -91,7 +61,7 @@ export default function SearchBox() {
     <div className="h-full w-full">
       <div
         className={cn("relative", {
-          "rounded-lg bg-white": searchResults?.length,
+          "rounded-lg bg-white": searchResults?.length && isInputFocused,
         })}
       >
         <form>
@@ -99,7 +69,8 @@ export default function SearchBox() {
             className={cn(
               "flex w-full items-center justify-between rounded-md bg-white p-2",
               {
-                "rounded-bl-none rounded-br-none": searchResults?.length,
+                "rounded-bl-none rounded-br-none":
+                  searchResults?.length && isInputFocused,
               },
             )}
           >
@@ -109,13 +80,15 @@ export default function SearchBox() {
               className="border-none bg-transparent"
               onChange={(e) => setInputVal(e.target.value)}
               value={inputVal}
+              onFocus={() => setIsInputFocused(true)}
+              onBlur={() => setIsInputFocused(false)}
             />
             <Button className={"rounded-md"} variant="primary">
               Search
             </Button>
           </div>
         </form>
-        {inputVal && searchResults?.length > 0 && (
+        {inputVal && isInputFocused && searchResults?.length > 0 && (
           <div className="absolute left-0 top-full z-10 h-48 w-full overflow-y-scroll rounded-bl-lg rounded-br-lg">
             <ProductTable products={searchResults} />
           </div>

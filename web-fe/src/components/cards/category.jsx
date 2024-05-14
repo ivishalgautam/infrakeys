@@ -34,13 +34,14 @@ export default function CategoryCard({ slug, image, name, subCategories }) {
           </div>
 
           <div>
-            <Image
-              width={500}
-              height={500}
-              src={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${image}`}
-              alt={name}
-              className="rounded object-contain bg-blend-screen transition-transform"
-            />
+            <figure className="relative h-32 w-full">
+              <Image
+                fill
+                src={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${image}`}
+                alt={name}
+                className="rounded object-contain bg-blend-screen transition-transform"
+              />
+            </figure>
           </div>
 
           <div className="group mt-3 flex items-center justify-start gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-semibold uppercase text-white transition-all md:gap-4">
