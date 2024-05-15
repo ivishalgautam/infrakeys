@@ -78,12 +78,12 @@ export function Card({ item, ind }) {
           <H5 className={"text-center text-primary"}>{item.title}</H5>
           <P className={"text-center text-sm"}>{item.content}</P>
         </div>
-        <div className="mt-auto flex items-center justify-start gap-4 rounded-lg bg-primary px-4 py-2 text-white transition-all group-hover:shadow-lg">
+        {/* <div className="mt-auto flex items-center justify-start gap-4 rounded-lg bg-primary px-4 py-2 text-white transition-all group-hover:shadow-lg">
           <span>Know more</span>
           <div className="transition-all group-hover:translate-x-3">
             <MoveRight />
           </div>
-        </div>
+        </div> */}
       </div>
     </CardContainer>
   );
