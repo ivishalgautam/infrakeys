@@ -15,13 +15,7 @@ import moment from "moment";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
-export const columns = (
-  setEnquiryId,
-  setType,
-  handleDelete,
-  openModal,
-  handleNavigate
-) => [
+export const columns = (handleDelete, handleNavigate) => [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -122,7 +116,7 @@ export const columns = (
     },
   },
   {
-    accessorKey: "Enquiry status",
+    accessorKey: "status",
     header: ({ column }) => {
       return <Button variant="ghost">Status</Button>;
     },

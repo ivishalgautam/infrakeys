@@ -32,7 +32,7 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 
-export function DataTable({ columns, data, searchParams, handleSearch }) {
+export function DataTable({ columns, data }) {
   const [sorting, setSorting] = React.useState([]);
   const router = useRouter();
   const [columnFilters, setColumnFilters] = React.useState([]);
@@ -67,9 +67,7 @@ export function DataTable({ columns, data, searchParams, handleSearch }) {
         <div>
           <Label>Enquiry for</Label>
           <Select
-            defaultValue={searchParams["enquiry_type"] ?? ""}
             onValueChange={(value) => {
-              handleSearch("enquiry_type", value);
               table.getColumn("enquiry_type")?.setFilterValue(value);
             }}
           >
@@ -85,9 +83,7 @@ export function DataTable({ columns, data, searchParams, handleSearch }) {
         <div>
           <Label>Coverted to order</Label>
           <Select
-            defaultValue={searchParams["is_converted_to_order"] ?? ""}
             onValueChange={(value) => {
-              handleSearch("is_converted_to_order", value);
               table.getColumn("is_converted_to_order")?.setFilterValue(value);
             }}
           >
@@ -103,9 +99,7 @@ export function DataTable({ columns, data, searchParams, handleSearch }) {
         <div>
           <Label>Payment method</Label>
           <Select
-            defaultValue={searchParams["payment_method"] ?? ""}
             onValueChange={(value) => {
-              handleSearch("payment_method", value);
               table.getColumn("payment_method")?.setFilterValue(value);
             }}
           >
@@ -128,9 +122,7 @@ export function DataTable({ columns, data, searchParams, handleSearch }) {
         <div>
           <Label>Status</Label>
           <Select
-            defaultValue={searchParams["status"] ?? ""}
             onValueChange={(value) => {
-              handleSearch("status", value);
               table.getColumn("status")?.setFilterValue(value);
             }}
           >
@@ -150,7 +142,16 @@ export function DataTable({ columns, data, searchParams, handleSearch }) {
         </div>
 
         <div className="mt-auto">
-          <Button onClick={() => router.push("/enquiries")}>Reset</Button>
+          <Button
+            onClick={() => {
+              table.getColumn("enquiry_type")?.setFilterValue("");
+              table.getColumn("is_converted_to_order")?.setFilterValue("");
+              table.getColumn("payment_method")?.setFilterValue("");
+              table.getColumn("status")?.setFilterValue("");
+            }}
+          >
+            Reset
+          </Button>
         </div>
       </div>
 

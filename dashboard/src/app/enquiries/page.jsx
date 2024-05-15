@@ -7,14 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "@/utils/http";
 import { endpoints } from "../../utils/endpoints.js";
 import { toast } from "sonner";
-import { useState } from "react";
-import Modal from "@/components/Modal.js";
-import { EnquiryForm } from "@/components/Forms/Enquiry.js";
 import { useRouter } from "next/navigation.js";
-
-async function updateEnquiry(data) {
-  return http().put(`${endpoints.enquiries.getAll}/${data.id}`, data);
-}
 
 async function deleteEnquiry({ id }) {
   return http().delete(`${endpoints.enquiries.getAll}/${id}`);
@@ -25,32 +18,15 @@ async function fetchEnquiries() {
   return data;
 }
 
-export default function Products({ searchParams }) {
+export default function Products() {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const [enquiryId, setEnquiryId] = useState("");
-  const [type, setType] = useState("");
-  const [isModal, setIsModal] = useState(false);
+
   const { data, isLoading, isError, error } = useQuery({
     queryFn: fetchEnquiries,
     queryKey: ["enquiries"],
   });
-  function openModal() {
-    setIsModal(true);
-  }
-  function closeModal() {
-    setIsModal(false);
-  }
-  const updateMutation = useMutation(updateEnquiry, {
-    onSuccess: (data) => {
-      toast.success(data.message);
-      queryClient.invalidateQueries(["enquiries"]);
-      closeModal();
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
+
   const deleteMutation = useMutation(deleteEnquiry, {
     onSuccess: (data) => {
       toast.success(data.message);
@@ -61,20 +37,8 @@ export default function Products({ searchParams }) {
     },
   });
 
-  const handleUpdate = async (data) => {
-    updateMutation.mutate({ ...data, id: enquiryId });
-  };
-
   const handleDelete = async ({ id }) => {
     deleteMutation.mutate({ id });
-  };
-
-  const handleSearch = async (type, value) => {
-    const url = new URL(window.location.href);
-    const urlParams = new URLSearchParams(url.search);
-
-    urlParams.set(type, value);
-    router.push(`/enquiries?${urlParams.toString()}`);
   };
 
   const handleNavigate = (href) => {
@@ -86,7 +50,7 @@ export default function Products({ searchParams }) {
   }
 
   if (isError) {
-    return error.message ?? "error";
+    return error?.message ?? "error";
   }
 
   return (
@@ -97,28 +61,10 @@ export default function Products({ searchParams }) {
 
       <div>
         <DataTable
-          columns={columns(
-            setEnquiryId,
-            setType,
-            handleDelete,
-            openModal,
-            handleNavigate
-          )}
+          columns={columns(handleDelete, handleNavigate)}
           data={data}
-          searchParams={searchParams}
-          handleSearch={handleSearch}
         />
       </div>
-
-      {isModal && (
-        <Modal isOpen={isModal} onClose={closeModal}>
-          <EnquiryForm
-            handleUpdate={handleUpdate}
-            enquiryId={enquiryId}
-            type={type}
-          />
-        </Modal>
-      )}
     </div>
   );
 }

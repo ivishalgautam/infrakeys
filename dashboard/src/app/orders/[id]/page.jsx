@@ -206,15 +206,20 @@ export default function Page({ params: { id } }) {
                 {/* quantity */}
                 <div>
                   <Label>Quantity</Label>
-                  <Input
-                    disabled
-                    type="number"
-                    {...register(`items.${key}.quantity`, {
-                      required: "required",
-                      valueAsNumber: true,
-                    })}
-                    placeholder="Enter quantity"
-                  />
+                  <div className="relative">
+                    <Input
+                      disabled
+                      type="number"
+                      {...register(`items.${key}.quantity`, {
+                        required: "required",
+                        valueAsNumber: true,
+                      })}
+                      placeholder="Enter quantity"
+                    />
+                    <span className="absolute top-0 right-0 bg-primary text-white rounded p-2">
+                      {watch(`items.${key}.quantity_type`)}
+                    </span>
+                  </div>
                   {errors?.items?.[key] && (
                     <Small className={"text-red-500"}>
                       {errors.items[key]?.["quantity"]?.message}

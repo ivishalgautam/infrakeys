@@ -234,15 +234,20 @@ export default function Page({ params: { id } }) {
                 {/* quantity */}
                 <div>
                   <Label>Quantity</Label>
-                  <Input
-                    disabled
-                    type="number"
-                    {...register(`items.${key}.quantity`, {
-                      required: "required",
-                      valueAsNumber: true,
-                    })}
-                    placeholder="Enter quantity"
-                  />
+                  <div className="relative">
+                    <Input
+                      disabled
+                      type="number"
+                      {...register(`items.${key}.quantity`, {
+                        required: "required",
+                        valueAsNumber: true,
+                      })}
+                      placeholder="Enter quantity"
+                    />
+                    <span className="absolute top-0 right-0 bg-primary text-white rounded p-2">
+                      {watch(`items.${key}.quantity_type`)}
+                    </span>
+                  </div>
                   {errors?.items?.[key] && (
                     <Small className={"text-red-500"}>
                       {errors.items[key]?.["quantity"]?.message}
@@ -333,7 +338,7 @@ export default function Page({ params: { id } }) {
                 {/* gst */}
                 {!["pending", "not_available"].includes(
                   watch(`items.${key}.status`)
-                ) && (
+                ) ? (
                   <div>
                     <Label>GST</Label>
                     <Input
@@ -350,25 +355,28 @@ export default function Page({ params: { id } }) {
                       </Small>
                     )}
                   </div>
+                ) : (
+                  <></>
                 )}
 
                 {/* total amount */}
                 {!["pending", "not_available"].includes(
                   watch(`items.${key}.status`)
-                ) &&
-                  watch(`items.${key}.total_amount`) && (
-                    <div>
-                      <Label>Total amount</Label>
-                      <Input
-                        type="text"
-                        {...register(`items.${key}.total_amount`)}
-                        value={parseFloat(
-                          watch(`items.${key}.total_amount`)
-                        ).toFixed(2)}
-                        disabled
-                      />
-                    </div>
-                  )}
+                ) && watch(`items.${key}.total_amount`) ? (
+                  <div>
+                    <Label>Total amount</Label>
+                    <Input
+                      type="text"
+                      {...register(`items.${key}.total_amount`)}
+                      value={parseFloat(
+                        watch(`items.${key}.total_amount`)
+                      ).toFixed(2)}
+                      disabled
+                    />
+                  </div>
+                ) : (
+                  <></>
+                )}
 
                 {/* filters */}
                 {isObject(getFilters(key)) ? (
@@ -516,7 +524,7 @@ export default function Page({ params: { id } }) {
           </div>
 
           <div className="col-span-4">
-            <Label>Address</Label>
+            <Label>Other requirement details</Label>
             <Textarea {...register(`delivery_summary`)} disabled />
           </div>
 
