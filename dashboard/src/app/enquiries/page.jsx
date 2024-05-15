@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import Modal from "@/components/Modal.js";
 import { EnquiryForm } from "@/components/Forms/Enquiry.js";
-import { useRouter, useSearchParams } from "next/navigation.js";
+import { useRouter } from "next/navigation.js";
 
 async function updateEnquiry(data) {
   return http().put(`${endpoints.enquiries.getAll}/${data.id}`, data);

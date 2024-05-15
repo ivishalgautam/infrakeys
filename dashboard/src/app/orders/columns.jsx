@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "../../components/ui/button";
 import { ArrowUpDown } from "lucide-react";
-import Link from "next/link";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   DropdownMenu,
@@ -14,7 +13,7 @@ import {
 
 import moment from "moment";
 import { cn } from "@/lib/utils";
-import { Small } from "@/components/ui/typography";
+import { Badge } from "@/components/ui/badge";
 
 export const columns = (handleDelete, handleNavigate) => [
   {
@@ -25,9 +24,12 @@ export const columns = (handleDelete, handleNavigate) => [
     cell: ({ row }) => {
       const id = row.original.id;
       return (
-        <Small className={"bg-primary text-white rounded-full p-1 px-2"}>
-          <Link href={`/orders/${id}`}>{id}</Link>
-        </Small>
+        <Badge
+          className={"text-white cursor-pointer"}
+          onClick={() => handleNavigate(`/orders/${id}`)}
+        >
+          {id}
+        </Badge>
       );
     },
   },

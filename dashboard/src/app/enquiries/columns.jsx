@@ -1,8 +1,6 @@
 "use client";
 import { Button } from "../../components/ui/button";
 import { ArrowUpDown } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   DropdownMenu,
@@ -15,10 +13,15 @@ import {
 
 import moment from "moment";
 import { cn } from "@/lib/utils";
-import { Small } from "@/components/ui/typography";
 import { Badge } from "@/components/ui/badge";
 
-export const columns = (setEnquiryId, setType, handleDelete, openModal) => [
+export const columns = (
+  setEnquiryId,
+  setType,
+  handleDelete,
+  openModal,
+  handleNavigate
+) => [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -27,8 +30,11 @@ export const columns = (setEnquiryId, setType, handleDelete, openModal) => [
     cell: ({ row }) => {
       const id = row.original.id;
       return (
-        <Badge className={"text-white"}>
-          <Link href={`/enquiries/${id}`}>{id}</Link>
+        <Badge
+          className={"text-white cursor-pointer"}
+          onClick={() => handleNavigate(`/enquiries/${id}`)}
+        >
+          {id}
         </Badge>
       );
     },
