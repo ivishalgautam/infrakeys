@@ -231,7 +231,7 @@ export default function ProductTableWithFilter({ products }) {
                                     "flex cursor-pointer items-center justify-center gap-1 space-x-2 rounded-xl border p-2 text-xs capitalize transition-colors",
                                     {
                                       "border-primary/50 bg-primary/20":
-                                        watch(`products.${key}.${type}`) ===
+                                        watch(`products.${key}.item_type`) ===
                                         type,
                                     },
                                   )}
