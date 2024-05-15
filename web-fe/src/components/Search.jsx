@@ -3,7 +3,7 @@ import { Input } from "./ui/input";
 import { searchProducts } from "@/hooks/useSearchProducts";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Search } from "lucide-react";
 import { Table, TableBody, TableCell, TableRow } from "./ui/table";
@@ -97,6 +97,7 @@ export function ProductTable({ products }) {
   const { watch, control, getValues, setValue } = useForm({
     defaultValues: { products: [] },
   });
+  const router = useRouter();
   const { fields } = useFieldArray({ control, name: "products" });
 
   useEffect(() => {
@@ -112,15 +113,11 @@ export function ProductTable({ products }) {
         {fields?.map((product, key) => (
           <TableRow
             key={product.id}
-            className="text-xs *:bg-white *:py-1 *:font-medium hover:bg-primary/5"
+            className="group cursor-pointer text-xs *:bg-white *:py-1 *:font-medium hover:bg-primary/5"
+            onClick={() => router.push(`/products/${product.slug}`)}
           >
             <TableCell className="capitalize">
-              <Link
-                href={`/products/${product.slug}`}
-                className="transition-colors hover:text-primary"
-              >
-                {product.title}
-              </Link>
+              <span className="group-hover:text-primary">{product.title}</span>
             </TableCell>
             <TableCell className="flex items-center justify-end gap-4 space-x-2">
               <div className="flex items-center justify-center sm:justify-start">
@@ -134,24 +131,24 @@ export function ProductTable({ products }) {
                       onValueChange={field.onChange}
                     >
                       {["buy", "sell"].map((type) => (
-                        <div
+                        <Label
+                          htmlFor={`products.${key}.${type}`}
                           key={type}
                           className={cn(
-                            "flex items-center justify-center space-x-2 rounded-xl border p-2 transition-colors",
+                            "flex cursor-pointer items-center justify-center gap-1 space-x-2 rounded-xl border p-2 text-xs capitalize transition-colors",
                             {
                               "border-primary/50 bg-primary/20":
-                                watch("enquiry_type") === type,
+                                watch(`products.${key}.item_type`) === type,
                             },
                           )}
+                          onClick={(e) => e.stopPropagation()}
                         >
-                          <RadioGroupItem value={type} id={type} />
-                          <Label
-                            htmlFor={type}
-                            className="cursor-pointer capitalize"
-                          >
-                            {type}
-                          </Label>
-                        </div>
+                          <RadioGroupItem
+                            value={type}
+                            id={`products.${key}.${type}`}
+                          />
+                          {type}
+                        </Label>
                       ))}
                     </RadioGroup>
                   )}

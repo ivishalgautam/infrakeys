@@ -16,7 +16,7 @@ import { Check } from "lucide-react";
 
 export default function ProfileLayout({ children }) {
   const pathname = usePathname();
-  const { user } = useContext(MainContext);
+  const { user, setUser } = useContext(MainContext);
   const { data, isLoading } = useQuery({
     queryKey: ["points", user?.id],
     queryFn: fetchPoints,
@@ -74,7 +74,7 @@ export default function ProfileLayout({ children }) {
           <div className="grid grid-cols-12 gap-6">
             <div className="col-span-12 md:col-span-4 lg:col-span-3">
               <div className="rounded-md bg-white p-4">
-                <Sidebar {...user} pathname={pathname} />
+                <Sidebar {...user} setUser={setUser} pathname={pathname} />
               </div>
             </div>
             <div className="col-span-12 md:col-span-8 lg:col-span-9">
@@ -87,7 +87,7 @@ export default function ProfileLayout({ children }) {
   );
 }
 
-export function Sidebar({ pathname }) {
+export function Sidebar({ pathname, setUser }) {
   const router = useRouter();
 
   const tabs = [
@@ -131,6 +131,7 @@ export function Sidebar({ pathname }) {
           <Button
             onClick={() => {
               localStorage.clear();
+              setUser("");
               router.replace("/auth/login");
             }}
             className="flex w-full items-center justify-start gap-4 rounded-none bg-transparent px-4 py-6 text-sm text-black hover:bg-transparent"

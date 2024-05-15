@@ -170,10 +170,10 @@ export default function CartItemTable({
               )}
             </div>
             <div>
-              <Label>Delivery summary</Label>
+              <Label>Other requirement details</Label>
               <Textarea
                 {...register("delivery_summary")}
-                placeholder="Enter delivery summary"
+                placeholder="Enter Other requirement details"
               ></Textarea>
             </div>
             {/* delivery time */}
@@ -217,14 +217,14 @@ export default function CartItemTable({
               )}
             </div>
 
-            {/* payment method */}
+            {/* payment term */}
             <div>
-              <Label>Payment method</Label>
+              <Label>Payment term</Label>
               <Controller
                 control={control}
                 maxMenuHeight={230}
                 name="payment_method"
-                rules={{ required: "Select payment method" }}
+                rules={{ required: "Select payment term" }}
                 render={({ field: { onChange, value } }) => (
                   <Select
                     value={value}
@@ -232,7 +232,7 @@ export default function CartItemTable({
                     className="bg-white"
                   >
                     <SelectTrigger className="bg-white">
-                      <SelectValue placeholder="Select payment method" />
+                      <SelectValue placeholder="Select payment term" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>

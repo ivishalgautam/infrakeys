@@ -8,6 +8,7 @@ import { MainContext } from "@/store/context";
 import { Button } from "../ui/button";
 import { removeEmptyKeys } from "@/lib/removeEmptyKeys";
 import { ShoppingCart } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const addToCart = (data) => {
   return http().post(`${endpoints.cart.getAll}`, data);
@@ -15,6 +16,7 @@ const addToCart = (data) => {
 
 export default function AddToCart({ id, type, filters }) {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const { user } = useContext(MainContext);
   const createMutation = useMutation(addToCart, {
     onSuccess: (data) => {
@@ -27,11 +29,18 @@ export default function AddToCart({ id, type, filters }) {
     },
   });
 
-  const handleAddToCart = async (id, type) => {
+  const handleAddToCart = async (e, id, type) => {
+    e.stopPropagation();
+
+    if (!user) {
+      toast.warning("Please login first");
+      return router.push("/auth/login");
+    }
+
     if (!type) {
       return toast.warning("Please select type!");
     }
-    if (!user) return toast.warning("Please login first");
+
     createMutation.mutate({
       product_id: id,
       item_type: type,
@@ -40,7 +49,7 @@ export default function AddToCart({ id, type, filters }) {
   };
 
   return (
-    <Button variant="primary" onClick={() => handleAddToCart(id, type)}>
+    <Button variant="primary" onClick={(e) => handleAddToCart(e, id, type)}>
       <ShoppingCart size={16} /> &nbsp; Add
     </Button>
   );

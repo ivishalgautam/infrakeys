@@ -27,16 +27,16 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { FaWhatsapp } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 export default function ProductTableWithFilter({ products }) {
+  const router = useRouter();
   const [customProperties, setCustomProperties] = useState({});
   const { watch, control, getValues, setValue } = useForm({
     defaultValues: { products: [] },
   });
   const { fields } = useFieldArray({ control, name: "products" });
   const [filters, setFilters] = useState({});
-
-  console.log({ customProperties, filters });
 
   const handleCheckChange = (check, name, value) => {
     setFilters((prev) => {
@@ -201,12 +201,13 @@ export default function ProductTableWithFilter({ products }) {
               : getFilteredProducts()?.map((product, key) => (
                   <TableRow
                     key={product.id}
-                    className="text-xs *:bg-white *:py-1 *:font-medium hover:bg-primary/5"
+                    className="group cursor-pointer text-xs *:bg-white *:py-1 *:font-medium hover:bg-primary/5"
+                    onClick={() => router.push(`/products/${product.slug}`)}
                   >
                     <TableCell className="rounded-bl-md rounded-tl-md  capitalize">
                       <Link
                         href={`/products/${product.slug}`}
-                        className="transition-colors hover:text-primary"
+                        className="transition-colors group-hover:text-primary"
                       >
                         {product.title}
                       </Link>
@@ -223,24 +224,25 @@ export default function ProductTableWithFilter({ products }) {
                               onValueChange={field.onChange}
                             >
                               {["buy", "sell"].map((type) => (
-                                <div
+                                <Label
+                                  htmlFor={`products.${key}.${type}`}
                                   key={type}
                                   className={cn(
-                                    "flex items-center justify-center space-x-2 rounded-xl border p-2 transition-colors",
+                                    "flex cursor-pointer items-center justify-center gap-1 space-x-2 rounded-xl border p-2 text-xs capitalize transition-colors",
                                     {
                                       "border-primary/50 bg-primary/20":
-                                        watch("enquiry_type") === type,
+                                        watch(`products.${key}.${type}`) ===
+                                        type,
                                     },
                                   )}
+                                  onClick={(e) => e.stopPropagation()}
                                 >
-                                  <RadioGroupItem value={type} id={type} />
-                                  <Label
-                                    htmlFor={type}
-                                    className="cursor-pointer text-xs capitalize"
-                                  >
-                                    {type}
-                                  </Label>
-                                </div>
+                                  <RadioGroupItem
+                                    value={type}
+                                    id={`products.${key}.${type}`}
+                                  />
+                                  {type}
+                                </Label>
                               ))}
                             </RadioGroup>
                           )}
