@@ -4,7 +4,7 @@ import { ArrowUpDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Switch } from "@/components/ui/switch";
-import { Small } from "@/components/ui/typography";
+import { Muted, Small } from "@/components/ui/typography";
 import {
   CaretSortIcon,
   ChevronDownIcon,
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import moment from "moment";
+import { Badge } from "@/components/ui/badge";
 
 export const columns = (
   setType,
@@ -44,14 +45,16 @@ export const columns = (
     },
     cell: ({ row }) => {
       const name = row.original.name;
+      const username = row.original.username;
       const id = row.original.id;
       return (
-        <Link
-          href={`/customers/${id}/edit`}
-          className="hover:text-primary transition-colors capitalize"
+        <div
+          onClick={() => handleNavigate(`/users/${id}/edit`)}
+          className="hover:text-primary transition-colors capitalize cursor-pointer"
         >
           {name}
-        </Link>
+          {username && <Muted className={"lowercase"}>@{username}</Muted>}
+        </div>
       );
     },
   },
@@ -73,6 +76,20 @@ export const columns = (
     accessorKey: "email",
     header: ({ column }) => {
       return <Button variant="ghost">Email</Button>;
+    },
+  },
+  {
+    accessorKey: "role",
+    header: ({ column }) => {
+      return <Button variant="ghost">Status</Button>;
+    },
+    cell: ({ row }) => {
+      const role = row.original.role;
+      return (
+        <div className="flex items-center justify-start gap-2">
+          <Badge className={"uppercase text-xs"}>{role}</Badge>
+        </div>
+      );
     },
   },
   {

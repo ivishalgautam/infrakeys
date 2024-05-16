@@ -39,12 +39,7 @@ export default function LoginForm() {
 
       return response.data;
     } catch (error) {
-      // console.log(error);
-      if (isObject(error)) {
-        toast.error(error.message);
-      } else {
-        toast.error("Unable to complete your request.");
-      }
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }

@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
     //  || route.link.includes(router.pathname)
     // If the current route is not found in the array or the user's role is not allowed for this route
     if (!currentRoute || !currentRoute?.roles?.includes(currentUser?.role)) {
-      router.replace("/unauthorized");
+      router.replace("/login");
     }
   }, [pathname]);
 

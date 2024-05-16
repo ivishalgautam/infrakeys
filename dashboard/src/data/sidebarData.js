@@ -110,12 +110,12 @@ export const AllRoutes = [
     icon: BiCategoryAlt,
     roles: [ROLES.ADMIN],
   },
-  {
-    label: "Banners",
-    link: "/banners",
-    icon: Image,
-    roles: [ROLES.ADMIN],
-  },
+  // {
+  //   label: "Banners",
+  //   link: "/banners",
+  //   icon: Image,
+  //   roles: [ROLES.ADMIN],
+  // },
   // {
   //   label: "Industries",
   //   link: "/industries",

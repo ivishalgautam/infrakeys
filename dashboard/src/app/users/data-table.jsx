@@ -23,6 +23,15 @@ import {
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function DataTable({ columns, data }) {
   const [sorting, setSorting] = React.useState([]);
@@ -44,15 +53,40 @@ export function DataTable({ columns, data }) {
 
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-4 gap-2">
         <Input
-          placeholder="Filter customers by name"
+          placeholder="Filter users by name"
           value={table?.getColumn("name")?.getFilterValue() ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
+        <Select
+          onValueChange={(value) =>
+            table.getColumn("role")?.setFilterValue(value)
+          }
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select role" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Roles</SelectLabel>
+              <SelectItem value="subadmin">Subadmin</SelectItem>
+              <SelectItem value="user">User</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+
+        <Button
+          onClick={() => {
+            table.getColumn("name")?.setFilterValue("");
+            table.getColumn("role")?.setFilterValue("");
+          }}
+        >
+          Reset
+        </Button>
       </div>
 
       <div className="rounded-md border">

@@ -2,10 +2,10 @@
 
 import http from "@/utils/http";
 import { CustomerForm } from "../../../components/Forms/Customer.js";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { endpoints } from "@/utils/endpoints";
 import { toast } from "sonner";
-import { isObject } from "@/utils/object";
+import { useRouter } from "next/navigation.js";
 
 async function createCustomer(data) {
   return http().post(endpoints.users.getAll, data);
@@ -13,11 +13,13 @@ async function createCustomer(data) {
 
 export default function Create() {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const createMutation = useMutation(createCustomer, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       toast.success("User created.");
+      router.push("/users");
     },
     onError: (error) => {
       toast.error(error.message ?? "error");
