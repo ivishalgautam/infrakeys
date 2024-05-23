@@ -11,7 +11,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import http from "@/utils/http";
 import { endpoints } from "../../utils/endpoints.js";
 import { toast } from "sonner";
-import { isObject } from "@/utils/object";
 import { CustomerForm } from "@/components/Forms/Customer";
 import { useFetchUsers } from "@/hooks/useFetchUsers";
 import { useRouter } from "next/navigation";
@@ -39,7 +38,7 @@ export default function Customers() {
   const deleteMutation = useMutation(deleteUser, {
     onSuccess: () => {
       toast.success("User deleted.");
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries("users");
       closeModal();
     },
     onError: (error) => {
@@ -62,7 +61,7 @@ export default function Customers() {
         { is_active: status }
       );
       toast.success(response.message);
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries("users");
     } catch (error) {
       console.log(error);
     }
@@ -73,7 +72,7 @@ export default function Customers() {
   }
 
   if (isError) {
-    return JSON.stringify(error);
+    return error?.message ?? "error";
   }
 
   return (

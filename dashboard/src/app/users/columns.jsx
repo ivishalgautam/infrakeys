@@ -22,6 +22,7 @@ import {
 
 import moment from "moment";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export const columns = (
   setType,
@@ -93,21 +94,24 @@ export const columns = (
     },
   },
   {
-    accessorKey: "blocked",
+    accessorKey: "is_active",
     header: ({ column }) => {
       return <Button variant="ghost">Status</Button>;
     },
     cell: ({ row }) => {
-      const is_active = row.original.is_active;
+      const is_active = row.getValue("is_active");
       const id = row.original.id;
       return (
         <div className="flex items-center justify-start gap-2">
           <Switch
             checked={is_active}
-            onCheckedChange={() => handleCustomerStatus(id, !is_active)}
+            onCheckedChange={(value) => handleCustomerStatus(id, value)}
           />
           <Small
-            className={`capitalize ${is_active ? "text-green-500" : "text-red-500"}`}
+            className={cn("capitalize", {
+              "text-green-500": is_active,
+              "text-red-500": !is_active,
+            })}
           >
             {is_active ? "active" : "inactive"}
           </Small>
