@@ -4,8 +4,13 @@ import Link from "next/link";
 import { H1 } from "./ui/typography";
 import { useFetchFeaturedSubCategories } from "@/hooks/useFetchFeaturedSubCat";
 import SearchBox from "./Search";
+import { FlipWords } from "./ui/flip-words";
+import { ImagesSlider } from "./Image-slider";
+import banner1 from "../../public/banner-1.jpg";
+import banner2 from "../../public/banner-2.jpg";
 
 export default function Hero() {
+  const banners = [banner1, banner2];
   const { data: subCategories, isLoading: isSubCatLoading } =
     useFetchFeaturedSubCategories();
   const imageDomain = process.env.NEXT_PUBLIC_IMAGE_DOMAIN;
@@ -13,22 +18,20 @@ export default function Hero() {
   return (
     <section
       style={{ height: "calc(100vh - 30vh)" }}
-      className="relative overflow-hidden before:absolute before:inset-0 before:z-10 before:bg-black/60"
+      // className="relative overflow-hidden before:absolute before:inset-0 before:z-10 before:bg-black/60"
     >
-      <div className="absolute bottom-0">
-        <video src="./banner-video.mp4" autoPlay loop></video>
-      </div>
-
-      <div className="absolute inset-0 z-20 flex items-center justify-start p-4 lg:p-24">
-        <div className="grid grid-cols-12">
-          <div className="col-span-12 space-y-4 sm:col-span-10 md:col-span-8 lg:col-span-6">
-            <H1 className={"text-white lg:text-4xl"}>
-              India&apos;s Largest B2B Raw Materials Procurement & Credit
-              Platform
+      <div className="h-full">
+        {/* <video src="./banner-video.mp4" autoPlay loop></video> */}
+        <ImagesSlider images={banners}>
+          <div className="relative z-50 flex flex-col items-center justify-center gap-3">
+            <H1 className={"text-center text-white lg:text-4xl"}>
+              India&apos;s Largest B2B Raw Materials <br /> Procurement &{" "}
+              <FlipWords
+                words={"Lorem ipsum dolor sit amet consectetur adipisicing elit Cumque veritatis odit magni facilis provident commodi consequatur accusantium Quas optio".split(
+                  " ",
+                )}
+              />
             </H1>
-            <div>
-              <SearchBox />
-            </div>
             <div className="space-x-2">
               {isSubCatLoading ? (
                 <div className="flex gap-2">
@@ -45,7 +48,7 @@ export default function Hero() {
                     <Link
                       href={`/category/${cat.category_slug}/${cat.slug}`}
                       key={cat.id}
-                      className="flex items-center gap-1 rounded-full border border-white/40 bg-white/90 p-1 pr-3 text-xs text-gray-500 backdrop-blur-sm transition-colors hover:bg-white"
+                      className="flex items-center gap-1 rounded-full border border-white/40 bg-white/30 p-1 pr-3 text-xs text-white backdrop-blur-sm transition-colors hover:bg-white hover:bg-white/40"
                     >
                       <Image
                         width={20}
@@ -61,6 +64,12 @@ export default function Hero() {
               )}
             </div>
           </div>
+        </ImagesSlider>
+      </div>
+
+      <div className="-mt-8">
+        <div className="mx-auto max-w-[700px] px-4">
+          <SearchBox />
         </div>
       </div>
     </section>

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Input } from "./ui/input";
 import { searchProducts } from "@/hooks/useSearchProducts";
-import Link from "next/link";
 import { Button } from "./ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -11,18 +10,22 @@ import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import AddToCart from "./forms/add-to-cart";
+import { GeistMono } from "geist/font/mono";
 
 export default function SearchBox() {
   const [searchResults, setSearchResults] = useState([]);
   const [inputVal, setInputVal] = useState("");
   const throttleTimeoutRef = useRef(null);
   const pathname = usePathname();
+  const [isResultsVisible, setIsResultsVisible] = useState(false);
+  const containerRef = useRef(null);
 
   const handleSearch = async (value) => {
     if (!value.trim()) return setSearchResults([]);
     const searchQuery = value.replace(/\s+/g, "-");
     const results = await searchProducts(searchQuery);
     setSearchResults(results);
+    setIsResultsVisible(true);
   };
 
   useEffect(() => {
@@ -33,7 +36,7 @@ export default function SearchBox() {
       throttleTimeoutRef.current = setTimeout(() => {
         throttleTimeoutRef.current = null;
         handleSearch(value);
-      }, 1000);
+      }, 300);
     };
 
     throttledInputChange(inputVal);
@@ -55,36 +58,57 @@ export default function SearchBox() {
     };
   }, [pathname]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setIsResultsVisible(false);
+      } else {
+        setIsResultsVisible(true);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [containerRef]);
+
+  // console.log(isResultsVisible, searchResults);
+
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full" ref={containerRef}>
       <div
         className={cn("relative", {
-          "rounded-lg bg-white": searchResults?.length,
+          "rounded-lg bg-white": searchResults?.length && isResultsVisible,
         })}
       >
         <form>
           <div
             className={cn(
-              "flex w-full items-center justify-between rounded-md bg-white p-2",
+              "flex w-full items-center justify-between rounded-md bg-white p-3 shadow-md",
               {
-                "rounded-bl-none rounded-br-none": searchResults?.length,
+                "rounded-bl-none rounded-br-none":
+                  searchResults?.length && isResultsVisible,
               },
             )}
           >
             <Search className="ml-2 text-xl text-primary" size={30} />
             <Input
               placeholder="Search..."
-              className="border-none bg-transparent"
+              className={`border-none bg-transparent ${GeistMono.className} font-semibold`}
               onChange={(e) => setInputVal(e.target.value)}
               value={inputVal}
             />
-            <Button className={"rounded-md"} variant="primary">
+            <Button type="button" className={"rounded-md"} variant="primary">
               Search
             </Button>
           </div>
         </form>
-        {inputVal && searchResults?.length > 0 && (
-          <div className="absolute left-0 top-full z-10 h-48 w-full overflow-y-scroll rounded-bl-lg rounded-br-lg">
+        {inputVal && isResultsVisible && searchResults?.length > 0 && (
+          <div className="absolute left-0 top-full z-10 max-h-48 w-full overflow-y-scroll rounded-bl-lg rounded-br-lg shadow-md">
             <ProductTable products={searchResults} />
           </div>
         )}

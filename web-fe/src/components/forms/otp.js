@@ -16,8 +16,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-const sendOtp = async () => {
-  return await http().post(endpoints.otp.send);
+const sendOtp = async (data) => {
+  return await http().post(endpoints.otp.send, data);
 };
 
 export default function OTPForm({ phone }) {
@@ -88,7 +88,7 @@ export default function OTPForm({ phone }) {
   };
 
   const handleSendOtp = () => {
-    sendMutation.mutate();
+    sendMutation.mutate({ phone });
   };
 
   const handleVerifyOtp = (otp, phone) => {
