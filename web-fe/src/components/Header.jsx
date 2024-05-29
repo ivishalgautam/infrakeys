@@ -31,7 +31,7 @@ const size = 20;
 
 export const navList = [
   { title: "Home", href: "/", icon: <Home size={size} /> },
-  { title: "About", href: "/about", icon: <Info size={size} /> },
+  { title: "About", href: "", icon: <Info size={size} /> },
   { title: "Products", href: "/products", icon: <Box size={size} /> },
   { title: "Contact", href: "/contact", icon: <SquareUserRound size={size} /> },
 ];

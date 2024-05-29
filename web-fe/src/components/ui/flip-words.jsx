@@ -7,7 +7,7 @@ let interval;
 
 export const FlipWords = ({ words, duration = 3000, className }) => {
   const [currentWord, setCurrentWord] = useState(words[0]);
-
+  console.log(currentWord.split(""));
   useEffect(() => {
     startAnimation();
 
@@ -69,7 +69,7 @@ export const FlipWords = ({ words, duration = 3000, className }) => {
               delay: index * 0.08,
               duration: 0.4,
             }}
-            className="inline-block"
+            className={cn("inline-block", { "w-1.5": letter === " " })}
           >
             {letter}
           </motion.span>

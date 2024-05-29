@@ -24,14 +24,25 @@ export default function Hero() {
         {/* <video src="./banner-video.mp4" autoPlay loop></video> */}
         <ImagesSlider images={banners}>
           <div className="relative z-50 flex flex-col items-center justify-center gap-3">
-            <H1 className={"text-center text-white lg:text-4xl"}>
-              India&apos;s Largest B2B Raw Materials <br /> Procurement &{" "}
+            <h1
+              className={
+                "py-2 text-center text-3xl font-extrabold text-white lg:text-4xl"
+              }
+            >
+              India&apos;s largest B2B construction raw materials platform.
+              <br /> Extensive range of{" "}
               <FlipWords
-                words={"Lorem ipsum dolor sit amet consectetur adipisicing elit Cumque veritatis odit magni facilis provident commodi consequatur accusantium Quas optio".split(
-                  " ",
-                )}
+                words={[
+                  "Steel",
+                  "PEB Products",
+                  "Scaffolding",
+                  "Wire Mesh",
+                  "Binding Wire",
+                  "Doors & Windows",
+                  "Nails & Fasteners",
+                ]}
               />
-            </H1>
+            </h1>
             <div className="space-x-2">
               {isSubCatLoading ? (
                 <div className="flex gap-2">
