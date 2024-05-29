@@ -7,10 +7,10 @@ let interval;
 
 export const FlipWords = ({ words, duration = 3000, className }) => {
   const [currentWord, setCurrentWord] = useState(words[0]);
-  console.log(currentWord.split(""));
+  const [isAnimating, setIsAnimating] = useState(false);
   useEffect(() => {
     startAnimation();
-
+    setIsAnimating(true);
     return () => {
       clearInterval(interval);
     };
@@ -28,8 +28,19 @@ export const FlipWords = ({ words, duration = 3000, className }) => {
     }, duration);
   };
 
+  useEffect(() => {
+    if (!isAnimating)
+      setTimeout(() => {
+        startAnimation();
+      }, duration);
+  }, [isAnimating, duration, startAnimation]);
+
   return (
-    <AnimatePresence>
+    <AnimatePresence
+      onExitComplete={() => {
+        setIsAnimating(false);
+      }}
+    >
       <motion.div
         initial={{
           opacity: 0,
