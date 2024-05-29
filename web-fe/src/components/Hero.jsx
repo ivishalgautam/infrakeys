@@ -24,14 +24,14 @@ export default function Hero() {
         {/* <video src="./banner-video.mp4" autoPlay loop></video> */}
         <ImagesSlider images={banners}>
           <div className="relative z-50 flex flex-col items-center justify-center gap-3">
-            <h1 className={"py-2 text-center text-4xl text-white"}>
+            <h1 className={"py-2 text-center text-3xl text-white"}>
               India&apos;s largest
               <br />{" "}
               <span className="text-4xl font-extrabold">
                 B2B construction raw materials platform.
               </span>
               <br /> Extensive range of{" "}
-              <span className="text-3xl font-semibold">
+              <span className="text-4xl font-bold">
                 <FlipWords
                   words={[
                     "Steel",
