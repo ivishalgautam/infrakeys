@@ -24,24 +24,26 @@ export default function Hero() {
         {/* <video src="./banner-video.mp4" autoPlay loop></video> */}
         <ImagesSlider images={banners}>
           <div className="relative z-50 flex flex-col items-center justify-center gap-3">
-            <h1
-              className={
-                "py-2 text-center text-3xl font-extrabold text-white lg:text-4xl"
-              }
-            >
-              India&apos;s largest B2B construction raw materials platform.
+            <h1 className={"py-2 text-center text-4xl text-white"}>
+              India&apos;s largest
+              <br />{" "}
+              <span className="text-4xl font-extrabold">
+                B2B construction raw materials platform.
+              </span>
               <br /> Extensive range of{" "}
-              <FlipWords
-                words={[
-                  "Steel",
-                  "PEB Products",
-                  "Scaffolding",
-                  "Wire Mesh",
-                  "Binding Wire",
-                  "Doors & Windows",
-                  "Nails & Fasteners",
-                ]}
-              />
+              <span className="text-3xl font-semibold">
+                <FlipWords
+                  words={[
+                    "Steel",
+                    "PEB Products",
+                    "Scaffolding",
+                    "Wire Mesh",
+                    "Binding Wire",
+                    "Doors & Windows",
+                    "Nails & Fasteners",
+                  ]}
+                />
+              </span>
             </h1>
             <div className="space-x-2">
               {isSubCatLoading ? (
