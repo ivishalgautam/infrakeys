@@ -10,14 +10,14 @@ import {
 } from "../ui/table";
 import Link from "next/link";
 import AddToCart from "../forms/add-to-cart";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { cn } from "@/lib/utils";
-import { Button, buttonVariants } from "../ui/button";
+import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { ChevronDown } from "lucide-react";
-import { Muted, Small } from "../ui/typography";
+import { Muted } from "../ui/typography";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,12 +28,31 @@ import {
 } from "../ui/dropdown-menu";
 import { FaWhatsapp } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import Spinner from "../Spinner";
+import { useQuery } from "@tanstack/react-query";
+import { endpoints } from "@/utils/endpoints";
+import http from "@/utils/http";
 
-export default function ProductTableWithCategoriesAndFilter({ products }) {
+const fetchProducts = async () => {
+  const url = `${endpoints.products.getAll}`;
+  const { data } = await http().get(url);
+  return data;
+};
+
+export default function ProductTableWithCategoriesAndFilter() {
+  const {
+    data: products,
+    isLoading,
+    isFetching,
+  } = useQuery({
+    queryKey: ["products"],
+    queryFn: () => fetchProducts(),
+  });
+
   const router = useRouter();
 
   const [customProperties, setCustomProperties] = useState({});
-  const { watch, control, getValues, setValue } = useForm({
+  const { watch, control, setValue } = useForm({
     defaultValues: { products: [] },
   });
   const [filters, setFilters] = useState({});
@@ -82,10 +101,10 @@ export default function ProductTableWithCategoriesAndFilter({ products }) {
 
       return true;
     });
-  }, [filters]);
+  }, [filters, products]);
 
   useEffect(() => {
-    if (!(products?.length === 1 && products?.[0] === null)) {
+    if (products && !(products?.length === 1 && products?.[0] === null)) {
       setValue(
         "products",
         products?.map((product) => ({
@@ -109,6 +128,7 @@ export default function ProductTableWithCategoriesAndFilter({ products }) {
               ]
             : [String(sub_category_name).toLowerCase()],
         }));
+
         for (const cp of custom_properties) {
           const name = String(cp.name).toLowerCase();
 
@@ -131,7 +151,9 @@ export default function ProductTableWithCategoriesAndFilter({ products }) {
       }
     }
   }, [products]);
-  console.log(watch());
+
+  if (isLoading) return <Spinner />;
+
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-start gap-4">
