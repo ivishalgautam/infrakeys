@@ -1,5 +1,4 @@
-"use client";
-import { useRouter } from "next/navigation";
+import About from "@/components/about";
 
 export const metadata = {
   title:
@@ -11,6 +10,5 @@ export const metadata = {
 };
 
 export default function Page() {
-  const router = useRouter();
-  router.push("/");
+  return <About />;
 }
