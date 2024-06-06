@@ -7,16 +7,21 @@ import React from "react";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export async function generateMetadata({ params: { subCatSlug } }) {
+export async function generateMetadata({ params: { slug, subCatSlug } }) {
   const { data } = (
     await axios.get(`${baseUrl}${endpoints.subCategories.getAll}/${subCatSlug}`)
   )?.data;
 
   return {
-    title: data?.name,
+    title: data?.meta_title ?? data?.name,
     description: data?.meta_description,
     keywords: data?.meta_keywords,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/category/${slug}/${subCatSlug}`,
+    },
     openGraph: {
+      title: data?.meta_title ?? data?.name,
+      description: data?.meta_description,
       images: data?.image,
     },
   };

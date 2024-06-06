@@ -19,8 +19,13 @@ export async function generateMetadata({ params: { slug } }) {
     title: data?.meta_title ?? data?.name,
     description: data?.meta_description,
     keywords: data?.meta_keywords,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/category/${data?.slug ?? slug}`,
+    },
     openGraph: {
       images: data?.image,
+      title: data?.meta_title ?? data?.name,
+      description: data?.meta_description,
     },
   };
 }

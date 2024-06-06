@@ -23,20 +23,29 @@ export const metadata = {
     "Infrakeys, the best steel manufacturers in India, offered a wide range of steel, wire mesh & binding wire, scaffolding, doors & windows, nails & industrial products at reasonable prices.",
   keywords:
     "Steel Manufacturers in india, steel fabricators near me,industrial steel in faridabad, Steel supplier in India, scaffolding manufacturer in faridabad, TMT suppliers in faridabad, PEB manufacturers in India, PEB manufacturers, steel supplier in faridabad, steel manufacturers,india, industrial steel in india, scaffolding manufacturer in India, TMT suppliers in India, steel manufacturers india",
+  alternates: {
+    title:
+      "InfraKeys: Stainless Steel l Wire Mesh & Scaffolding Manufacturer in India",
+    description:
+      "Infrakeys, the best steel manufacturers in India, offered a wide range of steel, wire mesh & binding wire, scaffolding, doors & windows, nails & industrial products at reasonable prices.",
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}`,
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <GoogleTagManager gtmId="GTM-WN9SB6DD" />
-      <noscript>
-        <iframe
-          src="https://www.googletagmanager.com/ns.html?id=GTM-WN9SB6DD"
-          height="0"
-          width="0"
-          style={{ display: "none", visibility: "hidden" }}
-        ></iframe>
-      </noscript>
+      <head>
+        <GoogleTagManager gtmId="GTM-WN9SB6DD" />
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-WN9SB6DD"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript>
+      </head>
       <body
         className={`${GeistSans.className} overflow-x-hidden`}
         suppressHydrationWarning={true}

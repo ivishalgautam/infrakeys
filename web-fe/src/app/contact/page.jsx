@@ -7,6 +7,13 @@ export const metadata = {
     "Contact Infrakeys- Primary TMT, Channel, Purlins, Ms Angle, Wire Mesh, Steel Manufacturers, Scaffolding manufacturers, Nails & Fasteners Supplier in Haryana, India",
   keywords:
     "Primary TMT, SAIL TMT, MS Channel, Purlins, Ms Angle, Wire Mesh, Steel Manufacturers, Scaffolding manufacturers, Nails & Fasteners Supplier in Haryana, Steel Fabricators, TMT suppliers in Faridabad, TMT suppliers in India, PEB manufacturers in India, Quality building products Industrial Steel, Instant steel raw material, ISMC,ISA 9899061621",
+  alternates: {
+    title:
+      "Contact us +91 8130376622 - Wire Mesh, Steel Manufacturers, Scaffolding manufacturers",
+    description:
+      "Contact Infrakeys- Primary TMT, Channel, Purlins, Ms Angle, Wire Mesh, Steel Manufacturers, Scaffolding manufacturers, Nails & Fasteners Supplier in Haryana, India",
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/contact`,
+  },
 };
 export default function Page() {
   return (

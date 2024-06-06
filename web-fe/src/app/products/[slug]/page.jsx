@@ -10,8 +10,14 @@ export async function generateMetadata({ params: { slug } }) {
     title: data?.meta_title ?? data?.title,
     description: data?.meta_description,
     keywords: data?.meta_keywords,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/products/${data?.slug}`,
+    },
     openGraph: {
+      title: data?.meta_title ?? data?.title,
+      description: data?.meta_description,
       images: data?.image,
+      type: "website",
     },
   };
 }
