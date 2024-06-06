@@ -30,6 +30,9 @@ export const metadata = {
       "Infrakeys, the best steel manufacturers in India, offered a wide range of steel, wire mesh & binding wire, scaffolding, doors & windows, nails & industrial products at reasonable prices.",
     canonical: `${process.env.NEXT_PUBLIC_SITE_URL}`,
   },
+  verification: {
+    google: "kWcwy0Kag9MmpnCSMcrOL7VuQT5ZKjuBbZ6218QCpZw",
+  },
 };
 
 export default function RootLayout({ children }) {
