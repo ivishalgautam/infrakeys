@@ -73,10 +73,12 @@ export default async function CategoryPage({ params: { slug } }) {
 
             {/* banners */}
             <div className="col-span-12 overflow-hidden rounded-lg sm:col-span-7 md:col-span-8 lg:col-span-9">
-              <CategorySlider
-                banners={category?.banners}
-                categoryName={category?.name}
-              />
+              <div className="max-h-[375px]">
+                <CategorySlider
+                  banners={category?.banners}
+                  categoryName={category?.name}
+                />
+              </div>
             </div>
           </div>
         </div>
