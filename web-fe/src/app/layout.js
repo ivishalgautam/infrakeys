@@ -4,6 +4,8 @@ import QueryProvider from "@/components/QueryClientProvider";
 import { Toaster } from "sonner";
 import Context from "@/store/context";
 import Layout from "@/components/layout";
+import { GoogleTagManager } from "@next/third-parties/google";
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -26,6 +28,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <GoogleTagManager gtmId="GTM-WN9SB6DD" />
+      <noscript>
+        <iframe
+          src="https://www.googletagmanager.com/ns.html?id=GTM-WN9SB6DD"
+          height="0"
+          width="0"
+          style={{ display: "none", visibility: "hidden" }}
+        ></iframe>
+      </noscript>
       <body
         className={`${GeistSans.className} overflow-x-hidden`}
         suppressHydrationWarning={true}
