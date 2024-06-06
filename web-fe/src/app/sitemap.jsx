@@ -15,6 +15,7 @@ async function fetchCategories() {
   );
   return data;
 }
+
 async function fetchSubCategories() {
   const { data } = await axios.get(
     `${apiBaseUrl}${endpoints.subCategories.getAll}?page=1&limit=10000`,
@@ -24,6 +25,7 @@ async function fetchSubCategories() {
 
 export default async function Sitemap() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
   const { data: products } = await fetchProducts();
   const { data: categories } = await fetchCategories();
   const { data: subCategories } = await fetchSubCategories();
