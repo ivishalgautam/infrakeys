@@ -59,7 +59,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* <div className="mt-2 grid w-full grid-cols-12 gap-4 text-sm text-gray-900">
+        <div className="mt-2 grid w-full grid-cols-12 gap-4 text-sm text-gray-900">
           <div
             className={
               "col-span-4 flex h-full items-center justify-start gap-2 rounded-lg border bg-white p-2"
@@ -104,7 +104,7 @@ export default function Footer() {
               </p>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
 
       {/* copyright */}
