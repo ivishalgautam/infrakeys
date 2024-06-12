@@ -1,11 +1,15 @@
 import React from "react";
-import { H4, P } from "./ui/typography";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaYoutube,
+} from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { Mail, MapPin, Phone, PhoneCall } from "lucide-react";
+import { Mail, MapPin, PhoneCall } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -22,25 +26,50 @@ export default function Footer() {
             size="icon"
             className="rounded-full bg-black transition-transform hover:-translate-y-1"
           >
-            <FaFacebookF size={20} />
+            <a
+              href="https://www.facebook.com/profile.php?id=61555145229580"
+              target="_blank"
+            >
+              <FaFacebookF size={20} />
+            </a>
           </Button>
           <Button
             size="icon"
             className="rounded-full bg-black transition-transform hover:-translate-y-1"
           >
-            <FaInstagram size={20} />
+            <a href="javascript:void(0);">
+              <FaInstagram size={20} />
+            </a>
           </Button>
           <Button
             size="icon"
             className="rounded-full bg-black transition-transform hover:-translate-y-1"
           >
-            <FaXTwitter size={20} />
+            <a href="javascript:void(0);">
+              <FaXTwitter size={20} />
+            </a>
           </Button>
           <Button
             size="icon"
             className="rounded-full bg-black transition-transform hover:-translate-y-1"
           >
-            <FaLinkedinIn size={20} />
+            <a
+              href="https://www.linkedin.com/company/infrakeys-technologies/"
+              target="_blank"
+            >
+              <FaLinkedinIn size={20} />
+            </a>
+          </Button>
+          <Button
+            size="icon"
+            className="rounded-full bg-black transition-transform hover:-translate-y-1"
+          >
+            <a
+              href="https://www.youtube.com/@infrakeystechnologies"
+              target="_blank"
+            >
+              <FaYoutube size={20} />
+            </a>
           </Button>
         </div>
 
