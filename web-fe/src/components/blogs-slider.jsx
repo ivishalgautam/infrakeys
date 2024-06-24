@@ -43,6 +43,7 @@ export default function BlogsSlider() {
   });
 
   if (isLoading) return <Spinner />;
+  if (!data?.length) return;
 
   return (
     <div className="container space-y-8 p-8">
