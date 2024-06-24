@@ -4,12 +4,11 @@ import { GoChecklist } from "react-icons/go";
 import { TbUserQuestion } from "react-icons/tb";
 import {
   LayoutDashboard,
-  Image,
   Tag,
-  Factory,
   Users,
   MessageCircleQuestion,
   ShoppingCart,
+  NotebookPen,
 } from "lucide-react";
 
 // Define the roles for each user type
@@ -96,6 +95,24 @@ export const AllRoutes = [
     label: "Sub categories",
     link: "/sub-categories/view/[id]",
     icon: BiCategoryAlt,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "Blogs",
+    link: "/blogs",
+    icon: NotebookPen,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "Blogs",
+    link: "/blogs/create",
+    icon: NotebookPen,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "Blogs",
+    link: "/blogs/edit/[id]",
+    icon: NotebookPen,
     roles: [ROLES.ADMIN],
   },
   {

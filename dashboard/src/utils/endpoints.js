@@ -28,6 +28,9 @@ export const endpoints = {
   banners: {
     getAll: "/banners",
   },
+  blogs: {
+    getAll: "/blogs",
+  },
   brands: {
     getAll: "/brands",
   },

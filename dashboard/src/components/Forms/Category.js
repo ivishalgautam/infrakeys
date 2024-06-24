@@ -72,7 +72,7 @@ export function CategoryForm({
         const { data } = await http().get(
           `${endpoints.categories.getAll}/getById/${categoryId}`
         );
-
+        console.log({ data });
         data && setValue("name", data?.name);
         data && setValue("is_featured", data?.is_featured);
         data && setPictures([data?.image]);
