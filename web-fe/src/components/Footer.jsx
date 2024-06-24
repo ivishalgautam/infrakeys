@@ -37,18 +37,18 @@ export default function Footer() {
             size="icon"
             className="rounded-full bg-black transition-transform hover:-translate-y-1"
           >
-            <a href="javascript:void(0);">
+            <a href="https://www.instagram.com/infrakeys_technologies/">
               <FaInstagram size={20} />
             </a>
           </Button>
-          <Button
+          {/* <Button
             size="icon"
             className="rounded-full bg-black transition-transform hover:-translate-y-1"
           >
             <a href="javascript:void(0);">
               <FaXTwitter size={20} />
             </a>
-          </Button>
+          </Button> */}
           <Button
             size="icon"
             className="rounded-full bg-black transition-transform hover:-translate-y-1"

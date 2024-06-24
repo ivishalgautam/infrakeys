@@ -5,6 +5,7 @@ import OurServices from "@/components/our-services";
 import WhyChooseUs from "@/components/why-choose-us";
 import QueryForm from "@/components/forms/query";
 import TellUsRequirement from "@/components/tell-us-requirement";
+import BlogsSlider from "@/components/blogs-slider";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Hero />
       <FeaturedCategories />
       <OurServices />
+      <BlogsSlider />
       <WhyChooseUs />
       <div className="bg-white py-8 pt-28">
         <div className="container">

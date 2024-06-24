@@ -11,21 +11,16 @@ import { endpoints } from "@/utils/endpoints";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { Button, buttonVariants } from "./ui/button";
-import Spinner from "./Spinner";
-import { Box, Home, Info, Menu, SquareUserRound } from "lucide-react";
-import { cn } from "@/lib/utils";
 import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "./ui/sheet";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
+  Box,
+  Home,
+  Info,
+  Menu,
+  SquarePen,
+  SquareUserRound,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "./ui/sheet";
 
 const size = 20;
 
@@ -33,6 +28,7 @@ export const navList = [
   { title: "Home", href: "/", icon: <Home size={size} /> },
   { title: "About", href: "", icon: <Info size={size} /> },
   { title: "Products", href: "/products", icon: <Box size={size} /> },
+  { title: "Blogs", href: "/blogs", icon: <SquarePen size={size} /> },
   { title: "Contact", href: "/contact", icon: <SquareUserRound size={size} /> },
 ];
 

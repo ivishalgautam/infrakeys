@@ -35,6 +35,9 @@ export const endpoints = {
   brands: {
     getAll: "/brands",
   },
+  blogs: {
+    getAll: "/blogs",
+  },
   files: {
     upload: "/upload/files",
     getFiles: "/upload",
