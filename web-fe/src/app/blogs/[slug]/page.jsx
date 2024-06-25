@@ -90,6 +90,7 @@ export default async function Page({ params: { slug } }) {
               </div>
             )}
           </div>
+
           <div>
             <div className="h-auto rounded-lg bg-white p-8">
               <H5>Related blogs</H5>

@@ -52,35 +52,38 @@ export default function FeaturedCategories() {
   return (
     // <div className="bg-gradient-to-b from-primary/10 to-transparent py-8">
     <div className="bg-primary/5 py-8 pt-16">
-      <div className="container space-y-4">
+      <div className="container space-y-4 overflow-hidden">
         <H2 className={"text-center"}>Featured categories</H2>
         <div className="mt-2">
           <Swiper
             // spaceBetween={50}
             slidesPerView={1}
             breakpoints={breakpoints}
-            className="categories-slider"
+            className="categories-slider !overflow-visible"
             navigation
             modules={[Navigation]}
+            autoplay
           >
-            {isLoading
-              ? [...new Array(8)].map((_, key) => (
-                  <SwiperSlide key={key}>
-                    <Skeleton />
-                  </SwiperSlide>
-                ))
-              : data?.map(({ id, slug, name, image, sub_categories }) =>
-                  [...Array(1)].map((_, key) => (
-                    <SwiperSlide key={id} className="">
-                      <CategoryCard
-                        slug={slug}
-                        name={name}
-                        image={image}
-                        subCategories={sub_categories.slice(0, 5)}
-                      />
+            <div className="">
+              {isLoading
+                ? [...new Array(8)].map((_, key) => (
+                    <SwiperSlide key={key}>
+                      <Skeleton />
                     </SwiperSlide>
-                  )),
-                )}
+                  ))
+                : data?.map(({ id, slug, name, image, sub_categories }) =>
+                    [...Array(1)].map((_, key) => (
+                      <SwiperSlide key={id} className="">
+                        <CategoryCard
+                          slug={slug}
+                          name={name}
+                          image={image}
+                          subCategories={sub_categories.slice(0, 5)}
+                        />
+                      </SwiperSlide>
+                    )),
+                  )}
+            </div>
           </Swiper>
         </div>
       </div>

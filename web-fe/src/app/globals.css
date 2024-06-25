@@ -125,14 +125,14 @@
 .swiper-button-prev,
 .swiper-button-next {
   width: 60px !important;
-  top: 40% !important;
+  top: 50% !important;
 }
 
 .swiper-button-prev {
-  left: 0 !important;
+  left: -1.9rem !important;
 }
 .swiper-button-next {
-  right: 0 !important;
+  right: -1.9rem !important;
 }
 
 .swiper-button-prev::after {

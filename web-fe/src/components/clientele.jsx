@@ -11,10 +11,11 @@ export function Clientele() {
             <br /> SMEs & Corporates Served
           </H4>
           <p className={"mt-3 text-sm"}>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore
-            totam harum, dolore consequatur porro nesciunt labore inventore
-            distinctio, nobis optio, ratione nihil deserunt. Sequi minima eos
-            ipsum voluptatem voluptates velit beatae nobis commodi placeat.e
+            We take pride in serving a diverse range of clients across various
+            industries. Our commitment to excellence and personalized service
+            has earned us the trust and loyalty of numerous prestigious
+            organizations. Below is a selection of our esteemed clientele who
+            have partnered with us to achieve their goals and drive success.
           </p>
         </div>
         <div>
