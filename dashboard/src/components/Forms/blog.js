@@ -8,7 +8,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import http from "@/utils/http";
 import useFileUpload from "@/hooks/useFileUpload";
 import { endpoints } from "@/utils/endpoints";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
 import Title from "../Title";
 import { Button } from "../ui/button";
@@ -16,6 +16,7 @@ import { useFetchCategories } from "@/hooks/useFetchCategories";
 import Select from "react-select";
 import Spinner from "../Spinner";
 import { Editor } from "@tinymce/tinymce-react";
+import { H4 } from "../ui/typography";
 
 export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
   const {
@@ -37,6 +38,10 @@ export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
       meta_description: "",
       meta_keywords: "",
     },
+  });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "faq",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [text, setText] = useState("");
@@ -71,6 +76,7 @@ export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
       meta_title: data.meta_title,
       meta_description: data.meta_description,
       meta_keywords: data.meta_keywords,
+      faq: data.faq,
     };
 
     if (type === "create") {
@@ -102,6 +108,10 @@ export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
         data && setValue("meta_description", data.meta_description);
         data && setValue("meta_keywords", data.meta_keywords);
         data && setValue("slug", data.slug);
+        data && data?.faq && setValue("faq", data.faq);
+        // data?.faq?.map(({ question, answer }) => {
+        //   append({ question, answer });
+        // });
       } catch (error) {
         console.error(error);
       } finally {
@@ -255,6 +265,66 @@ export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
               </div>
             )}
           </div>
+        </div>
+
+        {/* faq */}
+        <div className="col-span-3 bg-white space-y-2">
+          <Title text={"FAQ"} />
+
+          <div className="space-y-4">
+            {fields.map((field, key) => (
+              <div key={key} className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <H4> Question: {key + 1}</H4>
+                  {type !== "view" && (
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="destructive"
+                      onClick={() => remove(key)}
+                    >
+                      <AiOutlineDelete size={20} />
+                    </Button>
+                  )}
+                </div>
+                <div>
+                  <Label>Question</Label>
+                  <Input
+                    {...register(`faq.${key}.question`, {
+                      required: "required",
+                    })}
+                    placeholder="Question"
+                    disabled={type === "view"}
+                  />
+                  {errors.faq && (
+                    <span className="text-red-600">
+                      {errors.faq?.[key]?.question?.message}
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <Label>Answer</Label>
+                  <Textarea
+                    {...register(`faq.${key}.answer`, {
+                      required: "required",
+                    })}
+                    placeholder="Answer"
+                    disabled={type === "view"}
+                  />
+                  {errors.faq && (
+                    <span className="text-red-600">
+                      {errors.faq?.[key]?.answer?.message}
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+          {type !== "view" && (
+            <Button type="button" onClick={() => append()}>
+              Add
+            </Button>
+          )}
         </div>
 
         <div className="space-y-4">
