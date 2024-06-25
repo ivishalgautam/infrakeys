@@ -4,7 +4,7 @@ import { H4 } from "./ui/typography";
 export function Clientele() {
   return (
     <div className="bg-white p-4">
-      <div className="container grid gap-4  lg:grid-cols-2">
+      <div className="container grid gap-4 lg:grid-cols-2">
         <div className="flex flex-col items-start justify-center">
           <H4 className={"m-0 text-primary"}>
             <span className="text-5xl font-bold text-black">1 Million+</span>{" "}

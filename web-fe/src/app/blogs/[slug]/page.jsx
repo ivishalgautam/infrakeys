@@ -62,7 +62,7 @@ export default async function Page({ params: { slug } }) {
         </div>
 
         <div className="grid grid-cols-4 gap-4">
-          <div className="col-span-3 space-y-4 rounded-lg bg-white p-8">
+          <div className="col-span-4 space-y-4 rounded-lg bg-white p-8 lg:col-span-3">
             {/* date */}
             <div className="flex items-center justify-start gap-1 text-xs font-medium text-gray-400">
               <Clock size={18} /> {moment(blog.created_at).format("DD MMM, Y")}
@@ -74,7 +74,7 @@ export default async function Page({ params: { slug } }) {
             {/* blog content */}
             <div className="w-full">
               <div
-                className="prose prose-slate prose-orange w-full rounded-lg md:prose-lg lg:prose-lg  prose-h1:mb-0 prose-h1:mt-5 prose-h2:mb-0 prose-h2:mt-5 prose-h3:mb-0 prose-h3:mt-5  prose-h4:mb-0 prose-h4:mt-5 prose-h5:mb-0 prose-h5:mt-5 prose-h6:mb-0 prose-h6:mt-5 prose-p:m-0 prose-img:rounded-xl "
+                className="prose prose-slate prose-orange w-full rounded-lg lg:prose-lg prose-h1:mb-0 prose-h1:mt-5 prose-h2:mb-0 prose-h2:mt-5 prose-h3:mb-0 prose-h3:mt-5  prose-h4:mb-0 prose-h4:mt-5 prose-h5:mb-0 prose-h5:mt-5 prose-h6:mb-0 prose-h6:mt-5 prose-p:m-0 prose-img:rounded-xl"
                 dangerouslySetInnerHTML={{ __html: blog?.content }}
               />
             </div>
@@ -91,7 +91,7 @@ export default async function Page({ params: { slug } }) {
             )}
           </div>
 
-          <div>
+          <div className="col-span-4 lg:col-span-1">
             <div className="h-auto rounded-lg bg-white p-8">
               <H5>Related blogs</H5>
               <div className="mt-2 space-y-2">
