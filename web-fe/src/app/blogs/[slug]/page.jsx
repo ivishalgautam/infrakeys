@@ -1,4 +1,5 @@
-import { H1, H5, H6, P } from "@/components/ui/typography";
+import FAQAccordion from "@/components/faq-accordion";
+import { H1, H4, H5, H6, P } from "@/components/ui/typography";
 import { endpoints } from "@/utils/endpoints";
 import axios from "axios";
 import { Clock } from "lucide-react";
@@ -10,7 +11,6 @@ const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export async function generateMetadata({ params: { slug } }) {
   const data = await getBlog(slug);
-  console.log(data);
   return {
     title: data?.meta_title ? data?.meta_title : data?.title,
     description: data?.meta_description,
@@ -73,15 +73,27 @@ export default async function Page({ params: { slug } }) {
             {/* blog content */}
             <div className="w-full">
               <div
-                className="prose prose-img:rounded-xl prose-orange prose-slate md:prose-lg lg:prose-lg prose-h1:mb-0  prose-h2:mb-0 prose-h3:mb-0 prose-h4:mb-0 prose-h5:mb-0 prose-h6:mb-0 prose-h1:mt-5  prose-h2:mt-5 prose-h3:mt-5 prose-h4:mt-5 prose-h5:mt-5 prose-h6:mt-5 prose-p:m-0 w-full rounded-lg "
+                className="prose prose-slate prose-orange w-full rounded-lg md:prose-lg lg:prose-lg  prose-h1:mb-0 prose-h1:mt-5 prose-h2:mb-0 prose-h2:mt-5 prose-h3:mb-0 prose-h3:mt-5  prose-h4:mb-0 prose-h4:mt-5 prose-h5:mb-0 prose-h5:mt-5 prose-h6:mb-0 prose-h6:mt-5 prose-p:m-0 prose-img:rounded-xl "
                 dangerouslySetInnerHTML={{ __html: blog?.content }}
               />
             </div>
+
+            {/* faq */}
+            {blog?.faq && (
+              <div className="!mt-16">
+                <H4 className={"text-primary"}>FAQs</H4>
+
+                <div>
+                  <FAQAccordion faq={blog?.faq} />
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="rounded-lg bg-white p-8">
             <H5>Recent blogs</H5>
             <div className="mt-2 space-y-2">
+              {!relatedBlogs.length && <P>No recent blogs</P>}
               {relatedBlogs?.map((blog) => (
                 <div key={blog.id} className="group">
                   <Link

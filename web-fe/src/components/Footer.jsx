@@ -75,7 +75,7 @@ export default function Footer() {
 
         <div className="">
           <ul className="flex items-center justify-center gap-8">
-            {["home", "about", "products", "contact"].map((item) => (
+            {["home", "about", "products", "blogs", "contact"].map((item) => (
               <li key={item} className="">
                 <Link
                   href={item === "home" ? "/" : `/${item}`}

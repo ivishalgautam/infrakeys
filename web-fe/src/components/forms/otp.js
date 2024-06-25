@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { H1, P, Small } from "@/components/ui/typography";
+import { H1, Small } from "@/components/ui/typography";
 import { useForm, Controller } from "react-hook-form";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
@@ -14,7 +13,6 @@ import http from "@/utils/http";
 import { endpoints } from "@/utils/endpoints";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 
 const sendOtp = async (data) => {
   return await http().post(endpoints.otp.send, data);
@@ -130,7 +128,7 @@ export default function OTPForm({ phone }) {
           {/* {errors.otp && <span>{errors.otp.message}</span>} */}
           <Small className={"text-center"}>Enter your one-time password.</Small>
         </div>
-        <div className="space-x-2">
+        <div className="flex items-center justify-start gap-2">
           <Button variant="primary">
             {loading && (
               <span className="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white/30 border-t-white"></span>

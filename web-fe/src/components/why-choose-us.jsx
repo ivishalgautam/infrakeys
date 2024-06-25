@@ -1,17 +1,14 @@
 "use client";
 import React from "react";
-import { H2, H3, H4, H6, P } from "./ui/typography";
+import { H2, H3, P } from "./ui/typography";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { ShoppingCart, Star, Truck, Wallet } from "lucide-react";
-import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import { Autoplay } from "swiper/modules";
 import { CardContainer } from "./ui/3d-card";
-import { cn } from "@/lib/utils";
 SwiperCore.use([Autoplay]);
 
-const size = 50;
+const size = 20;
 
 const data = {
   buyer: [
@@ -62,18 +59,18 @@ const data = {
 
 export default function WhyChooseUs() {
   return (
-    <div className="bg-primary/5 py-8">
+    <div className="bg-white py-8">
       <div className="container">
         <H2 className={"text-center"}>Why Choose Us</H2>
         <div className="mt-2">
           <Tabs defaultValue="buyer" className="w-full">
             <div className="mb-8 flex items-center justify-center">
-              <TabsList className="mx-auto w-full text-center md:w-2/3 lg:w-1/4">
+              <TabsList className="mx-auto w-full rounded-full bg-gray-100 text-center md:w-2/3 lg:w-1/4">
                 {Object.keys(data).map((key) => (
                   <TabsTrigger
                     key={key}
                     value={key}
-                    className="w-full capitalize"
+                    className="w-full rounded-full capitalize"
                   >
                     {key}
                   </TabsTrigger>
@@ -87,9 +84,6 @@ export default function WhyChooseUs() {
             ))}
           </Tabs>
         </div>
-        <div className="relative z-10 -mb-20 mt-10">
-          <Clientele />
-        </div>
       </div>
     </div>
   );
@@ -99,115 +93,24 @@ export function Cards({ data }) {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
       {data.map((item, key) => (
-        <CardContainer
-          className={"h-full w-full cursor-pointer shadow-md"}
-          key={key}
-        >
-          <div className="h-full w-full space-y-4 rounded-lg border border-primary bg-white p-8 text-black">
-            <div className="flex size-14 items-center justify-end overflow-hidden rounded-md bg-primary text-white">
-              <div
-                className={cn("-mr-3", {
-                  "scale-x-[-1]": key === 1 || key === 2,
-                })}
-              >
-                {item.icon}
-              </div>
+        <CardContainer className={"h-full w-full cursor-pointer"} key={key}>
+          <div className="flex h-full w-full flex-col items-center justify-center space-y-4 rounded-lg bg-white p-8 text-black">
+            <div className="flex items-center justify-end overflow-hidden rounded-full bg-gray-100 p-6 text-white">
+              <div className={"rounded-full bg-primary p-3"}>{item.icon}</div>
             </div>
             <H3
               className={
-                "relative before:absolute before:-bottom-2 before:left-0 before:h-1 before:w-14 before:bg-primary"
+                "relative text-center before:absolute before:-bottom-2 before:left-1/2 before:h-1 before:w-14 before:-translate-x-1/2 before:bg-primary"
               }
             >
               {item.title}
             </H3>
-            <P>{item.content}</P>
+            <P className={"text-center text-sm font-medium text-gray-600"}>
+              {item.content}
+            </P>
           </div>
         </CardContainer>
       ))}
-    </div>
-  );
-}
-
-export function Clientele() {
-  const breakpoints = {
-    1200: {
-      slidesPerView: 6,
-      spaceBetween: 24,
-    },
-    1024: {
-      slidesPerView: 4,
-      spaceBetween: 20,
-    },
-    768: {
-      slidesPerView: 3,
-      spaceBetween: 20,
-    },
-    550: {
-      slidesPerView: 2,
-      spaceBetween: 12,
-    },
-    500: {
-      slidesPerView: 1,
-      spaceBetween: 12,
-    },
-    0: {
-      slidesPerView: 1,
-      spaceBetween: 12,
-    },
-  };
-
-  return (
-    <div>
-      <H4>1 Million+ SMEs & Corporates Served</H4>
-      <div className="mt-2 rounded-lg bg-white shadow-md">
-        <Swiper
-          spaceBetween={10}
-          slidesPerView={1}
-          breakpoints={breakpoints}
-          className="py-2"
-          autoplay={true}
-          // onSlideChange={() => console.log("slide change")}
-          // onSwiper={(swiper) => console.log(swiper)}
-        >
-          {[
-            "/Ahulwalia_Contracts.png",
-            "/Interarch_logo.png",
-            "/KALPATPOWR.NS_logo.png",
-            "/Kirby.png",
-            "/L&T.png",
-            "/Navayuga.png",
-            "/NCRTC_LOGO.png",
-            "/Shapoorji_Pallonji.png",
-            "/Tata_Projects_Logo.png",
-          ].map((item, key) => (
-            <SwiperSlide key={key}>
-              <div>
-                <Image
-                  width={100}
-                  height={100}
-                  src={item}
-                  alt={item
-                    .replace("/", "")
-                    .replace(".png", "")
-                    .replace(".", "")
-                    .split("_")
-                    .join(" ")}
-                  style={{
-                    background: "#fff",
-                    width: "100%",
-                    height: "auto",
-                    backgroundPosition: "center",
-                    objectFit: "contain",
-                    borderRadius: "8px",
-                    margin: "1rem",
-                    padding: "10px",
-                  }}
-                />
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
     </div>
   );
 }

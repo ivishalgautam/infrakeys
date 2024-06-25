@@ -1,15 +1,8 @@
 "use client";
 import React, { useContext, useEffect } from "react";
-import { H3, P } from "../ui/typography";
+import { H3 } from "../ui/typography";
 import { cn } from "@/lib/utils";
 import { Controller, useForm } from "react-hook-form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -60,7 +53,6 @@ export default function QueryForm({ type, enquirytype = "buy", productId }) {
 
   const createMutation = useMutation(createQuery, {
     onSuccess: (data) => {
-      console.log({ data });
       toast.success("Enquiry sent");
       reset();
     },
