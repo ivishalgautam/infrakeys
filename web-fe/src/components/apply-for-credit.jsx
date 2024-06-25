@@ -6,6 +6,7 @@ import http from "@/utils/http";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Button } from "./ui/button";
 
 const applyForCredit = async (data) => {
   return await http().put(`${endpoints.users.getAll}/${data.id}`, data);
@@ -33,5 +34,9 @@ export default function ApplyForCredit() {
     createMutation.mutate({ id: user.id, channel_financing: "initiated" });
   }
 
-  return <div onClick={handleApplyForCredit}>ApplyForCredit</div>;
+  return (
+    <div onClick={handleApplyForCredit}>
+      <Button variant="primary">Apply for credit</Button>
+    </div>
+  );
 }

@@ -5,6 +5,7 @@ import WhyChooseUs from "@/components/why-choose-us";
 import TellUsRequirement from "@/components/tell-us-requirement";
 import BlogsSlider from "@/components/blogs-slider";
 import { Clientele } from "@/components/clientele";
+import ApplyForCredit from "@/components/apply-for-credit";
 
 export default function Home() {
   return (
@@ -19,6 +20,9 @@ export default function Home() {
         <div className="container">
           <TellUsRequirement type={"horizontal"} />
         </div>
+      </div>
+      <div className="fixed -right-12 top-2/3 -rotate-90">
+        <ApplyForCredit />
       </div>
     </div>
   );

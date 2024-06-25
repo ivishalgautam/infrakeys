@@ -92,9 +92,11 @@ export default async function Page({ params: { slug } }) {
           </div>
           <div>
             <div className="h-auto rounded-lg bg-white p-8">
-              <H5>Recent blogs</H5>
+              <H5>Related blogs</H5>
               <div className="mt-2 space-y-2">
-                {!relatedBlogs?.length && <P>No recent blogs</P>}
+                {!relatedBlogs?.length && (
+                  <P className={"text-xs"}>No related blogs</P>
+                )}
                 {relatedBlogs?.map((blog) => (
                   <div key={blog.id} className="group">
                     <Link
