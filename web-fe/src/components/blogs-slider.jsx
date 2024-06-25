@@ -8,6 +8,7 @@ import Spinner from "./Spinner";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { H2 } from "./ui/typography";
+import { Navigation } from "swiper/modules";
 
 async function fetchBlogs() {
   return await http().get(endpoints.blogs.getAll);
@@ -57,6 +58,7 @@ export default function BlogsSlider() {
           onSwiper={(swiper) => console.log(swiper)}
           breakpoints={breakpoints}
           navigation
+          modules={[Navigation]}
           autoplay
         >
           {data?.map((blog) => (
