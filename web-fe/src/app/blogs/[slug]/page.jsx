@@ -55,6 +55,7 @@ export default async function Page({ params: { slug } }) {
             src={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${blog?.image}`}
             width={1000}
             height={1000}
+            quality={100}
             alt={blog?.title}
             className="h-[30rem] w-full rounded-md object-cover object-center"
           />
