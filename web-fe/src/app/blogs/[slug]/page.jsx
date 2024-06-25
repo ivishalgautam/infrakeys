@@ -79,7 +79,7 @@ export default async function Page({ params: { slug } }) {
             </div>
 
             {/* faq */}
-            {blog?.faq && (
+            {Array.isArray(blog?.faq) && blog?.faq?.length && (
               <div className="!mt-16">
                 <H4 className={"text-primary"}>FAQs</H4>
 
