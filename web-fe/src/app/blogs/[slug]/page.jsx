@@ -89,55 +89,56 @@ export default async function Page({ params: { slug } }) {
               </div>
             )}
           </div>
-
-          <div className="rounded-lg bg-white p-8">
-            <H5>Recent blogs</H5>
-            <div className="mt-2 space-y-2">
-              {!relatedBlogs.length && <P>No recent blogs</P>}
-              {relatedBlogs?.map((blog) => (
-                <div key={blog.id} className="group">
-                  <Link
-                    href={`/blogs/${blog.slug}`}
-                    className="flex items-start justify-start gap-4"
-                  >
-                    <div>
-                      <figure className="h-16 w-16">
-                        <Image
-                          src={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${blog.image}`}
-                          width={100}
-                          height={100}
-                          alt={blog.title}
-                          className="h-full w-full rounded-md object-cover object-center"
-                        />
-                      </figure>
-                    </div>
-
-                    <div className="">
+          <div>
+            <div className="h-auto rounded-lg bg-white p-8">
+              <H5>Recent blogs</H5>
+              <div className="mt-2 space-y-2">
+                {!relatedBlogs.length && <P>No recent blogs</P>}
+                {relatedBlogs?.map((blog) => (
+                  <div key={blog.id} className="group">
+                    <Link
+                      href={`/blogs/${blog.slug}`}
+                      className="flex items-start justify-start gap-4"
+                    >
                       <div>
-                        <H6
-                          className={
-                            "line-clamp-1 text-ellipsis text-sm transition-colors group-hover:text-primary"
-                          }
-                        >
-                          {blog.title}
-                        </H6>
-                        <p
-                          className={
-                            "m-0 line-clamp-1 text-ellipsis text-xs text-gray-500"
-                          }
-                        >
-                          {blog.short_description}
-                        </p>
+                        <figure className="h-16 w-16">
+                          <Image
+                            src={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${blog.image}`}
+                            width={100}
+                            height={100}
+                            alt={blog.title}
+                            className="h-full w-full rounded-md object-cover object-center"
+                          />
+                        </figure>
                       </div>
 
-                      <div className="mt-2 flex items-center justify-start gap-1 text-[10px] font-medium text-gray-400">
-                        <Clock size={15} />{" "}
-                        {moment(blog.created_at).format("DD MMM, Y")}
+                      <div className="">
+                        <div>
+                          <H6
+                            className={
+                              "line-clamp-1 text-ellipsis text-sm transition-colors group-hover:text-primary"
+                            }
+                          >
+                            {blog.title}
+                          </H6>
+                          <p
+                            className={
+                              "m-0 line-clamp-1 text-ellipsis text-xs text-gray-500"
+                            }
+                          >
+                            {blog.short_description}
+                          </p>
+                        </div>
+
+                        <div className="mt-2 flex items-center justify-start gap-1 text-[10px] font-medium text-gray-400">
+                          <Clock size={15} />{" "}
+                          {moment(blog.created_at).format("DD MMM, Y")}
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                </div>
-              ))}
+                    </Link>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
