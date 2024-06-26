@@ -91,7 +91,7 @@ export default function Footer() {
         <div className="mt-2 grid w-full grid-cols-12 gap-4 text-sm text-gray-900">
           <div
             className={
-              "col-span-4 flex h-full items-center justify-start gap-2 rounded-lg border bg-white p-2"
+              "col-span-12 flex h-full items-center justify-start gap-2 rounded-lg border bg-white p-2 sm:col-span-6 lg:col-span-4"
             }
           >
             <div className="flex size-10 items-center justify-center rounded-md bg-primary text-white">
@@ -105,7 +105,7 @@ export default function Footer() {
 
           <div
             className={
-              "col-span-4 flex h-full items-center justify-start gap-2 rounded-lg border bg-white p-2"
+              "col-span-12 flex h-full items-center justify-start gap-2 rounded-lg border bg-white p-2 sm:col-span-6 lg:col-span-4"
             }
           >
             <div className="flex size-10 items-center justify-center rounded-md bg-primary text-white">
@@ -119,7 +119,7 @@ export default function Footer() {
 
           <div
             className={
-              "col-span-4 flex h-full items-center justify-start gap-2 rounded-lg border bg-white p-2"
+              "col-span-12 flex h-full items-center justify-start gap-2 rounded-lg border bg-white p-2 lg:col-span-4"
             }
           >
             <div className="flex size-10 items-center justify-center rounded-md bg-primary text-white">
