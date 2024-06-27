@@ -32,7 +32,7 @@ export const metadata = {
       "InfraKeys: Stainless Steel l Wire Mesh & Scaffolding Manufacturer in India",
     description:
       "Infrakeys, the best steel manufacturers in India, offered a wide range of steel, wire mesh & binding wire, scaffolding, doors & windows, nails & industrial products at reasonable prices.",
-    images: [banner1],
+    images: "/banner-1.jpg",
   },
   verification: {
     google: "kWcwy0Kag9MmpnCSMcrOL7VuQT5ZKjuBbZ6218QCpZw",
