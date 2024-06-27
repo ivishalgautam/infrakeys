@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { H1 } from "./ui/typography";
 import { useFetchFeaturedSubCategories } from "@/hooks/useFetchFeaturedSubCat";
 import SearchBox from "./Search";
 import { FlipWords } from "./ui/flip-words";

@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import Context from "@/store/context";
 import Layout from "@/components/layout";
 import { GoogleTagManager } from "@next/third-parties/google";
+import banner1 from "../../public/banner-1.jpg";
 
 // Import Swiper styles
 import "swiper/css";
@@ -31,6 +32,7 @@ export const metadata = {
       "InfraKeys: Stainless Steel l Wire Mesh & Scaffolding Manufacturer in India",
     description:
       "Infrakeys, the best steel manufacturers in India, offered a wide range of steel, wire mesh & binding wire, scaffolding, doors & windows, nails & industrial products at reasonable prices.",
+    images: [banner1],
   },
   verification: {
     google: "kWcwy0Kag9MmpnCSMcrOL7VuQT5ZKjuBbZ6218QCpZw",
