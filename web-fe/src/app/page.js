@@ -6,6 +6,7 @@ import TellUsRequirement from "@/components/tell-us-requirement";
 import BlogsSlider from "@/components/blogs-slider";
 import { Clientele } from "@/components/clientele";
 import ApplyForCredit from "@/components/apply-for-credit";
+import OurPartners from "@/components/our-partners";
 
 export default function Home() {
   return (
@@ -16,6 +17,9 @@ export default function Home() {
       <BlogsSlider />
       <WhyChooseUs />
       <Clientele />
+      <div className="bg-white pt-10">
+        <OurPartners />
+      </div>
       <div className="bg-white py-8 pt-28">
         <div className="container">
           <TellUsRequirement type={"horizontal"} />

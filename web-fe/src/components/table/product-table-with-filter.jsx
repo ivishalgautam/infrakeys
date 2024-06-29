@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -14,10 +14,10 @@ import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { cn } from "@/lib/utils";
-import { Button, buttonVariants } from "../ui/button";
+import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { ChevronDown } from "lucide-react";
-import { Muted, Small } from "../ui/typography";
+import { Muted } from "../ui/typography";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,15 +28,33 @@ import {
 } from "../ui/dropdown-menu";
 import { FaWhatsapp } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+
+const sendWhatsAppEnq = async (data) => {
+  return await http().post(
+    `${endpoints.enquiries.getAll}/whatsapp/${data.id}`,
+    data,
+  );
+};
 
 export default function ProductTableWithFilter({ products }) {
   const router = useRouter();
   const [customProperties, setCustomProperties] = useState({});
-  const { watch, control, getValues, setValue } = useForm({
+  const { watch, control, setValue } = useForm({
     defaultValues: { products: [] },
   });
   const { fields } = useFieldArray({ control, name: "products" });
   const [filters, setFilters] = useState({});
+
+  const whatsAppEnqMutation = useMutation(sendWhatsAppEnq, {
+    onSuccess: (data) => {
+      toast.success(data?.message ?? "Enquiry sent");
+    },
+    onError: (error) => {
+      console.error({ error });
+      toast.error(error.message ?? "error");
+    },
+  });
 
   const handleCheckChange = (check, name, value) => {
     setFilters((prev) => {
@@ -48,6 +66,12 @@ export default function ProductTableWithFilter({ products }) {
 
       return { ...prev, [name]: updatedArray };
     });
+  };
+
+  const handleWhatsAppEnq = (e, id, enqFor) => {
+    e.stopPropagation();
+    if (!enqFor) return toast.warning("Please select enquiry for.");
+    whatsAppEnqMutation.mutate({ id, enqFor });
   };
 
   const getFilteredProducts = useCallback(() => {
@@ -256,6 +280,13 @@ export default function ProductTableWithFilter({ products }) {
                       <Button
                         size="icon"
                         className="bg-[#00a884] text-white hover:bg-[#00a884]"
+                        onClick={(e) =>
+                          handleWhatsAppEnq(
+                            e,
+                            product.id,
+                            watch(`products.${key}.item_type`),
+                          )
+                        }
                       >
                         <FaWhatsapp size={20} />
                       </Button>

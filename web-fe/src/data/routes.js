@@ -10,7 +10,7 @@ export const allRoutes = [
   },
   {
     link: "/about",
-    roles: [ROLES.USER],
+    roles: [],
   },
   {
     link: "/products",
@@ -46,6 +46,18 @@ export const allRoutes = [
   },
   {
     link: "/blogs",
+    roles: [],
+  },
+  {
+    link: "/clientele",
+    roles: [],
+  },
+  {
+    link: "/our-partners",
+    roles: [],
+  },
+  {
+    link: "/clientele",
     roles: [],
   },
   {

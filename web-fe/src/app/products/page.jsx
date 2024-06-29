@@ -1,4 +1,4 @@
-import ProductTableWithCategoriesAndFilter from "@/components/table/product-table-with-categories-filter";
+import Categories from "../categories";
 
 export const metadata = {
   title:
@@ -21,9 +21,8 @@ export default function Page() {
     <section className="py-6">
       <div className="container">
         <div>
-          <ProductTableWithCategoriesAndFilter />
+          <Categories />
         </div>
-        <div>{/* <PaginationControls total_page={data?.total_page} /> */}</div>
       </div>
     </section>
   );

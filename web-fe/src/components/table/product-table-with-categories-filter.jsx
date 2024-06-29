@@ -29,14 +29,22 @@ import {
 import { FaWhatsapp } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Spinner from "../Spinner";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { endpoints } from "@/utils/endpoints";
 import http from "@/utils/http";
+import { toast } from "sonner";
 
 const fetchProducts = async () => {
   const url = `${endpoints.products.getAll}`;
   const { data } = await http().get(url);
   return data;
+};
+
+const sendWhatsAppEnq = async (data) => {
+  return await http().post(
+    `${endpoints.enquiries.getAll}/whatsapp/${data.id}`,
+    data,
+  );
 };
 
 export default function ProductTableWithCategoriesAndFilter() {
@@ -56,6 +64,16 @@ export default function ProductTableWithCategoriesAndFilter() {
     defaultValues: { products: [] },
   });
   const [filters, setFilters] = useState({});
+
+  const whatsAppEnqMutation = useMutation(sendWhatsAppEnq, {
+    onSuccess: (data) => {
+      toast.success(data?.message ?? "Enquiry sent");
+    },
+    onError: (error) => {
+      console.error({ error });
+      toast.error(error.message ?? "error");
+    },
+  });
 
   const handleCheckChange = (check, name, value) => {
     setFilters((prev) => {
@@ -102,6 +120,12 @@ export default function ProductTableWithCategoriesAndFilter() {
       return true;
     });
   }, [filters, products]);
+
+  const handleWhatsAppEnq = (e, id, enqFor) => {
+    e.stopPropagation();
+    if (!enqFor) return toast.warning("Please select enquiry for.");
+    whatsAppEnqMutation.mutate({ id, enqFor });
+  };
 
   useEffect(() => {
     if (products && !(products?.length === 1 && products?.[0] === null)) {
@@ -303,6 +327,14 @@ export default function ProductTableWithCategoriesAndFilter() {
                       <Button
                         size="icon"
                         className="bg-[#00a884] text-white hover:bg-[#00a884]"
+                        type="button"
+                        onClick={(e) =>
+                          handleWhatsAppEnq(
+                            e,
+                            product.id,
+                            watch(`products.${key}.item_type`),
+                          )
+                        }
                       >
                         <FaWhatsapp size={20} />
                       </Button>

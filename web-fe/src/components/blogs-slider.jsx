@@ -11,7 +11,7 @@ import { H2 } from "./ui/typography";
 import { Navigation } from "swiper/modules";
 
 async function fetchBlogs() {
-  return await http().get(endpoints.blogs.getAll);
+  return await http().get(`${endpoints.blogs.getAll}?featured=true`);
 }
 
 const breakpoints = {
@@ -47,7 +47,7 @@ export default function BlogsSlider() {
   if (!data?.length) return;
 
   return (
-    <div className="container space-y-8 p-8">
+    <div className="container space-y-8 overflow-hidden p-8">
       <H2 className={"text-center"}>Our blogs</H2>
 
       <div className="">
@@ -60,6 +60,7 @@ export default function BlogsSlider() {
           navigation
           modules={[Navigation]}
           autoplay
+          className="!overflow-visible"
         >
           {data?.map((blog) => (
             <SwiperSlide key={blog.id}>

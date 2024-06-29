@@ -13,6 +13,8 @@ import { usePathname } from "next/navigation";
 import { Button, buttonVariants } from "./ui/button";
 import {
   Box,
+  Handshake,
+  HeartHandshake,
   Home,
   Info,
   Menu,
@@ -26,9 +28,15 @@ const size = 20;
 
 export const navList = [
   { title: "Home", href: "/", icon: <Home size={size} /> },
-  { title: "About", href: "", icon: <Info size={size} /> },
+  { title: "About", href: "/about", icon: <Info size={size} /> },
   { title: "Products", href: "/products", icon: <Box size={size} /> },
   { title: "Blogs", href: "/blogs", icon: <SquarePen size={size} /> },
+  { title: "Clientele", href: "/clientele", icon: <Handshake size={size} /> },
+  {
+    title: "Partners",
+    href: "/our-partners",
+    icon: <HeartHandshake size={size} />,
+  },
   { title: "Contact", href: "/contact", icon: <SquareUserRound size={size} /> },
 ];
 
@@ -61,8 +69,8 @@ export const HeaderTop = () => {
           <div className="">
             <Link href={"/"}>
               <Image
-                width={70}
-                height={70}
+                width={128}
+                height={60}
                 src={"/logo.webp"}
                 alt="logo"
                 className="h-full w-full object-contain object-center"
@@ -70,7 +78,7 @@ export const HeaderTop = () => {
             </Link>
           </div>
 
-          <nav className="ml-auto mr-10 hidden md:block">
+          <nav className="ml-auto mr-10 hidden lg:block">
             <ul className="flex items-center justify-start gap-2">
               {navList.map(({ title, href, icon }) => (
                 <li key={title}>
@@ -92,7 +100,7 @@ export const HeaderTop = () => {
             </ul>
           </nav>
 
-          <div className="ml-auto flex items-center justify-center gap-4 md:ml-0">
+          <div className="ml-auto flex items-center justify-center gap-4 lg:ml-0">
             {isUserLoading ? (
               <ProfileLoading />
             ) : user ? (
@@ -118,7 +126,7 @@ export const HeaderTop = () => {
             )}
           </div>
 
-          <SheetTrigger asChild className="ml-2 block md:hidden">
+          <SheetTrigger asChild className="ml-2 block lg:hidden">
             <Button
               variant="outline"
               size="icon"

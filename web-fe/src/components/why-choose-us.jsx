@@ -14,44 +14,50 @@ const data = {
   buyer: [
     {
       title: "Get Lowest Price",
-      content: "Get rates at least 1% lower than the existing market rates",
+      content: "Access rates at least 1% lower than current market rates.",
       icon: <ShoppingCart size={size} />,
     },
     {
       title: "Get Credit",
-      content: "Do not worry about working capital. Grow with our credit",
+      content:
+        "Unlock working capital worry-free and grow with our credit solutions.",
       icon: <Wallet size={size} />,
     },
     {
-      title: "Pan India & Global",
-      content: "World-class fulfillment for domestic and international markets",
+      title: "Pan India & Global Reach",
+      content:
+        "Experience world-class fulfillment for both domestic and international markets.",
       icon: <Truck size={size} />,
     },
     {
-      title: "Multi Brand SKUs",
-      content: "One stop shop for 3L+ SKU from multiple brands",
+      title: "Wide Range of Products",
+      content:
+        "Explore over 3 million SKUs from leading brands, all in one convenient place.",
       icon: <Star size={size} />,
     },
   ],
   seller: [
     {
-      title: "Grow Your Business",
-      content: "Get access to a global buyer base and grow 3x and more",
+      title: "Expand Your Business",
+      content:
+        "Access a global buyer base and achieve triple growth and beyond.",
       icon: <ShoppingCart size={size} />,
     },
     {
       title: "Advance Payments",
-      content: "Get your payments upfront and let us worry about the credit",
+      content: "Receive upfront payments while we manage credit concerns.",
       icon: <Wallet size={size} />,
     },
     {
-      title: "High Order Volumes",
-      content: "Get bigger order volumes from our large global buyer base",
+      title: "High Volume Orders",
+      content:
+        "Secure larger order volumes from our extensive global buyer network.",
       icon: <Truck size={size} />,
     },
     {
-      title: "Fulfillment Services",
-      content: "End-to-end managed logistics while you focus on business",
+      title: "Efficient Fulfillment Services",
+      content:
+        "Streamline logistics management from start to finish, allowing you to focus on your core business.",
       icon: <Star size={size} />,
     },
   ],

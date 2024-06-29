@@ -11,6 +11,11 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import AddToCart from "./forms/add-to-cart";
 import { GeistMono } from "geist/font/mono";
+import { FaWhatsapp } from "react-icons/fa";
+import http from "@/utils/http";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { endpoints } from "@/utils/endpoints";
 
 export default function SearchBox() {
   const [searchResults, setSearchResults] = useState([]);
@@ -124,6 +129,29 @@ export function ProductTable({ products }) {
   const router = useRouter();
   const { fields } = useFieldArray({ control, name: "products" });
 
+  const sendWhatsAppEnq = async (data) => {
+    return await http().post(
+      `${endpoints.enquiries.getAll}/whatsapp/${data.id}`,
+      data,
+    );
+  };
+
+  const whatsAppEnqMutation = useMutation(sendWhatsAppEnq, {
+    onSuccess: (data) => {
+      toast.success(data?.message ?? "Enquiry sent");
+    },
+    onError: (error) => {
+      console.error({ error });
+      toast.error(error.message ?? "error");
+    },
+  });
+
+  const handleWhatsAppEnq = (e, id, enqFor) => {
+    e.stopPropagation();
+    if (!enqFor) return toast.warning("Please select enquiry for.");
+    whatsAppEnqMutation.mutate({ id, enqFor });
+  };
+
   useEffect(() => {
     setValue(
       "products",
@@ -182,6 +210,19 @@ export function ProductTable({ products }) {
                 id={product._id}
                 type={watch(`products.${key}.item_type`)}
               />
+              <Button
+                size="icon"
+                className="bg-[#00a884] text-white hover:bg-[#00a884]"
+                onClick={(e) =>
+                  handleWhatsAppEnq(
+                    e,
+                    product._id,
+                    watch(`products.${key}.item_type`),
+                  )
+                }
+              >
+                <FaWhatsapp size={20} />
+              </Button>
             </TableCell>
           </TableRow>
         ))}

@@ -15,28 +15,31 @@ const data = [
   {
     title: "Buy & Sell With Us",
     content:
-      "One stop solution for your raw material sourcing and selling needs",
+      "Discover a seamless solution for all your raw material sourcing and selling needs.",
     image: "/buy_sell.svg",
   },
   {
-    title: "Raw Materials Prices",
-    content: "Get live prices for the raw materials you deal in",
+    title: "Live Raw Materials Prices",
+    content:
+      "Access real-time prices for the raw materials essential to your operations.",
     image: "/raw_material.svg",
   },
   {
-    title: "Raw Materials News",
-    content: "Get daily raw material news & insights live from the ground",
+    title: "Daily Raw Materials News",
+    content:
+      "Stay informed with daily news and insights directly from the industry.",
     image: "/news.svg",
   },
   {
-    title: "Grow With Credit",
-    content: "Get access to credit for manufacturers and contractors",
+    title: "Grow With Accessible Credit",
+    content:
+      "Gain access to credit tailored for manufacturers and contractors, facilitating growth opportunities.",
     image: "/credit.svg",
   },
   {
-    title: "Industry Digital First",
+    title: "Industry-Leading Digital Solutions",
     content:
-      "Transparency on your orders, live tracking & more with our app and web",
+      "Experience transparency in your orders, live tracking, and more through our advanced app and web platforms.",
     image: "/tracking.svg",
   },
 ];
