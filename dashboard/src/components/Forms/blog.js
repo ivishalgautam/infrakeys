@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Label } from "../ui/label";
-// import { Editor } from "primereact/editor";
 import { Input } from "../ui/input";
 import Image from "next/image";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -14,9 +13,9 @@ import Title from "../Title";
 import { Button } from "../ui/button";
 import { useFetchCategories } from "@/hooks/useFetchCategories";
 import Select from "react-select";
-import Spinner from "../Spinner";
 import { Editor } from "@tinymce/tinymce-react";
 import { H4 } from "../ui/typography";
+import { Switch } from "../ui/switch";
 
 export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
   const {
@@ -33,7 +32,7 @@ export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
       image: "",
       short_description: "",
       content: "",
-      is_featured: false,
+      is_active: false,
       meta_title: "",
       meta_description: "",
       meta_keywords: "",
@@ -72,7 +71,7 @@ export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
       image: image[0],
       short_description: data.short_description,
       content: text,
-      is_featured: data.is_featured,
+      is_active: data.is_active,
       meta_title: data.meta_title,
       meta_description: data.meta_description,
       meta_keywords: data.meta_keywords,
@@ -108,6 +107,7 @@ export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
         data && setValue("meta_description", data.meta_description);
         data && setValue("meta_keywords", data.meta_keywords);
         data && setValue("slug", data.slug);
+        data && setValue("is_active", data.is_active);
         data && data?.faq && setValue("faq", data.faq);
         // data?.faq?.map(({ question, answer }) => {
         //   append({ question, answer });
@@ -364,6 +364,24 @@ export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
               <Input type="text" {...register("slug")} placeholder="Slug" />
             </div>
           </div>
+        </div>
+
+        {/* is featured */}
+        <div className="flex justify-center gap-1 flex-col mt-4 col-span-3">
+          <Label htmlFor="is_active">
+            {watch("is_active") === true ? "Published" : "Unpublished"}
+          </Label>
+          <Controller
+            control={control}
+            name="is_active"
+            render={({ field: { onChange, value } }) => (
+              <Switch
+                onCheckedChange={onChange}
+                checked={value}
+                disabled={type === "view" || type === "delete"}
+              />
+            )}
+          />
         </div>
 
         <div>
