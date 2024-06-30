@@ -100,7 +100,7 @@ export function Cards({ data }) {
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
       {data.map((item, key) => (
         <CardContainer className={"h-full w-full cursor-pointer"} key={key}>
-          <div className="flex h-full w-full flex-col items-center justify-center space-y-4 rounded-lg bg-white p-8 text-black">
+          <div className="flex h-full w-full flex-col items-center justify-start space-y-4 rounded-lg bg-white p-8 text-black">
             <div className="flex items-center justify-end overflow-hidden rounded-full bg-gray-100 p-6 text-white">
               <div className={"rounded-full bg-primary p-3"}>{item.icon}</div>
             </div>

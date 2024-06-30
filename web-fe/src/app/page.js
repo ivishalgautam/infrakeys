@@ -25,7 +25,7 @@ export default function Home() {
           <TellUsRequirement type={"horizontal"} />
         </div>
       </div>
-      <div className="fixed -right-12 top-2/3 -rotate-90">
+      <div className="fixed -right-12 top-2/3 z-50 -rotate-90">
         <ApplyForCredit />
       </div>
     </div>

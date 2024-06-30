@@ -1,4 +1,4 @@
-import { H2 } from "@/components/ui/typography";
+import { H1 } from "@/components/ui/typography";
 import Image from "next/image";
 
 export default function Page() {
@@ -6,7 +6,7 @@ export default function Page() {
     <div className="h-full p-4">
       <div className="container">
         <div className="">
-          <H2 className={"m-0 text-center"}>Our Clientele</H2>
+          <H1 className={"my-8 text-center"}>Our Clientele</H1>
         </div>
         <div>
           <div className="mt-2 grid grid-cols-2 gap-4 rounded-lg sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">

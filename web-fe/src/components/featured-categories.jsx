@@ -24,22 +24,18 @@ export default function FeaturedCategories() {
 
   const breakpoints = {
     1200: {
-      slidesPerView: 6,
+      slidesPerView: 5,
       spaceBetween: 24,
     },
     1024: {
-      slidesPerView: 5,
-      spaceBetween: 20,
-    },
-    768: {
       slidesPerView: 4,
       spaceBetween: 20,
     },
-    550: {
+    768: {
       slidesPerView: 3,
-      spaceBetween: 12,
+      spaceBetween: 20,
     },
-    500: {
+    550: {
       slidesPerView: 2,
       spaceBetween: 12,
     },
@@ -56,7 +52,7 @@ export default function FeaturedCategories() {
         <H2 className={"text-center"}>Featured categories</H2>
         <div className="mt-2">
           <Swiper
-            // spaceBetween={50}
+            spaceBetween={50}
             slidesPerView={1}
             breakpoints={breakpoints}
             className="categories-slider !overflow-visible"

@@ -74,7 +74,7 @@ export default function Footer() {
         </div>
 
         <div className="">
-          <ul className="flex items-center justify-center gap-8">
+          <ul className="flex items-center justify-center gap-4 md:gap-8">
             {["home", "about", "products", "blogs", "contact"].map((item) => (
               <li key={item} className="">
                 <Link
@@ -138,7 +138,7 @@ export default function Footer() {
 
       {/* copyright */}
       <div className="bg-black text-white">
-        <div className="container flex items-center justify-between py-3 text-sm">
+        <div className="container flex items-center justify-between py-3 text-xs sm:text-sm">
           <span>Copyright © {new Date().getFullYear()} by Infrakeys</span>
           <span>All rights reserved.</span>
         </div>

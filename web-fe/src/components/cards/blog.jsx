@@ -16,7 +16,7 @@ export default function BlogCard({ blog }) {
               width={300}
               height={300}
               alt={blog.title}
-              className="h-full w-full"
+              className="aspect-video"
             />
           </figure>
         </div>
@@ -42,8 +42,14 @@ export default function BlogCard({ blog }) {
 
           {/* title and short desc */}
           <div className="space-y-1">
-            <H6 className={"line-clamp-2 leading-5"}>{blog.title}</H6>
-            <p className="line-clamp-3 text-ellipsis text-xs text-gray-400">
+            <H6
+              className={
+                "line-clamp-2 h-[40px] leading-5 md:line-clamp-1 md:h-auto lg:line-clamp-2 lg:h-[40px]"
+              }
+            >
+              {blog.title}
+            </H6>
+            <p className="line-clamp-3 h-[48px] text-ellipsis text-xs text-gray-400">
               {blog.short_description}
             </p>
           </div>

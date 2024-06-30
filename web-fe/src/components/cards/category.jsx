@@ -39,7 +39,7 @@ export default function CategoryCard({ slug, image, name, subCategories }) {
                 fill
                 src={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${image}`}
                 alt={name}
-                className="rounded object-contain bg-blend-screen transition-transform"
+                className="aspect-video rounded object-contain bg-blend-screen transition-transform"
               />
             </figure>
           </div>

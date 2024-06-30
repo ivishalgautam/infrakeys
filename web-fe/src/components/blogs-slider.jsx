@@ -24,7 +24,7 @@ const breakpoints = {
     spaceBetween: 20,
   },
   768: {
-    slidesPerView: 2,
+    slidesPerView: 3,
     spaceBetween: 20,
   },
   550: {
@@ -52,10 +52,8 @@ export default function BlogsSlider() {
 
       <div className="">
         <Swiper
-          // spaceBetween={50}
+          spaceBetween={50}
           slidesPerView={1}
-          onSlideChange={() => console.log("slide change")}
-          onSwiper={(swiper) => console.log(swiper)}
           breakpoints={breakpoints}
           navigation
           modules={[Navigation]}

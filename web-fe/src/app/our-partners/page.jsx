@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import { H2 } from "@/components/ui/typography";
+import { H1 } from "@/components/ui/typography";
 
 export default function Page() {
   return (
     <div className="h-full py-8">
       <div className="container">
-        <H2 className={"text-center"}>Our Partners</H2>
+        <H1 className={"my-8 text-center"}>Our Partners</H1>
 
         <div className="mt-10">
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
