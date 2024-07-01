@@ -67,7 +67,7 @@ export default function Hero() {
                         height={20}
                         src={`${imageDomain}/${cat.image}`}
                         alt={cat.name}
-                        className="rounded-full"
+                        className="aspect-square rounded-full object-cover object-center"
                       />
                       <span className="capitalize">{cat.name}</span>
                     </Link>
