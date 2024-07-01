@@ -3,28 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { useQuery } from "@tanstack/react-query";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { endpoints } from "@/utils/endpoints";
-import { CiFilter } from "react-icons/ci";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
-import { cn } from "@/lib/utils";
 import http from "@/utils/http";
 
-import ProductCard from "./cards/product";
-import { H5, P } from "./ui/typography";
-import { Button } from "./ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
-import { Checkbox } from "./ui/checkbox";
-import { Label } from "./ui/label";
+import { P } from "./ui/typography";
 import ProductTable from "./table/product-table";
 
 export const fetchCategories = async () => {

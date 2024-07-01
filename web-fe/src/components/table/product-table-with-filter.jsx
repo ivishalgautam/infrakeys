@@ -261,12 +261,12 @@ export default function ProductTableWithFilter({ products }) {
                         size="icon"
                         className="bg-[#00a884] text-white hover:bg-[#00a884]"
                         onClick={(e) => {
+                          e.stopPropagation();
                           if (!user) {
                             toast.warning("Please login first!");
                             return router.push("/auth/login");
                           }
                           handleWhatsAppEnq(
-                            e,
                             user.name,
                             product.title,
                             watch(`products.${key}.item_type`),

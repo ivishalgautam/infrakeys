@@ -1,13 +1,11 @@
 import { toast } from "sonner";
 
 export const handleWhatsAppEnq = (
-  e,
   customer_name,
   product_name,
   enqFor,
   filters,
 ) => {
-  e.stopPropagation();
   if (!enqFor) return toast.warning("Please select enquiry for.");
   let filtersStr = "";
 
@@ -24,7 +22,7 @@ I want to ${String(enqFor).toUpperCase()} this product
 Product Details
 Product name: ${product_name.charAt(0).toUpperCase() + product_name.slice(1)}
 
-More details below:
+${filters ? "More details below:" : ""}
 ${filtersStr}
 
 Can you please provide rates and other details of the product?`);
