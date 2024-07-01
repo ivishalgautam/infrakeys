@@ -55,7 +55,7 @@ export default function Hero() {
                   ))}
                 </div>
               ) : (
-                <div className="flex flex-wrap items-center justify-start gap-2">
+                <div className="flex flex-wrap items-center justify-center gap-2">
                   {subCategories?.slice(0, 5).map((cat) => (
                     <Link
                       href={`/category/${cat.category_slug}/${cat.slug}`}

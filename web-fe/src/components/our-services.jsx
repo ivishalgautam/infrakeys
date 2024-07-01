@@ -1,12 +1,4 @@
 import { H2, H5, P } from "./ui/typography";
-import {
-  AreaChart,
-  Lightbulb,
-  MoveRight,
-  ShoppingCart,
-  Wallet,
-  Zap,
-} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CardContainer } from "./ui/3d-card";
 import Image from "next/image";
@@ -51,7 +43,7 @@ export default function OurServices() {
     <div className="bg-primary/5 py-8">
       <div className="container">
         <H2 className={"text-center"}>Our Services</H2>
-        <div className="mt-10 grid grid-cols-1 gap-4  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           {data.map((item, ind) => (
             <Card item={item} ind={ind} key={ind} />
           ))}
