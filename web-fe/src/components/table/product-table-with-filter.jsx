@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -28,33 +28,19 @@ import {
 } from "../ui/dropdown-menu";
 import { FaWhatsapp } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
-
-const sendWhatsAppEnq = async (data) => {
-  return await http().post(
-    `${endpoints.enquiries.getAll}/whatsapp/${data.id}`,
-    data,
-  );
-};
+import { toast } from "sonner";
+import { handleWhatsAppEnq } from "@/lib/handle-whatsapp-enq";
+import { MainContext } from "@/store/context";
 
 export default function ProductTableWithFilter({ products }) {
   const router = useRouter();
+  const { user } = useContext(MainContext);
   const [customProperties, setCustomProperties] = useState({});
   const { watch, control, setValue } = useForm({
     defaultValues: { products: [] },
   });
   const { fields } = useFieldArray({ control, name: "products" });
   const [filters, setFilters] = useState({});
-
-  const whatsAppEnqMutation = useMutation(sendWhatsAppEnq, {
-    onSuccess: (data) => {
-      toast.success(data?.message ?? "Enquiry sent");
-    },
-    onError: (error) => {
-      console.error({ error });
-      toast.error(error.message ?? "error");
-    },
-  });
 
   const handleCheckChange = (check, name, value) => {
     setFilters((prev) => {
@@ -66,12 +52,6 @@ export default function ProductTableWithFilter({ products }) {
 
       return { ...prev, [name]: updatedArray };
     });
-  };
-
-  const handleWhatsAppEnq = (e, id, enqFor) => {
-    e.stopPropagation();
-    if (!enqFor) return toast.warning("Please select enquiry for.");
-    whatsAppEnqMutation.mutate({ id, enqFor });
   };
 
   const getFilteredProducts = useCallback(() => {
@@ -280,13 +260,19 @@ export default function ProductTableWithFilter({ products }) {
                       <Button
                         size="icon"
                         className="bg-[#00a884] text-white hover:bg-[#00a884]"
-                        onClick={(e) =>
+                        onClick={(e) => {
+                          if (!user) {
+                            toast.warning("Please login first!");
+                            return router.push("/auth/login");
+                          }
                           handleWhatsAppEnq(
                             e,
-                            product.id,
+                            user.name,
+                            product.title,
                             watch(`products.${key}.item_type`),
-                          )
-                        }
+                            filters,
+                          );
+                        }}
                       >
                         <FaWhatsapp size={20} />
                       </Button>

@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { H3, H4 } from "../ui/typography";
+import { H4 } from "../ui/typography";
 import { MoveRight } from "lucide-react";
-import { CardBody, CardContainer, CardItem } from "../ui/3d-card";
+import { CardContainer } from "../ui/3d-card";
 import React from "react";
 
 export default function CategoryCard({ slug, image, name, subCategories }) {
