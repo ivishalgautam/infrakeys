@@ -22,7 +22,7 @@ I want to ${String(enqFor).toUpperCase()} this product
 Product Details
 Product name: ${product_name.charAt(0).toUpperCase() + product_name.slice(1)}
 
-${filters ? "More details below:" : ""}
+${filters && Object.keys(filters).length > 0 ? "More details below:" : ""}
 ${filtersStr}
 
 Can you please provide rates and other details of the product?`);
