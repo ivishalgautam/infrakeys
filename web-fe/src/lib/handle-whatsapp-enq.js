@@ -15,7 +15,7 @@ export const handleWhatsAppEnq = (
   }
 
   const filterProducts = `
-${filters && Object.keys(filters).length > 0 ? "More details below:" : ""}
+More details below
 ${filtersStr}`;
 
   const text = String(`
