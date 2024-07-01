@@ -9,7 +9,7 @@ export default function Page() {
         <H1 className={"my-8 text-center"}>Our Partners</H1>
 
         <div className="mt-10">
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+          <div className="grid grid-cols-2 gap-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
             {[
               "/partners/amns.png",
               "/partners/apollo.png",
@@ -30,7 +30,7 @@ export default function Page() {
               "/partners/tata.png",
               "/partners/vizag.png",
             ].map((image, key) => (
-              <figure key={key} className="rounded-2xl bg-primary/5 p-8 py-4">
+              <figure key={key} className="rounded-lg bg-primary/5 p-8 py-4">
                 <Image
                   src={image}
                   width={500}
