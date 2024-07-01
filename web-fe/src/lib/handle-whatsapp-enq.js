@@ -27,5 +27,5 @@ ${filtersStr}
 
 Can you please provide rates and other details of the product?`);
 
-  return (window.location.href = `https://api.whatsapp.com/send/?phone=${process.env.WHATSAPP_ENQ_NUMBER}&text=${encodeURIComponent(text)}`);
+  return (window.location.href = `https://api.whatsapp.com/send/?phone=${process.env.NEXT_PUBLIC_WHATSAPP_ENQ_NUMBER}&text=${encodeURIComponent(text)}`);
 };
