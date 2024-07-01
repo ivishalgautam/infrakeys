@@ -29,5 +29,5 @@ ${filtersStr}
 
 Can you please provide rates and other details of the product?`);
 
-  return (window.location.href = `https://api.whatsapp.com/send/?phone=7011691802&text=${encodeURIComponent(text)}`);
+  return (window.location.href = `https://api.whatsapp.com/send/?phone=8130376622&text=${encodeURIComponent(text)}`);
 };
