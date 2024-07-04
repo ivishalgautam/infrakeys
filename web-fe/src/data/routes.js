@@ -30,7 +30,7 @@ export const allRoutes = [
   },
   {
     link: "/apply-for-credit",
-    roles: [],
+    roles: [ROLES.USER],
   },
   {
     link: "/customer/[slug]",
