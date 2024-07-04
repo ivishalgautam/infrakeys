@@ -5,7 +5,6 @@ import { Toaster } from "sonner";
 import Context from "@/store/context";
 import Layout from "@/components/layout";
 import { GoogleTagManager } from "@next/third-parties/google";
-import banner1 from "../../public/banner-1.jpg";
 
 // Import Swiper styles
 import "swiper/css";
@@ -60,14 +59,15 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <GoogleTagManager gtmId="GTM-WN9SB6DD" />
-        <noscript>
+        <GoogleTagManager gtmId="AW-11427244694" />
+        {/* <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-WN9SB6DD"
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
           ></iframe>
-        </noscript>
+        </noscript> */}
       </head>
       <body
         className={`${GeistSans.className} overflow-x-hidden`}
