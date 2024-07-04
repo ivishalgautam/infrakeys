@@ -29,6 +29,10 @@ export const allRoutes = [
     roles: [ROLES.USER],
   },
   {
+    link: "/apply-for-credit",
+    roles: [ROLES.USER],
+  },
+  {
     link: "/customer/[slug]",
     roles: [ROLES.USER],
   },
