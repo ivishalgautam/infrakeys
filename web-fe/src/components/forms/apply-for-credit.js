@@ -111,12 +111,10 @@ export default function ApplyForCreditForm() {
         {/* industry */}
         <div>
           <Input
-            type="number"
+            type="text"
             placeholder="Industry"
             {...register("industry", {
               required: "required",
-              valueAsNumber: true,
-              min: 10,
             })}
             className={className}
           />

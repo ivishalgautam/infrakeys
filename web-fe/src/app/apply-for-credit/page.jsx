@@ -44,9 +44,9 @@ export default function Page() {
   return (
     <div className="min-h-screen">
       <div className="container py-8">
-        <div className="grid grid-cols-4">
-          <div className="col-span-2 flex items-center justify-start">
-            <H2>
+        <div className="grid grid-cols-4 gap-4 ">
+          <div className="col-span-4 flex items-center justify-center md:col-span-2 md:justify-start">
+            <H2 className={"text-center md:text-start"}>
               <span className="text-5xl font-bold">
                 GET Credit upto <span className="text-primary"> 5CR</span>
               </span>
@@ -57,7 +57,7 @@ export default function Page() {
               </span>
             </H2>
           </div>
-          <div className="col-span-2 rounded-lg bg-white p-8">
+          <div className="col-span-4 rounded-lg bg-white p-8 md:col-span-2">
             <ApplyForCreditForm />
           </div>
         </div>
