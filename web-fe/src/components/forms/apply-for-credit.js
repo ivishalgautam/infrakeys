@@ -46,8 +46,6 @@ export default function ApplyForCreditForm() {
     createMutation.mutate(data);
   };
 
-  console.log(errors);
-
   const className = "bg-gray-100 rounded-[60px] p-6 py-5.5";
 
   return (
@@ -114,7 +112,7 @@ export default function ApplyForCreditForm() {
         <div>
           <Input
             type="number"
-            placeholder="industry"
+            placeholder="Industry"
             {...register("industry", {
               required: "required",
               valueAsNumber: true,
