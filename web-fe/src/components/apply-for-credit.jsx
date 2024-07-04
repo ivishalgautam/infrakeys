@@ -26,6 +26,7 @@ export default function ApplyForCredit() {
   });
 
   function handleApplyForCredit() {
+    return router.push("/apply-for-credit");
     if (!user) {
       toast.warning("Please login first!");
       return router.push("/auth/login");
