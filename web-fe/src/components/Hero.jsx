@@ -5,8 +5,8 @@ import { useFetchFeaturedSubCategories } from "@/hooks/useFetchFeaturedSubCat";
 import SearchBox from "./Search";
 import { FlipWords } from "./ui/flip-words";
 import { ImagesSlider } from "./Image-slider";
-import banner1 from "../../public/banner/banner-1.jpg";
-import banner2 from "../../public/banner/banner-2.jpg";
+import banner1 from "../../public/banner-1.jpg";
+import banner2 from "../../public/banner-2.jpg";
 
 export default function Hero() {
   const banners = [banner1, banner2];
