@@ -5,8 +5,8 @@ import { useFetchFeaturedSubCategories } from "@/hooks/useFetchFeaturedSubCat";
 import SearchBox from "./Search";
 import { FlipWords } from "./ui/flip-words";
 import { ImagesSlider } from "./Image-slider";
-import banner1 from "../../public/banner-1.jpg";
-import banner2 from "../../public/banner-2.jpg";
+import banner1 from "../../public/banner/banner-1.jpg";
+import banner2 from "../../public/banner/banner-2.jpg";
 
 export default function Hero() {
   const banners = [banner1, banner2];
@@ -20,7 +20,6 @@ export default function Hero() {
       // className="relative overflow-hidden before:absolute before:inset-0 before:z-10 before:bg-black/60"
     >
       <div className="h-full">
-        {/* <video src="./banner-video.mp4" autoPlay loop></video> */}
         <ImagesSlider images={banners}>
           <div className="relative z-50 flex flex-col items-center justify-center gap-3">
             <h1 className={"py-2 text-center text-3xl text-white"}>
