@@ -217,4 +217,10 @@ export const AllRoutes = [
     icon: TbUserQuestion,
     roles: [ROLES.ADMIN],
   },
+  {
+    label: "Credit Applies",
+    link: "/credit-applies",
+    icon: TbUserQuestion,
+    roles: [ROLES.ADMIN],
+  },
 ];
