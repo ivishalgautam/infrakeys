@@ -9,6 +9,7 @@ import {
   MessageCircleQuestion,
   ShoppingCart,
   NotebookPen,
+  IndianRupee,
 } from "lucide-react";
 
 // Define the roles for each user type
@@ -220,7 +221,7 @@ export const AllRoutes = [
   {
     label: "Credit Applies",
     link: "/credit-applies",
-    icon: TbUserQuestion,
+    icon: IndianRupee,
     roles: [ROLES.ADMIN],
   },
 ];
