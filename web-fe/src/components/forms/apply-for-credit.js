@@ -1,6 +1,5 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Controller, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import http from "@/utils/http";
@@ -17,12 +16,14 @@ import {
   SelectValue,
 } from "../ui/select";
 import { H2 } from "../ui/typography";
+import { useRouter } from "next/navigation";
 
-const createQuery = async (data) => {
-  return await http().post(endpoints.queries.getAll, data);
+const applyForCredit = async (data) => {
+  return await http().post(endpoints.creditApplies.getAll, data);
 };
 
 export default function ApplyForCreditForm() {
+  const router = useRouter();
   const {
     control,
     formState: { errors },
@@ -31,20 +32,31 @@ export default function ApplyForCreditForm() {
     reset,
   } = useForm();
 
-  const createMutation = useMutation(createQuery, {
+  const createMutation = useMutation(applyForCredit, {
     onSuccess: (data) => {
-      toast.success(data.message);
+      toast.success(data.message ?? "Application sent.");
       reset();
+      router.push("/");
     },
     onError: (error) => {
+      console.log(error);
       toast.error(error.message);
     },
   });
 
   const onSubmit = (data) => {
-    return;
-    createMutation.mutate(data);
+    const payload = {
+      company_name: data.company_name,
+      turnover: data.turnover,
+      funds_required: data.funds_required,
+      industry: data.industry,
+    };
+    handleCreate(payload);
   };
+
+  function handleCreate(data) {
+    createMutation.mutate(data);
+  }
 
   const className = "bg-gray-100 rounded-[60px] p-6 py-5.5";
 
@@ -72,8 +84,9 @@ export default function ApplyForCreditForm() {
           <Controller
             control={control}
             name="turnover"
+            rules={{ required: "Please select your turnover." }}
             render={({ field }) => (
-              <Select>
+              <Select onValueChange={field.onChange}>
                 <SelectTrigger className="rounded-full bg-gray-100 !py-6 px-4">
                   <SelectValue placeholder="Select your turnover" />
                 </SelectTrigger>
@@ -89,6 +102,9 @@ export default function ApplyForCreditForm() {
               </Select>
             )}
           />
+          {errors.turnover && (
+            <span className="text-red-600">{errors.turnover.message}</span>
+          )}
         </div>
 
         {/* funds required */}

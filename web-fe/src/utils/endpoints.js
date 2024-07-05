@@ -54,6 +54,9 @@ export const endpoints = {
   queries: {
     getAll: "/queries",
   },
+  creditApplies: {
+    getAll: "/credit-applies",
+  },
   otp: {
     send: "/auth/send",
     verify: "/auth/verify",

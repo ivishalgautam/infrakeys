@@ -1,8 +1,6 @@
-import ApplyForCredit from "@/components/apply-for-credit";
 import CreditBenefits from "@/components/credit-benefits";
 import ApplyForCreditForm from "@/components/forms/apply-for-credit";
-import { H1, H2, H3, H5, H6, P } from "@/components/ui/typography";
-import Image from "next/image";
+import { H2 } from "@/components/ui/typography";
 import React from "react";
 
 const benefits = [
@@ -48,7 +46,7 @@ export default function Page() {
           <div className="col-span-4 flex items-center justify-center md:col-span-2 md:justify-start">
             <H2 className={"text-center md:text-start"}>
               <span className="text-5xl font-bold">
-                GET Credit upto <span className="text-primary"> 5CR</span>
+                GET Credit upto <span className="text-primary">5CR</span>
               </span>
               <br />
               <span className="text-gray-700">
