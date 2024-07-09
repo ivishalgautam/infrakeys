@@ -123,6 +123,17 @@ export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
     }
   }, [blogId, type, formattedCategories?.length]);
 
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      const element = document.querySelector(".tox-notifications-container");
+      if (element) {
+        element.classList.add("tox-notifications-container-display-block");
+      }
+    }, 2000);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="rounded-xl bg-white">
       <Title text={type.toUpperCase()} />

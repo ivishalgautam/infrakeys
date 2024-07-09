@@ -78,3 +78,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.tox-notifications-container-display-block {
+  display: none !important;
+}
