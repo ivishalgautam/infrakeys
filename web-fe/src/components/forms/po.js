@@ -56,7 +56,7 @@ export default function POForm({
       );
       updateMutation.mutate({ po_file: "", enquiry_id: id });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error("error deleting image");
     }
   };

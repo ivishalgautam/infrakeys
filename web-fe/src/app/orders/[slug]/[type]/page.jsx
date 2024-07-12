@@ -36,7 +36,7 @@ export default function Page({ params: { slug } }) {
       queryClient.invalidateQueries([`order-${slug}`]);
     },
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
       toast.error(error.message);
     },
   });

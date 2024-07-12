@@ -21,7 +21,7 @@ function Context({ children }) {
           setIsUserLoading(false);
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
           setIsUserLoading(false);
         });
     }

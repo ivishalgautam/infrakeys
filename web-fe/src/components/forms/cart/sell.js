@@ -36,7 +36,7 @@ export default function SellForm({ data, handleCreate }) {
     },
     onError: (error) => {
       toast.error(error.message);
-      console.log({ error });
+      // console.log({ error });
     },
   });
 
@@ -45,7 +45,7 @@ export default function SellForm({ data, handleCreate }) {
   };
 
   const onSubmit = (data) => {
-    console.log({ data });
+    // console.log({ data });
     return;
     handleCreate(Object.assign(data, { enquiry_type: "sell" }));
   };

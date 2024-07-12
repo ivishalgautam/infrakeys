@@ -22,7 +22,7 @@ export default function useAddToCart() {
     },
     onError: (error) => {
       toast.error(error.message);
-      console.log({ error });
+      // console.log({ error });
     },
   });
 

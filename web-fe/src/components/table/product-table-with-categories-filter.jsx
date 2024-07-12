@@ -95,7 +95,6 @@ export default function ProductTableWithCategoriesAndFilter() {
               ),
           )
         ) {
-          console.log(false);
           return false;
         }
       }

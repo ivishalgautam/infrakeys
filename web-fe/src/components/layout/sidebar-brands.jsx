@@ -20,7 +20,7 @@ export default function SidebarBrands() {
     queryFn: fetchBrands,
   });
 
-  console.log({ data });
+  // console.log({ data });
 
   return (
     <div className="rounded-md bg-white p-4">

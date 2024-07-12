@@ -32,7 +32,7 @@ export default function SignUpForm({ setIsOtpSent, setPhone }) {
 
       return response.data;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return toast.error(error?.message ?? "Unable to complete your request!");
     } finally {
       setLoading(false);

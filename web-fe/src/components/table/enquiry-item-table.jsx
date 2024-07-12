@@ -34,7 +34,7 @@ export default function EnquiryItemTable({ data, enquiryId }) {
     },
     onError: (error) => {
       toast.error(error.message);
-      console.log({ error });
+      // console.log({ error });
     },
   });
 

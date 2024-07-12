@@ -62,7 +62,7 @@ export default function QueryForm({ type, enquirytype = "buy", productId }) {
   });
 
   const onSubmit = (data) => {
-    console.log({ data });
+    // console.log({ data });
     const payload = {
       company: data?.company,
       company_gst: data?.company_gst,

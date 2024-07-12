@@ -52,7 +52,7 @@ export const columns = (setType, openModal, setProductId) => [
   {
     accessorKey: "status",
     header: ({ column }) => {
-      console.log({ column });
+      // console.log({ column });
       return <Button variant="ghost">Status</Button>;
     },
     cell: ({ row }) => {

@@ -36,7 +36,7 @@ export default function BuyForm({ data, handleCreate }) {
     },
     onError: (error) => {
       toast.error(error.message);
-      console.log({ error });
+      // console.log({ error });
     },
   });
 

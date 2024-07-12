@@ -41,7 +41,7 @@ export default function OTPForm({ phone }) {
       setTimeout(() => setIsResendDisabled(false), 1000 * 60 * minute);
     },
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
       if (error.response.status === 500) {
         return toast.error("Error sending otp!");
       }
@@ -63,7 +63,7 @@ export default function OTPForm({ phone }) {
       toast.success("Logged in.");
       return response;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return toast.error(error.message);
     } finally {
       setLoading(false);

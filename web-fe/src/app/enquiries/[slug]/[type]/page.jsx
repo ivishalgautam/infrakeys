@@ -44,7 +44,7 @@ export default function Page({ params: { slug } }) {
       queryClient.invalidateQueries([`enquiry-${slug}`]);
     },
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
       toast.error(error.message);
     },
   });
@@ -56,7 +56,7 @@ export default function Page({ params: { slug } }) {
       router.push("/profile/enquiries?status=closed");
     },
     onError: (error) => {
-      console.log({ error });
+      // console.log({ error });
       toast.error(error.message);
     },
   });

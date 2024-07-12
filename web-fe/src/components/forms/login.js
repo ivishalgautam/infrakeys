@@ -33,7 +33,7 @@ export default function LoginForm({ setIsOtpSent, setPhone }) {
 
       return response.data;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       if (isObject(error)) {
         return toast.error(error.message);
       } else {

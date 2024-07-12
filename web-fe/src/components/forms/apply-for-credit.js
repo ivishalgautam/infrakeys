@@ -39,7 +39,7 @@ export default function ApplyForCreditForm() {
       router.push("/");
     },
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
       toast.error(error.message);
     },
   });

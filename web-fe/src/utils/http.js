@@ -57,7 +57,7 @@ const http = (headerType = "json", baseURL = API_ROOT) => {
             // Refresh token is expired or invalid, logout the user
           } else {
             // Unable to refresh the token
-            console.log("Error refreshing token:", refreshError);
+            // console.log("Error refreshing token:", refreshError);
           }
           return Promise.reject(refreshError);
         });
@@ -65,7 +65,7 @@ const http = (headerType = "json", baseURL = API_ROOT) => {
 
     if (error.response?.status === 403) {
       // Handle forbidden access cases
-      console.log("Forbidden access:", error.response.data?.message);
+      // console.log("Forbidden access:", error.response.data?.message);
       // typeof logout === "function" && logout();
     }
 
