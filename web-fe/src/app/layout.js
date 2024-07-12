@@ -12,6 +12,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
+import Script from "next/script";
 
 export const metadata = {
   title: {
@@ -60,14 +61,22 @@ export default function RootLayout({ children }) {
       <head>
         <GoogleTagManager gtmId="GTM-WN9SB6DD" />
         <GoogleTagManager gtmId="AW-11427244694" />
-        {/* <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-WN9SB6DD"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          ></iframe>
-        </noscript> */}
+        <Script id="interakt-chatbot">
+          {`(function(w,d,s,c,r,a,m){
+            w['KiwiObject']=r;
+            w[r]=w[r] || function () {
+              (w[r].q=w[r].q||[]).push(arguments)};
+              w[r].l=1*new Date();
+              a=d.createElement(s);
+              m=d.getElementsByTagName(s)[0];
+            a.async=1;
+            a.src=c;
+            m.parentNode.insertBefore(a,m)
+            })(window,document,'script',"https://app.interakt.ai/kiwi-sdk/kiwi-sdk-17-prod-min.js?v="+ new Date().getTime(),'kiwi');
+        window.addEventListener("load",function () {
+            kiwi.init('', 'VjLmEvPfE3ANyJc8hQZKmMo3XrH3neWx', {});
+        });`}
+        </Script>
       </head>
       <body
         className={`${GeistSans.className} overflow-x-hidden`}

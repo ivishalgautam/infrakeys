@@ -52,7 +52,7 @@ const http = (headerType = "json", baseURL = API_ROOT) => {
           return client(error.config);
         })
         .catch((refreshError) => {
-          console.log({ refreshError });
+          // console.log({ refreshError });
           if (refreshError.response?.status === 401) {
             // Refresh token is expired or invalid, logout the user
           } else {
