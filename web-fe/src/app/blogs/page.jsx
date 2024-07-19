@@ -9,7 +9,7 @@ export const metadata = {
     description: "Infrakeys Blogs",
   },
   alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/blogs`,
+    canonical: `/blogs`,
   },
 };
 

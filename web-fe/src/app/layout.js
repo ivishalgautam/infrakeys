@@ -16,6 +16,7 @@ import Script from "next/script";
 import InteraktChatbot from "@/components/interakt-chatbot";
 
 export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL),
   title: {
     default:
       "InfraKeys: Stainless Steel l Wire Mesh & Scaffolding Manufacturer in India",
@@ -26,7 +27,7 @@ export const metadata = {
   keywords:
     "Steel Manufacturers in india, steel fabricators near me,industrial steel in faridabad, Steel supplier in India, scaffolding manufacturer in faridabad, TMT suppliers in faridabad, PEB manufacturers in India, PEB manufacturers, steel supplier in faridabad, steel manufacturers,india, industrial steel in india, scaffolding manufacturer in India, TMT suppliers in India, steel manufacturers india",
   alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}`,
+    canonical: `/`,
   },
   openGraph: {
     title:

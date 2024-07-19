@@ -14,7 +14,7 @@ export const metadata = {
       "Infrakeys offer quality Product MS Rails, GI Binding Wire, MS Binding Wire, Round Pipe, PPGl Coil, GI Coil, Ledger 2mm, Vertical 3mm, PPGL Coil 0.5mm at the best prices",
   },
   alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/products`,
+    canonical: `/products`,
   },
 };
 
