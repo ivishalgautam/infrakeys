@@ -1,6 +1,18 @@
 import { H1 } from "@/components/ui/typography";
 import Image from "next/image";
 
+export const metadata = {
+  title: "Clientele | Infrakeys",
+  description: "Infrakeys Clientele",
+  openGraph: {
+    title: "Infrakeys Clientele",
+    description: "Infrakeys Clientele",
+  },
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/clientele`,
+  },
+};
+
 export default function Page() {
   return (
     <div className="h-full p-4">

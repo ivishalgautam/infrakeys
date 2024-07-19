@@ -1,6 +1,18 @@
 import Blogs from "@/components/blogs";
 import { H1 } from "@/components/ui/typography";
 
+export const metadata = {
+  title: "Blogs | Infrakeys",
+  description: "Infrakeys Blogs",
+  openGraph: {
+    title: "Infrakeys Blogs",
+    description: "Infrakeys Blogs",
+  },
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/blogs`,
+  },
+};
+
 export default function Page() {
   return (
     <div className="container py-4">

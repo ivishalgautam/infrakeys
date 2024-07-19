@@ -2,6 +2,18 @@ import React from "react";
 import Image from "next/image";
 import { H1 } from "@/components/ui/typography";
 
+export const metadata = {
+  title: "Partners | Infrakeys",
+  description: "Infrakeys Partners",
+  openGraph: {
+    title: "Infrakeys Partners",
+    description: "Infrakeys Partners",
+  },
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/our-partners`,
+  },
+};
+
 export default function Page() {
   return (
     <div className="h-full py-8">
