@@ -113,7 +113,7 @@ export default function Footer() {
             </div>
             <div>
               <span className="font-semibold">Email</span>
-              <p>sales@infrakeys.com</p>
+              <p>contact@infrakeys.com</p>
             </div>
           </div>
 
