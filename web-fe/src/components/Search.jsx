@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Input } from "./ui/input";
 import { searchProducts } from "@/hooks/useSearchProducts";
 import { Button } from "./ui/button";
@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import { endpoints } from "@/utils/endpoints";
 import Modal from "./Modal";
 import RequirementForm from "./forms/requirement";
+import { MainContext } from "@/store/context";
 
 async function createDocs(data) {
   return http().post(endpoints.requirements.getAll, data);
@@ -32,6 +33,8 @@ export default function SearchBox() {
   const pathname = usePathname();
   const [isResultsVisible, setIsResultsVisible] = useState(false);
   const containerRef = useRef(null);
+  const { user } = useContext(MainContext);
+  const router = useRouter();
 
   const uploadDocsMutation = useMutation(createDocs, {
     onSuccess: (data) => {
@@ -142,7 +145,13 @@ export default function SearchBox() {
                 className="absolute left-full top-0 ml-2 hidden flex-col items-center justify-center p-8 shadow-md hover:bg-primary lg:flex"
                 size="icon"
                 variant="primary"
-                onClick={() => setIsModal(true)}
+                onClick={() => {
+                  if (!user) {
+                    toast.warning("Please login first!");
+                    return router.push("/auth/login");
+                  }
+                  setIsModal(true);
+                }}
               >
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 -translate-y-4 rounded-md bg-white p-3 text-primary">
                   Upload your requirements <br />
@@ -164,7 +173,13 @@ export default function SearchBox() {
               type="button"
               className="mt-2 w-full text-wrap p-6 text-start text-xs shadow-md sm:text-sm lg:hidden"
               variant="primary"
-              onClick={() => setIsModal(true)}
+              onClick={() => {
+                if (!user) {
+                  toast.warning("Please login first!");
+                  return router.push("/auth/login");
+                }
+                setIsModal(true);
+              }}
             >
               <Upload className="mr-4" /> Upload your requirements (e.g jpg,
               jpeg, pdf, png)
