@@ -1,7 +1,4 @@
-import { cn } from "@/lib/utils";
-import React from "react";
-
-const Modal = ({ isOpen, onClose, children, className }) => {
+const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) {
     return null;
   }
@@ -12,14 +9,9 @@ const Modal = ({ isOpen, onClose, children, className }) => {
         className="fixed inset-0 bg-black opacity-75"
         onClick={onClose}
       ></div>
-      <div
-        className={cn(
-          "relative z-10 flex items-center justify-between rounded-lg bg-white",
-          className,
-        )}
-      >
+      <div className="relative z-10 flex min-w-[40%] items-center justify-between rounded-lg bg-white p-6">
         <button
-          className="absolute right-2 top-2 text-black focus:outline-none "
+          className="absolute right-2 top-2 text-gray-500 hover:text-gray-700 focus:outline-none "
           onClick={onClose}
         >
           <svg
@@ -35,7 +27,7 @@ const Modal = ({ isOpen, onClose, children, className }) => {
             />
           </svg>
         </button>
-        <div className="scrollbar-hide flex w-full flex-col justify-center overflow-scroll">
+        <div className="flex max-h-[600px] w-full flex-col justify-center overflow-auto">
           {children}
         </div>
       </div>

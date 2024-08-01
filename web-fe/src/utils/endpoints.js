@@ -29,6 +29,9 @@ export const endpoints = {
   points: {
     getAll: "/points",
   },
+  requirements: {
+    getAll: "/requirements",
+  },
   banners: {
     getAll: "/banners",
   },
