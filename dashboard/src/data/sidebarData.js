@@ -10,6 +10,7 @@ import {
   ShoppingCart,
   NotebookPen,
   IndianRupee,
+  ListTodo,
 } from "lucide-react";
 
 // Define the roles for each user type
@@ -216,6 +217,12 @@ export const AllRoutes = [
     label: "Queries",
     link: "/queries/[id]",
     icon: TbUserQuestion,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "Requirements",
+    link: "/requirements",
+    icon: ListTodo,
     roles: [ROLES.ADMIN],
   },
   {

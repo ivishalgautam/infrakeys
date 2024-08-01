@@ -37,6 +37,9 @@ export const endpoints = {
   points: {
     getAll: "/points",
   },
+  requirements: {
+    getAll: "/requirements",
+  },
   industries: {
     getAll: "/industries",
   },
