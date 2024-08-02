@@ -154,10 +154,12 @@ export default function SearchBox() {
                 }}
               >
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 -translate-y-4 rounded-md bg-white p-3 text-primary">
-                  Upload your requirements <br />
-                  <span className="text-xs text-gray-400">
-                    (e.g jpg, jpeg, pdf, png)
-                  </span>
+                  <div className="text-center text-lg leading-4">
+                    Post Your Requirements <br />
+                    <span className="text-xs  text-gray-400">
+                      (Post you requirements, receive offers from sellers)
+                    </span>
+                  </div>
                   <span className="absolute -bottom-2 left-1/2 size-4 -translate-x-1/2 rotate-45 bg-white"></span>
                 </div>
                 <div>
@@ -171,7 +173,7 @@ export default function SearchBox() {
 
             <Button
               type="button"
-              className="mt-2 w-full text-wrap p-6 text-start text-xs shadow-md sm:text-sm lg:hidden"
+              className="mt-2 w-full text-wrap bg-white p-8 text-start text-xs text-primary shadow-md hover:bg-white/90 sm:text-sm lg:hidden"
               variant="primary"
               onClick={() => {
                 if (!user) {
@@ -181,8 +183,15 @@ export default function SearchBox() {
                 setIsModal(true);
               }}
             >
-              <Upload className="mr-4" /> Upload your requirements (e.g jpg,
-              jpeg, pdf, png)
+              <div>
+                <Upload className="mr-4" />
+              </div>
+              <div className="text-center text-lg leading-4">
+                Post Your Requirements <br />
+                <span className="text-xs  text-gray-400">
+                  (Post you requirements, receive offers from sellers)
+                </span>
+              </div>
             </Button>
           </form>
           {inputVal && isResultsVisible && searchResults?.length > 0 && (
