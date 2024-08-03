@@ -27,17 +27,38 @@ import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "./ui/sheet";
 const size = 20;
 
 export const navList = [
-  { title: "Home", href: "/", icon: <Home size={size} /> },
-  { title: "About", href: "/about", icon: <Info size={size} /> },
-  { title: "Products", href: "/products", icon: <Box size={size} /> },
-  { title: "Blogs", href: "/blogs", icon: <SquarePen size={size} /> },
-  { title: "Clientele", href: "/clientele", icon: <Handshake size={size} /> },
+  { title: "Home", href: "/", icon: <Home size={size} />, isHide: false },
+  { title: "About", href: "/about", icon: <Info size={size} />, isHide: false },
+  {
+    title: "Products",
+    href: "/products",
+    icon: <Box size={size} />,
+    isHide: false,
+  },
+  {
+    title: "Blogs",
+    href: "/blogs",
+    icon: <SquarePen size={size} />,
+    isHide: false,
+  },
+  {
+    title: "Clientele",
+    href: "/clientele",
+    icon: <Handshake size={size} />,
+    isHide: true,
+  },
   {
     title: "Partners",
     href: "/our-partners",
     icon: <HeartHandshake size={size} />,
+    isHide: true,
   },
-  { title: "Contact", href: "/contact", icon: <SquareUserRound size={size} /> },
+  {
+    title: "Contact",
+    href: "/contact",
+    icon: <SquareUserRound size={size} />,
+    isHide: false,
+  },
 ];
 
 const fetchTempCart = async () => {
@@ -80,23 +101,26 @@ export const HeaderTop = () => {
 
           <nav className="ml-auto mr-10 hidden lg:block">
             <ul className="flex items-center justify-start gap-2">
-              {navList.map(({ title, href, icon }) => (
-                <li key={title}>
-                  <Link
-                    href={href}
-                    className={cn(
-                      `flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-200`,
-                      {
-                        "bg-primary text-white hover:bg-primary":
-                          pathname === href,
-                      },
-                    )}
-                  >
-                    <span>{icon}</span>
-                    <span>{title}</span>
-                  </Link>
-                </li>
-              ))}
+              {navList.map(
+                ({ title, href, icon, isHide }) =>
+                  !isHide && (
+                    <li key={title}>
+                      <Link
+                        href={href}
+                        className={cn(
+                          `flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-200`,
+                          {
+                            "bg-primary text-white hover:bg-primary":
+                              pathname === href,
+                          },
+                        )}
+                      >
+                        <span>{icon}</span>
+                        <span>{title}</span>
+                      </Link>
+                    </li>
+                  ),
+              )}
             </ul>
           </nav>
 
