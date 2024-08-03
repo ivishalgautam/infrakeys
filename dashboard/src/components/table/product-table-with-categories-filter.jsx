@@ -85,17 +85,21 @@ export default function ProductTableWithCategoriesAndFilter({ products }) {
       for (const { sub_category_name, custom_properties } of products) {
         for (const cp of custom_properties) {
           const name = String(cp.name).toLowerCase();
-          setCustomProperties((prev) => ({
-            ...prev,
-            [name]: prev[name]
-              ? [
-                  ...prev[name],
-                  ...cp.values
-                    .filter((item) => !prev[name].includes(item.toLowerCase()))
-                    .map((item) => item.toLowerCase()),
-                ]
-              : [...cp.values.map((item) => item.toLowerCase())],
-          }));
+          if (name) {
+            setCustomProperties((prev) => ({
+              ...prev,
+              [name]: prev[name]
+                ? [
+                    ...prev[name],
+                    ...cp.values
+                      .filter(
+                        (item) => !prev[name].includes(item.toLowerCase())
+                      )
+                      .map((item) => item.toLowerCase()),
+                  ]
+                : [...cp.values.map((item) => item.toLowerCase())],
+            }));
+          }
         }
       }
     }
