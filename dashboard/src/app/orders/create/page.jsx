@@ -1,16 +1,11 @@
 "use client";
-import { useMutation } from "@tanstack/react-query";
-import http from "@/utils/http";
 import Title from "@/components/Title";
 import { useFetchProducts } from "@/hooks/useFetchProducts";
-import { toast } from "sonner";
-import { endpoints } from "../../../utils/endpoints";
 import ProductTableWithCategoriesAndFilter from "@/components/table/product-table-with-categories-filter";
 import Spinner from "@/components/Spinner";
 
 export default function Create() {
   const { data: products, isLoading } = useFetchProducts();
-
   if (isLoading) return <Spinner />;
 
   return (

@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IoDocumentAttachOutline } from "react-icons/io5";
+import moment from "moment";
 
 export const columns = (setRequirementId, handleDelete) => [
   {
@@ -55,6 +56,17 @@ export const columns = (setRequirementId, handleDelete) => [
         >
           <IoDocumentAttachOutline size={25} className="text-primary" />
         </a>
+      );
+    },
+  },
+  {
+    accessorKey: "created_at",
+    header: ({ column }) => {
+      return <Button variant="ghost">Created At</Button>;
+    },
+    cell: ({ row }) => {
+      return (
+        <div>{moment(row.getValue("created_at")).format("DD/MM/YYYY")}</div>
       );
     },
   },
