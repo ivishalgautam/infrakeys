@@ -54,16 +54,9 @@ export default function ProductTableWithCategoriesAndFilter({ products }) {
       return products;
 
     return products?.filter((product) => {
-      if (
-        !filters["sub_categories"]
-          ?.map((i) => i.toLowerCase())
-          .includes(String(product.sub_category_name).toLowerCase())
-      )
-        return false;
-
       // Check if any custom property matches
       for (const prop in filters) {
-        if (prop === "sub_categories" || filters[prop].length === 0) continue; // empty filters
+        if (filters[prop].length === 0) continue; // empty filters
 
         if (
           !product.custom_properties.some(
@@ -90,19 +83,6 @@ export default function ProductTableWithCategoriesAndFilter({ products }) {
       );
 
       for (const { sub_category_name, custom_properties } of products) {
-        setCustomProperties((prev) => ({
-          ...prev,
-          sub_categories: prev.sub_categories
-            ? [
-                ...prev.sub_categories,
-                ...(prev.sub_categories.includes(
-                  String(sub_category_name).toLowerCase()
-                )
-                  ? []
-                  : [String(sub_category_name).toLowerCase()]),
-              ]
-            : [String(sub_category_name).toLowerCase()],
-        }));
         for (const cp of custom_properties) {
           const name = String(cp.name).toLowerCase();
           setCustomProperties((prev) => ({
@@ -169,7 +149,7 @@ export default function ProductTableWithCategoriesAndFilter({ products }) {
                 <ChevronDown size={20} />
               </span>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent className="max-h-96 overflow-y-auto">
               <DropdownMenuLabel className="capitalize">
                 {val.split("_").join(" ")}
               </DropdownMenuLabel>
