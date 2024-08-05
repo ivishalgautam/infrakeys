@@ -44,7 +44,7 @@ async function getSubCategoriesByCategory(slug) {
 export default async function Page({ params: { slug: catSlug, subCatSlug } }) {
   const { data: products } = await getProductsBySubCategory(subCatSlug);
   const { data } = await getSubCategoriesByCategory(catSlug);
-
+  console.log({ data });
   return (
     <div className="container space-y-2 py-8">
       <SubCategoriesSheet>
