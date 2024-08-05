@@ -191,23 +191,43 @@ export const HeaderTop = () => {
           </SheetHeader>
           <div className="grid gap-4 py-4">
             <ul className="space-y-2">
-              {navList.map(({ href, icon, title }) => (
-                <li key={href}>
-                  <Link
-                    href={href}
-                    className={cn(
-                      `flex items-center justify-start gap-2 rounded-lg px-3 py-3 transition-colors hover:bg-gray-200`,
-                      {
-                        "bg-primary text-white hover:bg-primary":
-                          pathname === href,
-                      },
-                    )}
-                  >
-                    <span>{icon}</span>
-                    <span>{title}</span>
-                  </Link>
-                </li>
-              ))}
+              {user && (
+                <Link
+                  href={"/profile/enquiries?status=pending_enquiry"}
+                  className={cn(
+                    `flex items-center justify-start gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-200`,
+                    {
+                      "bg-primary text-white hover:bg-primary":
+                        pathname.includes("profile"),
+                    },
+                  )}
+                >
+                  <span>
+                    <FiUser size={size} />
+                  </span>
+                  <span>Dashboard</span>
+                </Link>
+              )}
+              {navList.map(
+                ({ href, icon, title, isHide }) =>
+                  !isHide && (
+                    <li key={href}>
+                      <Link
+                        href={href}
+                        className={cn(
+                          `flex items-center justify-start gap-2 rounded-lg px-3 py-3 transition-colors hover:bg-gray-200`,
+                          {
+                            "bg-primary text-white hover:bg-primary":
+                              pathname === href,
+                          },
+                        )}
+                      >
+                        <span>{icon}</span>
+                        <span>{title}</span>
+                      </Link>
+                    </li>
+                  ),
+              )}
             </ul>
           </div>
         </SheetContent>
