@@ -17,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 export const columns = (handleDelete, handleNavigate) => [
   {
@@ -74,13 +75,14 @@ export const columns = (handleDelete, handleNavigate) => [
       );
     },
     cell: ({ row }) => {
-      const category_id = row.original.category_id;
-      const category_name = row.original.category_name;
-      return (
-        <Link href={`/categories/edit/${category_id}`} className="capitalize">
-          {category_name}
-        </Link>
-      );
+      const categories = row.original.categories;
+      return categories?.map((category) => (
+        <Badge key={category.id} className={"mr-2"}>
+          <Link href={`/categories/edit/${category.id}`} className="capitalize">
+            {category.name}
+          </Link>
+        </Badge>
+      ));
     },
   },
   {

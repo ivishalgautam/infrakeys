@@ -29,6 +29,7 @@
     "@tanstack/react-table": "^8.11.7",
     "@tinymce/tinymce-react": "^5.1.1",
     "@tremor/react": "^3.14.1",
+    "@uidotdev/usehooks": "^2.4.1",
     "axios": "^1.4.0",
     "chroma-js": "^2.4.2",
     "class-variance-authority": "^0.7.0",

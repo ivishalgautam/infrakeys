@@ -66,7 +66,7 @@ export function SubCategoryForm({
   const onSubmit = (data) => {
     const payload = {
       name: data?.name,
-      category_id: data?.category_id.value,
+      category_ids: data?.categories.map(({ value }) => value),
       image: image,
       is_featured: data?.is_featured,
       meta_title: data?.meta_title,
@@ -74,6 +74,8 @@ export function SubCategoryForm({
       meta_keywords: data?.meta_keywords,
       type: data?.type,
     };
+
+    console.log(payload);
 
     if (type === "create") {
       handleCreate(payload);
@@ -96,8 +98,10 @@ export function SubCategoryForm({
         data && setValue("name", data?.name);
         data &&
           setValue(
-            "category_id",
-            formattedCategories.find((so) => so.value === data?.category_id)
+            "categories",
+            formattedCategories.filter((so) =>
+              data?.category_ids.includes(so.value)
+            )
           );
         data && setImage(data.image);
         data && setValue("is_featured", data?.is_featured);
@@ -204,7 +208,7 @@ export function SubCategoryForm({
               <Label htmlFor="category">Category</Label>
               <Controller
                 control={control}
-                name="category_id"
+                name="categories"
                 maxMenuHeight={230}
                 rules={{ required: "Please select category" }}
                 render={({ field: { onChange, value } }) => {
@@ -213,13 +217,14 @@ export function SubCategoryForm({
                       options={formattedCategories}
                       defaultValue={value}
                       onChange={onChange}
+                      isMulti
                     />
                   );
                 }}
               />
-              {errors.category_id && (
+              {errors.categories && (
                 <span className="text-red-600">
-                  {errors.category_id.message}
+                  {errors.categories.message}
                 </span>
               )}
             </div>

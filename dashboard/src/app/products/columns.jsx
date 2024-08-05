@@ -43,7 +43,7 @@ export const columns = (handleDelete, router) => [
     },
   },
   {
-    accessorKey: "category_name",
+    accessorKey: "categories",
     header: ({ column }) => {
       return (
         <Button
@@ -56,13 +56,16 @@ export const columns = (handleDelete, router) => [
       );
     },
     cell: ({ row }) => {
-      return (
-        <Badge className={`capitalize`}>{row.getValue("category_name")}</Badge>
-      );
+      const categories = row.getValue("categories");
+      return categories.map((cat) => (
+        <Badge key={cat.id} className={`capitalize mr-1`}>
+          {cat.name}
+        </Badge>
+      ));
     },
   },
   {
-    accessorKey: "sub_category_name",
+    accessorKey: "sub_categories",
     header: ({ column }) => {
       return (
         <Button
@@ -75,11 +78,12 @@ export const columns = (handleDelete, router) => [
       );
     },
     cell: ({ row }) => {
-      return (
-        <Badge className={`capitalize`}>
-          {row.getValue("sub_category_name")}
+      const subCategories = row.getValue("sub_categories");
+      return subCategories.map((subCat) => (
+        <Badge key={subCat.id} className={`capitalize`}>
+          {subCat.name}
         </Badge>
-      );
+      ));
     },
   },
   {

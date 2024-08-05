@@ -28,7 +28,7 @@ import {
 import { FaWhatsapp } from "react-icons/fa";
 import AddToCart from "../Forms/add-to-cart";
 
-export default function ProductTableWithCategoriesAndFilter({ products }) {
+export default function ProductTableWithFilter({ products = [] }) {
   const [customProperties, setCustomProperties] = useState({});
   const { watch, control, getValues, setValue } = useForm({
     defaultValues: { products: [] },
@@ -73,7 +73,7 @@ export default function ProductTableWithCategoriesAndFilter({ products }) {
 
       return true;
     });
-  }, [filters]);
+  }, [filters, products]);
 
   useEffect(() => {
     if (!(products?.length === 1 && products?.[0] === null)) {
