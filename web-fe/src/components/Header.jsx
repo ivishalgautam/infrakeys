@@ -101,6 +101,23 @@ export const HeaderTop = () => {
 
           <nav className="ml-auto mr-10 hidden lg:block">
             <ul className="flex items-center justify-start gap-2">
+              {user && (
+                <Link
+                  href={"/profile/enquiries?status=pending_enquiry"}
+                  className={cn(
+                    `flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-200`,
+                    {
+                      "bg-primary text-white hover:bg-primary":
+                        pathname.includes("profile"),
+                    },
+                  )}
+                >
+                  <span>
+                    <FiUser size={size} />
+                  </span>
+                  <span>Dashboard</span>
+                </Link>
+              )}
               {navList.map(
                 ({ title, href, icon, isHide }) =>
                   !isHide && (
