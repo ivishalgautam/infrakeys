@@ -49,7 +49,6 @@ export default function SearchBox() {
   });
 
   const handleCreate = (data) => {
-    console.log({ data });
     uploadDocsMutation.mutate(data);
   };
 

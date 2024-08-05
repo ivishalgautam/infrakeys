@@ -57,11 +57,15 @@ export const columns = (handleDelete, router) => [
     },
     cell: ({ row }) => {
       const categories = row.getValue("categories");
-      return categories.map((cat) => (
-        <Badge key={cat.id} className={`capitalize mr-1`}>
-          {cat.name}
-        </Badge>
-      ));
+      return (
+        <div className="max-w-80 space-y-2">
+          {categories.map((cat) => (
+            <Badge key={cat.id} className={`capitalize mr-1`}>
+              {cat.name}
+            </Badge>
+          ))}
+        </div>
+      );
     },
   },
   {
@@ -79,11 +83,15 @@ export const columns = (handleDelete, router) => [
     },
     cell: ({ row }) => {
       const subCategories = row.getValue("sub_categories");
-      return subCategories.map((subCat) => (
-        <Badge key={subCat.id} className={`capitalize`}>
-          {subCat.name}
-        </Badge>
-      ));
+      return (
+        <div className="max-w-80 space-y-2">
+          {subCategories.map((subCat) => (
+            <Badge key={subCat.id} className={`capitalize mr-1`}>
+              {subCat.name}
+            </Badge>
+          ))}
+        </div>
+      );
     },
   },
   {

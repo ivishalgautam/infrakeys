@@ -32,7 +32,6 @@ export default function Create() {
     keepPreviousData: true,
     staleTime: 1000,
   });
-  // console.log({ products });
   const createQueryString = useCallback(
     (name, value) => {
       const params = new URLSearchParams(searchParams);
