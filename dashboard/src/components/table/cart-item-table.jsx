@@ -78,7 +78,6 @@ export default function CartItemTable({
           control={control}
           name={`requirement_reference`}
           maxMenuHeight={230}
-          rules={{ required: "Select requirement reference" }}
           render={({ field: { onChange, value } }) => (
             <ReactSelect
               onChange={onChange}
