@@ -44,49 +44,53 @@ export default function CartItemTable({
 
   return (
     <div>
-      {/* user id */}
-      <div>
-        <Label>Customers</Label>
-        <Controller
-          control={control}
-          name={`user_id`}
-          maxMenuHeight={230}
-          rules={{ required: "Select measurement" }}
-          render={({ field: { onChange, value } }) => (
-            <Select value={value} onValueChange={onChange} className="">
-              <SelectTrigger className="">
-                <SelectValue placeholder="Select customer" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  {customers?.map(({ id, name, phone }) => (
-                    <SelectItem key={id} value={id} className="uppercase">
-                      {`${name} (${phone})`}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          )}
-        />
-      </div>
-
-      {/* reference id */}
-      <div>
-        <Label>Reference</Label>
-        <Controller
-          control={control}
-          name={`requirement_reference`}
-          maxMenuHeight={230}
-          render={({ field: { onChange, value } }) => (
-            <ReactSelect
-              onChange={onChange}
-              value={value}
-              options={formattedRequirements}
+      {fields?.length > 0 && (
+        <>
+          {/* user id */}
+          <div>
+            <Label>Customers</Label>
+            <Controller
+              control={control}
+              name={`user_id`}
+              maxMenuHeight={230}
+              rules={{ required: "Select measurement" }}
+              render={({ field: { onChange, value } }) => (
+                <Select value={value} onValueChange={onChange} className="">
+                  <SelectTrigger className="">
+                    <SelectValue placeholder="Select customer" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {customers?.map(({ id, name, phone }) => (
+                        <SelectItem key={id} value={id} className="uppercase">
+                          {`${name} (${phone})`}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
             />
-          )}
-        />
-      </div>
+          </div>
+
+          {/* reference id */}
+          <div>
+            <Label>Reference</Label>
+            <Controller
+              control={control}
+              name={`requirement_reference`}
+              maxMenuHeight={230}
+              render={({ field: { onChange, value } }) => (
+                <ReactSelect
+                  onChange={onChange}
+                  value={value}
+                  options={formattedRequirements}
+                />
+              )}
+            />
+          </div>
+        </>
+      )}
 
       <Table>
         <TableCaption>{fields?.length === 0 && "Empty"}</TableCaption>

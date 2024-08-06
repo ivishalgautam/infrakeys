@@ -16,7 +16,7 @@ export default function Cart() {
   const { user, isUserLoading } = useContext(MainContext);
   const pathname = usePathname();
   const { data } = useQuery({
-    queryKey: ["cart-items", pathname],
+    queryKey: ["cart-items"],
     queryFn: fetchTempCart,
     enabled: !!user,
   });
