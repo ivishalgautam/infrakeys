@@ -23,8 +23,8 @@ export default function Products() {
   const router = useRouter();
 
   const { data, isLoading, isError, error } = useQuery({
-    queryFn: fetchEnquiries,
     queryKey: ["enquiries"],
+    queryFn: fetchEnquiries,
   });
 
   const deleteMutation = useMutation(deleteEnquiry, {

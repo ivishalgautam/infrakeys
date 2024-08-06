@@ -9,7 +9,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "@/utils/http";
 import { endpoints } from "../../utils/endpoints.js";
 import { toast } from "sonner";
-import { isObject } from "@/utils/object";
 import { useRouter } from "next/navigation";
 
 async function deleteOrder({ id }) {
@@ -25,8 +24,8 @@ export default function Products() {
   const router = useRouter();
 
   const { data, isLoading, isError, error } = useQuery({
-    queryFn: fetchOrders,
     queryKey: ["orders"],
+    queryFn: fetchOrders,
   });
 
   const deleteMutation = useMutation(deleteOrder, {
@@ -35,11 +34,7 @@ export default function Products() {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
     },
     onError: (error) => {
-      if (isObject(error)) {
-        toast.error(error.message);
-      } else {
-        toast.error(error);
-      }
+      toast.error(error.message ?? "error");
     },
   });
 
