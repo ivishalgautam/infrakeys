@@ -9,48 +9,48 @@ import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { useCallback, useEffect, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 
 const fetchProducts = async (searchQuery) => {
   const { data } = await http().get(
-    `${endpoints.products.getAll}/dashboard/getAll?q=${searchQuery}`
+    searchQuery
+      ? `${endpoints.products.getAll}/dashboard/getAll?q=${searchQuery}`
+      : `${endpoints.products.getAll}/dashboard/getAll`
   );
   return data;
 };
 
 export default function Create() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
   const [inputVal, setInputVal] = useState("");
   const debouncedSearchTerm = useDebounce(inputVal, 300);
   const { data: products, isFetching } = useQuery({
-    queryKey: ["products", debouncedSearchTerm],
+    queryKey: ["create-order-products", debouncedSearchTerm],
     queryFn: () => fetchProducts(debouncedSearchTerm),
-    keepPreviousData: true,
-    staleTime: 1000,
   });
-  const createQueryString = useCallback(
-    (name, value) => {
-      const params = new URLSearchParams(searchParams);
-      params.set(name, value);
 
-      return params.toString();
-    },
-    [searchParams]
-  );
+  // const createQueryString = useCallback(
+  //   (name, value) => {
+  //     const params = new URLSearchParams(searchParams);
+  //     params.set(name, value);
+
+  //     return params.toString();
+  //   },
+  //   [searchParams]
+  // );
 
   const handleChange = (value) => {
     setInputVal(value);
   };
 
-  useEffect(() => {
-    router.replace(
-      `${pathname}?${createQueryString("q", debouncedSearchTerm)}`
-    );
-  }, [debouncedSearchTerm]);
+  // useEffect(() => {
+  //   if (debouncedSearchTerm) {
+  //     // searchParams.set("q", debouncedSearchTerm);
+  //     // router.replace(
+  //     //   `${pathname}?${createQueryString("q", debouncedSearchTerm)}`
+  //     // );
+  //   }
+  // }, [debouncedSearchTerm]);
 
   return (
     <div className="container mx-auto bg-white p-8 rounded-lg border-input space-y-4">

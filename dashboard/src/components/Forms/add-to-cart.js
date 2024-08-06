@@ -16,7 +16,7 @@ export default function AddToCart({ id, type }) {
   const { user } = useContext(MainContext);
   const createMutation = useMutation(addToCart, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries("cart-items");
+      queryClient.invalidateQueries({ queryKey: ["cart-items"] });
       toast.success(data.message);
     },
     onError: (error) => {

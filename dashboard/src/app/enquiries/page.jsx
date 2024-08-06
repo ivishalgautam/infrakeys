@@ -30,7 +30,7 @@ export default function Products() {
   const deleteMutation = useMutation(deleteEnquiry, {
     onSuccess: (data) => {
       toast.success(data.message);
-      queryClient.invalidateQueries(["enquiries"]);
+      queryClient.invalidateQueries({ queryKey: ["enquiries"] });
     },
     onError: (error) => {
       toast.error(error.message);
