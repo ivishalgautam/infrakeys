@@ -75,6 +75,31 @@ export const columns = (handleDelete, handleNavigate) => [
     },
   },
   {
+    accessorKey: "reference",
+    header: ({ column }) => {
+      return <Button variant="ghost">Reference</Button>;
+    },
+    cell: ({ row }) => {
+      const reference = row.original.reference;
+      return (
+        <div>
+          {reference.length ? (
+            <a
+              target="_blank"
+              href={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${reference?.[0].docs?.[0]}`}
+            >
+              <Badge className={cn("capitalize")}>
+                {reference?.[0]?.requirement_id}
+              </Badge>
+            </a>
+          ) : (
+            "No reference"
+          )}
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "created_at",
     header: ({ column }) => {
       return <Button variant="ghost">Created At</Button>;

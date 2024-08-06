@@ -8,6 +8,7 @@ import http from "@/utils/http";
 import { endpoints } from "../../utils/endpoints.js";
 import Spinner from "@/components/Spinner";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 async function deletePoints(data) {
   return http().delete(`${endpoints.requirements.getAll}/${data.id}`);
@@ -21,6 +22,7 @@ async function fetchRequirements() {
 export default function Brands() {
   const [requirementId, setRequirementId] = useState(null);
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const { data, isLoading, isError, error } = useQuery({
     queryFn: fetchRequirements,
@@ -39,6 +41,10 @@ export default function Brands() {
 
   const handleDelete = async (id) => {
     deleteMutation.mutate({ id: id });
+  };
+
+  const handleNavigate = async (href) => {
+    router.push(href);
   };
 
   useEffect(() => {
@@ -71,7 +77,7 @@ export default function Brands() {
       </div>
       <div>
         <DataTable
-          columns={columns(setRequirementId, handleDelete)}
+          columns={columns(setRequirementId, handleDelete, handleNavigate)}
           data={data}
         />
       </div>

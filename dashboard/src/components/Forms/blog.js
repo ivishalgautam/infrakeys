@@ -62,7 +62,6 @@ export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
   };
 
   const onSubmit = (data) => {
-    console.log({ data });
     const payload = {
       image: image[0],
       categories: data?.categories?.map(({ value }) => value),

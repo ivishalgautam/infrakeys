@@ -12,8 +12,31 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { IoDocumentAttachOutline } from "react-icons/io5";
 import moment from "moment";
+import { Badge } from "@/components/ui/badge";
 
-export const columns = (setRequirementId, handleDelete) => [
+export const columns = (setRequirementId, handleDelete, handleNavigate) => [
+  {
+    accessorKey: "requirement_id",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Id
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const requirement_id = row.original.requirement_id;
+      return (
+        <div className={`capitalize`}>
+          <Badge>{requirement_id}</Badge>
+        </div>
+      );
+    },
+  },
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -56,6 +79,44 @@ export const columns = (setRequirementId, handleDelete) => [
         >
           <IoDocumentAttachOutline size={25} className="text-primary" />
         </a>
+      );
+    },
+  },
+  {
+    accessorKey: "order_id",
+    header: ({ column }) => {
+      return <Button variant="ghost">Order</Button>;
+    },
+    cell: ({ row }) => {
+      const id = row.original.order_id;
+      return id ? (
+        <Badge
+          onClick={() => handleNavigate(`/orders/${id}`)}
+          className={"cursor-pointer"}
+        >
+          {id}
+        </Badge>
+      ) : (
+        "No Order"
+      );
+    },
+  },
+  {
+    accessorKey: "enquiry_id",
+    header: ({ column }) => {
+      return <Button variant="ghost">Enquiry</Button>;
+    },
+    cell: ({ row }) => {
+      const id = row.original.enquiry_id;
+      return id ? (
+        <Badge
+          onClick={() => handleNavigate(`/enquiries/${id}`)}
+          className={"cursor-pointer"}
+        >
+          {id}
+        </Badge>
+      ) : (
+        "No Enquiry"
       );
     },
   },

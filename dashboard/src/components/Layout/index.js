@@ -2,6 +2,8 @@
 import React from "react";
 import Sidebar from "./Sidebar";
 import { redirect } from "next/navigation";
+import { ShoppingCart } from "lucide-react";
+import Cart from "../cart";
 
 export const logout = () => {
   if (typeof window !== "undefined") {
@@ -17,6 +19,7 @@ const Layout = ({ children }) => {
       <div className="flex h-full">
         <Sidebar />
         <div className="overflow-scroll overflow-x-hidden w-full p-8 pb-20 h-full bg-gray-100">
+          <Cart />
           <main>{children}</main>
         </div>
       </div>

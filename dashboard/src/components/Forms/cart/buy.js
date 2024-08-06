@@ -45,7 +45,12 @@ export default function BuyForm({ data, handleCreate }) {
   };
 
   const onSubmit = (data) => {
-    handleCreate(Object.assign(data, { enquiry_type: "buy" }));
+    handleCreate(
+      Object.assign(
+        { ...data, requirement_reference: data.requirement_reference.value },
+        { enquiry_type: "buy" }
+      )
+    );
   };
 
   useEffect(() => {
@@ -53,7 +58,7 @@ export default function BuyForm({ data, handleCreate }) {
       "items",
       data?.map((item) => {
         return { _id: item.id, quantity_type: item.quantity_types[0], ...item };
-      }),
+      })
     );
   }, [data]);
 

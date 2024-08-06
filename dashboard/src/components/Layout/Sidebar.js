@@ -18,7 +18,8 @@ export default function Sidebar() {
     (item) =>
       !item.link.includes("/edit") &&
       !item.link.includes("/create") &&
-      !item.link.includes("[id]")
+      !item.link.includes("[id]") &&
+      !item.link.includes("cart")
   );
 
   // Determine the appropriate sidebar data based on the user's role

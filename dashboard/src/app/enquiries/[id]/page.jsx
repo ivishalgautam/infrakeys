@@ -340,14 +340,14 @@ export default function Page({ params: { id } }) {
                   watch(`items.${key}.status`)
                 ) ? (
                   <div>
-                    <Label>GST</Label>
+                    <Label>GST In Percentage</Label>
                     <Input
                       type="number"
                       {...register(`items.${key}.gst_percentage`, {
                         required: "required",
                         valueAsNumber: true,
                       })}
-                      placeholder="Enter gst"
+                      placeholder="Enter GST In Percentage"
                     />
                     {errors?.items?.[key] && (
                       <Small className={"text-red-500"}>

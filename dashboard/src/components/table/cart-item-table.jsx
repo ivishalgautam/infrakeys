@@ -26,6 +26,8 @@ import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
 import { Boxes, DivideIcon, Scale } from "lucide-react";
 import { useFetchUsers } from "@/hooks/useFetchUsers";
+import ReactSelect from "react-select";
+import { useFetchRequirements } from "@/hooks/useFetchRequirements";
 
 export default function CartItemTable({
   fields,
@@ -35,9 +37,14 @@ export default function CartItemTable({
   handleDelete,
 }) {
   const { data: customers } = useFetchUsers("user");
+  const { data: requirements } = useFetchRequirements();
+  const formattedRequirements = requirements?.map(
+    ({ id: value, requirement_id: label }) => ({ value, label })
+  );
 
   return (
     <div>
+      {/* user id */}
       <div>
         <Label>Customers</Label>
         <Controller
@@ -63,6 +70,25 @@ export default function CartItemTable({
           )}
         />
       </div>
+
+      {/* reference id */}
+      <div>
+        <Label>Reference</Label>
+        <Controller
+          control={control}
+          name={`requirement_reference`}
+          maxMenuHeight={230}
+          rules={{ required: "Select requirement reference" }}
+          render={({ field: { onChange, value } }) => (
+            <ReactSelect
+              onChange={onChange}
+              value={value}
+              options={formattedRequirements}
+            />
+          )}
+        />
+      </div>
+
       <Table>
         <TableCaption>{fields?.length === 0 && "Empty"}</TableCaption>
         <TableHeader>
