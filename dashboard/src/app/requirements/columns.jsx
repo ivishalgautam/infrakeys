@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "../../components/ui/button";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, Copy } from "lucide-react";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   DropdownMenu,
@@ -13,6 +13,8 @@ import {
 import { IoDocumentAttachOutline } from "react-icons/io5";
 import moment from "moment";
 import { Badge } from "@/components/ui/badge";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { toast } from "sonner";
 
 export const columns = (setRequirementId, handleDelete, handleNavigate) => [
   {
@@ -31,8 +33,18 @@ export const columns = (setRequirementId, handleDelete, handleNavigate) => [
     cell: ({ row }) => {
       const requirement_id = row.original.requirement_id;
       return (
-        <div className={`capitalize`}>
+        <div className={`capitalize flex items-center justify-start gap-2`}>
           <Badge>{requirement_id}</Badge>
+          <CopyToClipboard text={requirement_id}>
+            <Button
+              variant="outline"
+              size="icon"
+              className="size-8"
+              onClick={() => toast.success("Copied")}
+            >
+              <Copy size={13} />
+            </Button>
+          </CopyToClipboard>
         </div>
       );
     },
@@ -69,7 +81,6 @@ export const columns = (setRequirementId, handleDelete, handleNavigate) => [
       return <Button variant="ghost">Documents</Button>;
     },
     cell: ({ row }) => {
-      const id = row.original.id;
       return (
         <a
           size="icon"

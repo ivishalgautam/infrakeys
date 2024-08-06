@@ -21,8 +21,8 @@ export default function Page() {
   const router = useRouter();
 
   const { data, isLoading } = useQuery({
-    queryFn: fetchTempCart,
     queryKey: ["cart"],
+    queryFn: fetchTempCart,
   });
 
   const createMutation = useMutation(createEnquiry, {
