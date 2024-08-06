@@ -32,7 +32,7 @@ export default function SellForm({ data, handleCreate }) {
       const index = fields.findIndex((so) => so._id === data.data.id);
       remove(index);
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ["cart-items", "cart"] });
+      queryClient.invalidateQueries({ queryKey: ["cart-items"] });
     },
     onError: (error) => {
       toast.error(error.message);

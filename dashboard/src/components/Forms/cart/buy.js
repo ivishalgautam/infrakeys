@@ -32,7 +32,7 @@ export default function BuyForm({ data, handleCreate }) {
       const index = fields.findIndex((so) => so._id === data.data.id);
       remove(index);
       toast.success(data.message);
-      queryClient.invalidateQueries(["cart-items", "cart"]);
+      queryClient.invalidateQueries(["cart-items"]);
     },
     onError: (error) => {
       toast.error(error.message);
