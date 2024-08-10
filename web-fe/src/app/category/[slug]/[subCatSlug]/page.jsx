@@ -1,6 +1,8 @@
+import FAQAccordion from "@/components/faq-accordion";
 import SidebarSubCategoriesWithTypes from "@/components/layout/sidebar-subcategories-with-types";
 import SubCategoriesSheet from "@/components/sub-categories-sheet";
 import ProductTableWithFilter from "@/components/table/product-table-with-filter";
+import { H4 } from "@/components/ui/typography";
 import { endpoints } from "@/utils/endpoints";
 import axios from "axios";
 import React from "react";
@@ -41,10 +43,17 @@ async function getSubCategoriesByCategory(slug) {
   return data;
 }
 
+async function fetchSubCategory(slug) {
+  const response = await axios.get(
+    `${baseUrl}${endpoints.subCategories.getAll}/${slug}`,
+  );
+  return response.data;
+}
+
 export default async function Page({ params: { slug: catSlug, subCatSlug } }) {
   const { data: products } = await getProductsBySubCategory(subCatSlug);
   const { data } = await getSubCategoriesByCategory(catSlug);
-  console.log({ data });
+  const { data: subCategory } = await fetchSubCategory(subCatSlug);
   return (
     <div className="container space-y-2 py-8">
       <SubCategoriesSheet>
@@ -64,6 +73,13 @@ export default async function Page({ params: { slug: catSlug, subCatSlug } }) {
         </div>
         <div className="col-span-5 lg:col-span-4">
           <ProductTableWithFilter products={products} />
+        </div>
+      </div>
+      <div className="rounded-lg bg-white p-8">
+        <H4>{subCategory?.name} FAQs</H4>
+
+        <div>
+          <FAQAccordion faq={subCategory?.faq} />
         </div>
       </div>
     </div>

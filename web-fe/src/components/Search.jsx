@@ -43,13 +43,12 @@ export default function SearchBox() {
       setIsModal(false);
     },
     onError: (error) => {
-      toast.success(error.message ?? "Error uploading documents!");
+      toast.error(error.message ?? "Error uploading documents!");
       setIsModal(false);
     },
   });
 
   const handleCreate = (data) => {
-    console.log({ data });
     uploadDocsMutation.mutate(data);
   };
 
