@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
 import Title from "../Title";
 import http from "@/utils/http";
 import { Input } from "../ui/input";
@@ -45,7 +45,11 @@ export function SubCategoryForm({
     watch,
     getValues,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: { faq: [{ question: "", answer: "" }] } });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "faq",
+  });
   const [token] = useLocalStorage("token");
   const [image, setImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -69,13 +73,12 @@ export function SubCategoryForm({
       category_ids: data?.categories.map(({ value }) => value),
       image: image,
       is_featured: data?.is_featured,
+      faq: data.faq,
       meta_title: data?.meta_title,
       meta_description: data?.meta_description,
       meta_keywords: data?.meta_keywords,
       type: data?.type,
     };
-
-    console.log(payload);
 
     if (type === "create") {
       handleCreate(payload);
@@ -94,6 +97,7 @@ export function SubCategoryForm({
         const { data } = await http().get(
           `${endpoints.sub_categories.getAll}/getById/${subCategoryId}`
         );
+        console.log({ data });
 
         data && setValue("name", data?.name);
         data &&
@@ -109,6 +113,12 @@ export function SubCategoryForm({
         data && setValue("meta_description", data?.meta_description);
         data && setValue("meta_keywords", data?.meta_keywords);
         data && setValue("type", data?.type);
+        remove();
+        data &&
+          data?.faq &&
+          data?.faq?.map(({ question, answer }) => {
+            append({ question, answer });
+          });
       } catch (error) {
         console.error(error);
         toast.error(error.message ?? "Unable to fetch details!");
@@ -311,6 +321,66 @@ export function SubCategoryForm({
               )}
             </div>
           )}
+
+          {/* faq */}
+          <div className="col-span-3 bg-white space-y-2">
+            <Title text={"FAQ"} />
+
+            <div className="space-y-4">
+              {fields.map((field, key) => (
+                <div key={key} className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <H4> Question: {key + 1}</H4>
+                    {type !== "view" && (
+                      <Button
+                        type="button"
+                        size="icon"
+                        variant="destructive"
+                        onClick={() => remove(key)}
+                      >
+                        <AiOutlineDelete size={20} />
+                      </Button>
+                    )}
+                  </div>
+                  <div>
+                    <Label>Question</Label>
+                    <Input
+                      {...register(`faq.${key}.question`, {
+                        required: "required",
+                      })}
+                      placeholder="Question"
+                      disabled={type === "view"}
+                    />
+                    {errors.faq && (
+                      <span className="text-red-600">
+                        {errors.faq?.[key]?.question?.message}
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    <Label>Answer</Label>
+                    <Textarea
+                      {...register(`faq.${key}.answer`, {
+                        required: "required",
+                      })}
+                      placeholder="Answer"
+                      disabled={type === "view"}
+                    />
+                    {errors.faq && (
+                      <span className="text-red-600">
+                        {errors.faq?.[key]?.answer?.message}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+            {type !== "view" && (
+              <Button type="button" onClick={() => append()}>
+                Add
+              </Button>
+            )}
+          </div>
 
           {/* product seo */}
           <div className="space-y-4">
