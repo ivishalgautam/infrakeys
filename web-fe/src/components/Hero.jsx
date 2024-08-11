@@ -14,6 +14,7 @@ export default function Hero() {
   const { data: subCategories, isLoading: isSubCatLoading } =
     useFetchFeaturedSubCategories();
   const imageDomain = process.env.NEXT_PUBLIC_IMAGE_DOMAIN;
+  console.log({ subCategories });
 
   return (
     <section
@@ -58,7 +59,7 @@ export default function Hero() {
                 <div className="flex flex-wrap items-center justify-center gap-2">
                   {subCategories?.slice(0, 5).map((cat) => (
                     <Link
-                      href={`/category/${cat.category_slug}/${cat.slug}`}
+                      href={`/category/${cat.categories[0].slug}/${cat.slug}`}
                       key={cat.id}
                       className="flex items-center gap-1 rounded-full border border-white/40 bg-white/30 p-1 pr-3 text-xs text-white backdrop-blur-sm transition-colors hover:bg-white hover:bg-white/40"
                     >
