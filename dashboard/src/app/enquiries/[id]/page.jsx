@@ -175,7 +175,7 @@ export default function Page({ params: { id } }) {
 
       setValue("quotation_file", data.quotation_file);
 
-      updateMutation.mutate({ quotation_file: data?.path[0], id: id });
+      updateMutation.mutate({ quotation_file: data?.path[0], enquiry_id: id });
 
       // console.log("Upload successful:", data.path);
     } catch (error) {
