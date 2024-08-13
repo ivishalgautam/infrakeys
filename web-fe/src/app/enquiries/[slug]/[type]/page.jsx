@@ -7,10 +7,12 @@ import Spinner from "@/components/Spinner";
 import EnquiryItemTable from "@/components/table/enquiry-item-table";
 import SingleEnquiryTable from "@/components/table/single-enquiry-table";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { H4 } from "@/components/ui/typography";
 import { endpoints } from "@/utils/endpoints";
 import http from "@/utils/http";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
@@ -86,6 +88,30 @@ export default function Page({ params: { slug } }) {
                 data={data}
               />
             </div>
+            {data?.quotation_file && (
+              <>
+                <Label>Quotation file</Label>
+                <div className="flex items-center justify-between rounded-md border px-2 text-xs">
+                  <span className="text-ellipsis">
+                    {String(data?.quotation_file?.split("/")[1]).substring(
+                      0,
+                      30,
+                    )}
+                    ...{" "}
+                  </span>
+                  <div className="flex items-center justify-center gap-2">
+                    <Button type="button" variant="outline" size="icon">
+                      <a
+                        target="_vishal"
+                        href={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${data?.quotation_file}`}
+                      >
+                        <Eye />
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
