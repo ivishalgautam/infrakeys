@@ -7,7 +7,10 @@ import { fetchProduct } from "@/utils/api";
 export async function generateMetadata({ params: { slug } }) {
   const { data } = await fetchProduct(slug);
   return {
-    title: data?.meta_title ?? data?.title,
+    title:
+      data?.meta_title && data?.meta_title !== ""
+        ? data?.meta_title
+        : data?.title,
     description: data?.meta_description,
     keywords: data?.meta_keywords,
     alternates: {
