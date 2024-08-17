@@ -45,7 +45,7 @@ export default function SidebarSubCategoriesWithTypes({
           >
             <>
               <div className="flex items-center justify-between rounded-md bg-primary p-2 py-1 text-white">
-                <h4 className="text-sm font-semibold">{type}</h4>
+                <h4 className="text-sm font-semibold capitalize">{type}</h4>
                 <CollapsibleTrigger asChild>
                   <Button variant="ghost" size="sm" className="w-9 p-0">
                     <ChevronsUpDown className="h-4 w-4" />

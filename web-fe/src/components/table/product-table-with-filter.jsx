@@ -33,6 +33,7 @@ import { handleWhatsAppEnq } from "@/lib/handle-whatsapp-enq";
 import { MainContext } from "@/store/context";
 
 export default function ProductTableWithFilter({ products }) {
+  console.log({ products });
   const router = useRouter();
   const { user } = useContext(MainContext);
   const [customProperties, setCustomProperties] = useState({});
