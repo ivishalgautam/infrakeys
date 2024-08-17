@@ -75,13 +75,15 @@ export default async function Page({ params: { slug: catSlug, subCatSlug } }) {
           <ProductTableWithFilter products={products} />
         </div>
       </div>
-      <div className="rounded-lg bg-white p-8">
-        <H4>{subCategory?.name} FAQs</H4>
+      {subCategory?.faq?.length && (
+        <div className="rounded-lg bg-white p-8">
+          <H4>{subCategory?.name} FAQs</H4>
 
-        <div>
-          <FAQAccordion faq={subCategory?.faq} />
+          <div>
+            <FAQAccordion faq={subCategory?.faq} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
