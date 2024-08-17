@@ -37,7 +37,6 @@ export default function Categories() {
     onSuccess: () => {
       toast.success("Sub category deleted.");
       queryClient.invalidateQueries({ queryKey: ["sub-categories"] });
-      closeModal();
     },
     onError: (error) => {
       if (isObject(error)) {
