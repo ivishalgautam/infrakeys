@@ -57,7 +57,6 @@ export function SubCategoryForm({
   const { data: categories, isLoading: isCategoryLoading } =
     useFetchCategories();
   const { data: subCatTypes } = useFetchSubCatTypes();
-
   const formattedCategories = useMemo(
     () =>
       categories?.map(({ id: value, name: label }) => ({
@@ -77,7 +76,7 @@ export function SubCategoryForm({
       meta_title: data?.meta_title,
       meta_description: data?.meta_description,
       meta_keywords: data?.meta_keywords,
-      type: data?.type,
+      type: data?.type ?? "",
     };
 
     if (type === "create") {
@@ -89,6 +88,17 @@ export function SubCategoryForm({
     }
   };
 
+  const isSteelCategories =
+    Array.isArray(watch("categories")) &&
+    watch("categories").length === 1 &&
+    String(watch("categories").map(({ label }) => label)[0])
+      .trim()
+      .toLowerCase() === "steel"
+      ? true
+      : false;
+
+  console.log({ isSteelCategories });
+
   useEffect(() => {
     // Fetch data from API and populate the form with prefilled values
     const fetchData = async () => {
@@ -97,7 +107,6 @@ export function SubCategoryForm({
         const { data } = await http().get(
           `${endpoints.sub_categories.getAll}/getById/${subCategoryId}`
         );
-        console.log({ data });
 
         data && setValue("name", data?.name);
         data &&
@@ -260,11 +269,27 @@ export function SubCategoryForm({
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Types</SelectLabel>
-                        {subCatTypes?.map(({ id: value, name: label }) => (
-                          <SelectItem key={value} value={value}>
-                            {label}
-                          </SelectItem>
-                        ))}
+                        {subCatTypes?.map(({ id: value, name: label }) =>
+                          isSteelCategories && label !== "other" ? (
+                            <SelectItem
+                              key={value}
+                              value={value}
+                              className="capitalize"
+                            >
+                              {label}
+                            </SelectItem>
+                          ) : !isSteelCategories && label === "other" ? (
+                            <SelectItem
+                              key={value}
+                              value={value}
+                              className="capitalize"
+                            >
+                              {label}
+                            </SelectItem>
+                          ) : (
+                            <></>
+                          )
+                        )}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
