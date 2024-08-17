@@ -50,7 +50,11 @@ export default async function Page({ params: { slug } }) {
                   <span className="text-sm font-bold capitalize">
                     Categories:{" "}
                   </span>
-                  <span className="text-sm">{data?.category_name}</span>
+                  {data?.categories?.map((category) => (
+                    <span key={category.id} className="text-sm">
+                      {category?.name},
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
