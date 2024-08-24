@@ -270,7 +270,7 @@ export function SubCategoryForm({
                       <SelectGroup>
                         <SelectLabel>Types</SelectLabel>
                         {subCatTypes?.map(({ id: value, name: label }) =>
-                          isSteelCategories && label !== "other" ? (
+                          isSteelCategories && label !== "products" ? (
                             <SelectItem
                               key={value}
                               value={value}
@@ -278,7 +278,7 @@ export function SubCategoryForm({
                             >
                               {label}
                             </SelectItem>
-                          ) : !isSteelCategories && label === "other" ? (
+                          ) : !isSteelCategories && label === "products" ? (
                             <SelectItem
                               key={value}
                               value={value}
