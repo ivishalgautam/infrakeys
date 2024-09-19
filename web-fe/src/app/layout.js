@@ -4,7 +4,7 @@ import QueryProvider from "@/components/QueryClientProvider";
 import { Toaster } from "sonner";
 import Context from "@/store/context";
 import Layout from "@/components/layout";
-import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 
 // Import Swiper styles
 import "swiper/css";
@@ -14,6 +14,7 @@ import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 import Script from "next/script";
 import InteraktChatbot from "@/components/interakt-chatbot";
+import GoogleAnalyticss from "./GoogleAnalytics";
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL),
@@ -62,7 +63,8 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <GoogleTagManager gtmId="GTM-WN9SB6DD" />
-        <GoogleTagManager gtmId="AW-11427244694" />
+        <GoogleAnalytics gaId="AW-11427244694" />
+        <GoogleAnalyticss />
         <InteraktChatbot />
       </head>
       <body
