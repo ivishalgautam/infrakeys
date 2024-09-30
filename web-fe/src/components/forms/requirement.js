@@ -62,6 +62,7 @@ export default function RequirementForm({
                 required: "required*",
               })}
               onChange={handleFileChange}
+              multiple
             />
             {errors.file && (
               <span className="text-red-500">{errors.file.message}</span>
