@@ -16,6 +16,12 @@ import { Badge } from "@/components/ui/badge";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "sonner";
 
+const openLinksInNewTabs = (links) => {
+  links.forEach((link) => {
+    window.open(link, "_blank");
+  });
+};
+
 export const columns = (setRequirementId, handleDelete, handleNavigate) => [
   {
     accessorKey: "requirement_id",
@@ -81,15 +87,21 @@ export const columns = (setRequirementId, handleDelete, handleNavigate) => [
       return <Button variant="ghost">Documents</Button>;
     },
     cell: ({ row }) => {
+      const docs = row.getValue("docs");
       return (
-        <a
-          size="icon"
-          variant="outline"
-          href={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${row.getValue("docs")[0]}`}
-          target="_blank"
-        >
-          <IoDocumentAttachOutline size={25} className="text-primary" />
-        </a>
+        <div className="flex items-center justify-start gap-1 flex-wrap">
+          {docs.map((link) => (
+            <a
+              key={link}
+              size="icon"
+              variant="outline"
+              href={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${link}`}
+              target="_blank"
+            >
+              <IoDocumentAttachOutline size={25} className="text-primary" />
+            </a>
+          ))}
+        </div>
       );
     },
   },
