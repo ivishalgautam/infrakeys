@@ -7,12 +7,16 @@ import axios from "axios";
 import { endpoints } from "@/utils/endpoints";
 import { useState } from "react";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { Progress } from "../ui/progress";
+import Image from "next/image";
 
 export default function RequirementForm({
   handleCreate,
   filePath,
   setFilePath,
 }) {
+  const [isUploading, setIsUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [token] = useLocalStorage("token");
   const {
     register,
@@ -21,6 +25,7 @@ export default function RequirementForm({
   } = useForm({});
 
   const handleFileChange = async (event) => {
+    setIsUploading(true);
     try {
       const selectedFiles = Array.from(event.target.files);
       const formData = new FormData();
@@ -35,12 +40,21 @@ export default function RequirementForm({
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
+          onUploadProgress: (progressEvent) => {
+            const progress = parseInt(
+              Math.round((progressEvent.loaded * 100) / progressEvent.total),
+            );
+            setProgress(progress);
+          },
         },
       );
 
       setFilePath((prev) => [...prev, ...response.data?.path]);
     } catch (error) {
       console.error("Error uploading image:", error);
+    } finally {
+      setProgress(0);
+      setIsUploading(false);
     }
   };
 
@@ -54,22 +68,28 @@ export default function RequirementForm({
         <div className="space-y-4">
           <H2>Upload your requirements.</H2>
 
-          <div>
-            <Label>Select file</Label>
-            <Input
-              type="file"
-              {...register("file", {
-                required: "required*",
-              })}
-              onChange={handleFileChange}
-              multiple
-            />
-            {errors.file && (
-              <span className="text-red-500">{errors.file.message}</span>
-            )}
-          </div>
+          {
+            <div>
+              <Label>Select file</Label>
+              <Input
+                type="file"
+                {...register("file", {
+                  required: "required*",
+                })}
+                onChange={handleFileChange}
+                multiple
+              />
+              {errors.file && (
+                <span className="text-red-500">{errors.file.message}</span>
+              )}
+            </div>
+          }
 
-          <Button>Submit</Button>
+          {isUploading ? (
+            <Progress value={progress} />
+          ) : (
+            <Button>Submit</Button>
+          )}
         </div>
       </form>
     </div>
