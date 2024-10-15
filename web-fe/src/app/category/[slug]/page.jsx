@@ -3,7 +3,9 @@ import FAQAccordion from "@/components/faq-accordion";
 import ProductTable from "@/components/table/product-table";
 import ProductTableWithFilter from "@/components/table/product-table-with-filter";
 import TellUsRequirement from "@/components/tell-us-requirement";
+import { buttonVariants } from "@/components/ui/button";
 import { H2, H4 } from "@/components/ui/typography";
+import { cn } from "@/lib/utils";
 import { endpoints } from "@/utils/endpoints";
 import axios from "axios";
 import { ArrowRight } from "lucide-react";
@@ -36,6 +38,12 @@ async function fetchCategory(slug) {
   );
   return response.data;
 }
+async function fetchVariants(slug) {
+  const response = await axios.get(
+    `${baseUrl}${endpoints.categories.getAll}/getVariantsBySlug/${slug}`,
+  );
+  return response.data;
+}
 async function fetchProducts(slug) {
   const response = await axios.get(
     `${baseUrl}${endpoints.products.getAll}/getByCategory/${slug}`,
@@ -44,8 +52,14 @@ async function fetchProducts(slug) {
 }
 
 export default async function CategoryPage({ params: { slug } }) {
+  const { data: variants } = await fetchVariants(slug);
   const { data: category } = await fetchCategory(slug);
-  const { data: products } = await fetchProducts(slug);
+  const { data: products } = await fetchProducts(
+    category.is_variant ? category.main_slug : slug,
+  );
+  const filteredVariants =
+    variants?.filter((variant) => variant.id !== null) ?? [];
+
   return (
     <section>
       <div className="container space-y-8 py-8">
@@ -82,6 +96,26 @@ export default async function CategoryPage({ params: { slug } }) {
             </div>
           </div>
         </div>
+
+        {filteredVariants.length > 0 && (
+          <div className="space-y-2 rounded-lg bg-white p-8">
+            <H4>We serve in:</H4>
+            <div className="flex items-center justify-start gap-4">
+              {variants?.map((variant) => (
+                <Link
+                  key={variant.id}
+                  href={`/category/${variant.slug}`}
+                  className={cn(
+                    "capitalize",
+                    buttonVariants({ variant: "outline" }),
+                  )}
+                >
+                  {variant?.name?.split(" in ")[1]}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* products */}
         <div className="space-y-4 rounded-lg bg-white p-8">
