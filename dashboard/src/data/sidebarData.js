@@ -65,6 +65,24 @@ export const AllRoutes = [
   },
   {
     label: "Categories",
+    link: "/categories/variant/[id]",
+    icon: BiCategoryAlt,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "Categories",
+    link: "/categories/variant/create/[id]",
+    icon: BiCategoryAlt,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "Categories",
+    link: "/categories/variant/edit/[id]",
+    icon: BiCategoryAlt,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "Categories",
     link: "/categories/edit/[id]",
     icon: BiCategoryAlt,
     roles: [ROLES.ADMIN],

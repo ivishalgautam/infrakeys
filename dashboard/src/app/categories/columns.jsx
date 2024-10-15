@@ -107,6 +107,12 @@ export const columns = (handleDelete, handleNavigate) => [
               Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => handleNavigate(`/categories/variant/${id}`)}
+            >
+              Variants
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => handleDelete(id)}>
               Delete
             </DropdownMenuItem>

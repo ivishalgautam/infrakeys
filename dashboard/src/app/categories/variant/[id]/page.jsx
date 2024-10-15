@@ -19,12 +19,7 @@ async function deleteCategory(data) {
   return http().delete(`${endpoints.categories.getAll}/${data.id}`);
 }
 
-async function fetchCategories() {
-  const { data } = await http().get(endpoints.categories.getAll);
-  return data;
-}
-
-export default function Categories() {
+export default function Categories({ params: { id } }) {
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -36,8 +31,14 @@ export default function Categories() {
   }
 
   const { data, isLoading, isError, error } = useQuery({
-    queryFn: fetchCategories,
-    queryKey: ["categories"],
+    queryFn: async () => {
+      const { data } = await http().get(
+        `${endpoints.categories.getAll}/getVariants/${id}`
+      );
+      return data;
+    },
+    queryKey: [`categories-${id}`, id],
+    enabled: !!id,
   });
 
   const deleteMutation = useMutation(deleteCategory, {
@@ -77,7 +78,10 @@ export default function Categories() {
       <div className="flex items-center justify-between">
         <Title text={"Categories"} />
 
-        <Link className={buttonVariants("default")} href={"/categories/create"}>
+        <Link
+          className={buttonVariants("default")}
+          href={`/categories/variant/create/${id}`}
+        >
           Create
         </Link>
       </div>

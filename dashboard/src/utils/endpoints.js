@@ -18,6 +18,7 @@ export const endpoints = {
   },
   categories: {
     getAll: "/categories",
+    variant: "/category-variant",
   },
   sub_categories: {
     getAll: "/sub-categories",
