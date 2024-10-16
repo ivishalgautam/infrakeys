@@ -69,7 +69,7 @@ export default async function CategoryPage({ params: { slug } }) {
       <div className="container space-y-8 py-8">
         {/* sub categories and banners*/}
         <div>
-          <H1 className="capitalize">{`${category?.name}`}</H1>
+          <H1 className="text-[2rem] capitalize lg:text-[2rem]">{`${category?.name}`}</H1>
           <div className="grid grid-cols-12 gap-4">
             {/* top sub categories */}
             <div className="col-span-12 rounded-lg bg-white p-6 sm:col-span-5 md:col-span-4 lg:col-span-3 ">
