@@ -52,13 +52,15 @@ async function fetchProducts(slug) {
 }
 
 export default async function CategoryPage({ params: { slug } }) {
-  const { data: variants } = await fetchVariants(slug);
   const { data: category } = await fetchCategory(slug);
+  const { data: variants } = await fetchVariants(
+    category.is_variant ? category.main_slug : slug,
+  );
   const { data: products } = await fetchProducts(
     category.is_variant ? category.main_slug : slug,
   );
   const filteredVariants =
-    variants?.filter((variant) => variant.id !== null) ?? [];
+    variants?.filter((variant) => variant.slug !== slug) ?? [];
 
   return (
     <section>
@@ -101,7 +103,7 @@ export default async function CategoryPage({ params: { slug } }) {
           <div className="space-y-2 rounded-lg bg-white p-8">
             <H4>We serve in:</H4>
             <div className="flex items-center justify-start gap-4">
-              {variants?.map((variant) => (
+              {filteredVariants?.map((variant) => (
                 <Link
                   key={variant.id}
                   href={`/category/${variant.slug}`}
