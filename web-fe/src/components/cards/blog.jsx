@@ -10,13 +10,13 @@ export default function BlogCard({ blog }) {
     <Link href={`/blogs/${blog.slug}`}>
       <div className="group overflow-hidden rounded-lg bg-white shadow">
         <div>
-          <figure>
+          <figure className="h-[169px]">
             <Image
               src={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${blog.image}`}
               width={300}
               height={300}
               alt={blog.title}
-              className="aspect-video"
+              className="aspect-video w-full object-cover object-center"
             />
           </figure>
         </div>
