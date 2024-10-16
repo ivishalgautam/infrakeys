@@ -100,8 +100,8 @@ export default async function CategoryPage({ params: { slug } }) {
         </div>
 
         {filteredVariants.length > 0 && (
-          <div className="space-y-2 rounded-lg bg-white p-8">
-            <H4>We serve in:</H4>
+          <div className="space-y-2 rounded-lg bg-white p-8 py-4">
+            <H4>Related links</H4>
             <div className="flex items-center justify-start gap-4">
               {filteredVariants?.map((variant) => (
                 <Link
@@ -109,7 +109,7 @@ export default async function CategoryPage({ params: { slug } }) {
                   href={`/category/${variant.slug}`}
                   className={cn(
                     "capitalize",
-                    buttonVariants({ variant: "outline" }),
+                    buttonVariants({ variant: "outline", size: "xs" }),
                   )}
                 >
                   {variant?.name?.split(" in ")[1]}
