@@ -1,10 +1,9 @@
 import CategorySlider from "@/components/category-slider";
 import FAQAccordion from "@/components/faq-accordion";
-import ProductTable from "@/components/table/product-table";
 import ProductTableWithFilter from "@/components/table/product-table-with-filter";
 import TellUsRequirement from "@/components/tell-us-requirement";
 import { buttonVariants } from "@/components/ui/button";
-import { H2, H4 } from "@/components/ui/typography";
+import { H1, H4 } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { endpoints } from "@/utils/endpoints";
 import axios from "axios";
@@ -70,7 +69,7 @@ export default async function CategoryPage({ params: { slug } }) {
       <div className="container space-y-8 py-8">
         {/* sub categories and banners*/}
         <div>
-          <H2 className="capitalize">{`${category?.name}`}</H2>
+          <H1 className="capitalize">{`${category?.name}`}</H1>
           <div className="grid grid-cols-12 gap-4">
             {/* top sub categories */}
             <div className="col-span-12 rounded-lg bg-white p-6 sm:col-span-5 md:col-span-4 lg:col-span-3 ">
