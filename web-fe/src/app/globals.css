@@ -75,6 +75,26 @@
   }
 }
 
+/* width */
+::-webkit-scrollbar {
+  @apply w-2 rounded-lg;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply rounded-full bg-gray-100;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply cursor-pointer rounded-full bg-primary;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary/80;
+}
+
 /* swiper */
 .home-banners-slider {
   width: 100%;

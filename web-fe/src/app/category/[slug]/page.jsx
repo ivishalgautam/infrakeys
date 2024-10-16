@@ -101,26 +101,6 @@ export default async function CategoryPage({ params: { slug } }) {
           </div>
         </div>
 
-        {filteredVariants.length > 0 && (
-          <div className="space-y-2 rounded-lg bg-white p-8 py-4">
-            <H4>Related links</H4>
-            <div className="flex items-center justify-start gap-1">
-              {filteredVariants?.map((variant) => (
-                <Link
-                  key={variant.id}
-                  href={`/category/${variant.slug}`}
-                  className={cn(
-                    "capitalize",
-                    buttonVariants({ variant: "outline", size: "xs" }),
-                  )}
-                >
-                  {variant?.name?.split(" in ")[1]}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* products */}
         <div className="space-y-4 rounded-lg bg-white p-8">
           <div>
@@ -144,6 +124,26 @@ export default async function CategoryPage({ params: { slug } }) {
             <FAQAccordion faq={category?.faq} />
           </div>
         </div>
+
+        {filteredVariants.length > 0 && (
+          <div className="space-y-2 rounded-lg">
+            <H4>Related links</H4>
+            <div className="flex items-center justify-start gap-1">
+              {filteredVariants?.map((variant) => (
+                <Link
+                  key={variant.id}
+                  href={`/category/${variant.slug}`}
+                  className={cn(
+                    "capitalize",
+                    buttonVariants({ variant: "outline", size: "xs" }),
+                  )}
+                >
+                  {variant?.name?.split(" in ")[1]}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

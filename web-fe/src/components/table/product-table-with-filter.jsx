@@ -33,7 +33,6 @@ import { handleWhatsAppEnq } from "@/lib/handle-whatsapp-enq";
 import { MainContext } from "@/store/context";
 
 export default function ProductTableWithFilter({ products }) {
-  console.log({ products });
   const router = useRouter();
   const { user } = useContext(MainContext);
   const [customProperties, setCustomProperties] = useState({});
@@ -188,7 +187,7 @@ export default function ProductTableWithFilter({ products }) {
         ))}
       </div>
 
-      <div>
+      <div className="h-[500px] overflow-y-auto">
         <Table>
           <TableHeader>
             <TableRow className="*:bg-primary/20">
