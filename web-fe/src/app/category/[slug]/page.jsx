@@ -59,8 +59,11 @@ export default async function CategoryPage({ params: { slug } }) {
   const { data: products } = await fetchProducts(
     category.is_variant ? category.main_slug : slug,
   );
+
   const filteredVariants =
-    variants?.filter((variant) => variant.slug !== slug) ?? [];
+    variants
+      ?.filter((variant) => variant.id !== null)
+      .filter((variant) => variant.slug !== slug) ?? [];
 
   return (
     <section>
