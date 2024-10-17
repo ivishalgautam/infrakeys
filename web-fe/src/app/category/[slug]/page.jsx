@@ -128,7 +128,7 @@ export default async function CategoryPage({ params: { slug } }) {
         {filteredVariants.length > 0 && (
           <div className="space-y-2 rounded-lg">
             <H4>Related links</H4>
-            <div className="flex items-center justify-start gap-1">
+            <div className="flex flex-wrap items-center justify-start gap-1">
               {filteredVariants?.map((variant) => (
                 <Link
                   key={variant.id}

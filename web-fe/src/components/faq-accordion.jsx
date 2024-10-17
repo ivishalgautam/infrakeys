@@ -10,7 +10,9 @@ export default function FAQAccordion({ faq }) {
     <Accordion type="single" collapsible>
       {faq?.map(({ question, answer }, id) => (
         <AccordionItem value={question} key={id}>
-          <AccordionTrigger>{question}?</AccordionTrigger>
+          <AccordionTrigger className="text-start text-sm md:text-base">
+            {question}?
+          </AccordionTrigger>
           <AccordionContent>{answer}</AccordionContent>
         </AccordionItem>
       ))}
