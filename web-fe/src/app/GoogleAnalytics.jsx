@@ -4,7 +4,7 @@ import Script from "next/script";
 const GoogleAnalyticss = () => {
   return (
     <>
-      <Script id="" strategy="lazyOnload">
+      <Script id="" strategy="worker">
         {`
             function gtag_report_conversion(url) {
                 var callback = function () {

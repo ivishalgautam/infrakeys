@@ -14,6 +14,9 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    nextScriptWorkers: true,
+  },
 };
 
 export default nextConfig;

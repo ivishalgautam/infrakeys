@@ -37,15 +37,15 @@ export const metadata = {
       "Infrakeys, the best steel manufacturers in India, offered a wide range of steel, wire mesh & binding wire, scaffolding, doors & windows, nails & industrial products at reasonable prices.",
     images: [
       {
-        url: "https://www.infrakeys.com/_next/static/media/banner-1.df4039c7.jpg",
+        url: "https://www.infrakeys.com/_next/static/media/banner-1.d4ebdb1b.webp",
         width: 800,
         height: 600,
         alt: "Infrakeys",
       },
       {
-        url: "https://www.infrakeys.com/_next/static/media/banner-2.e2d2ad9e.jpg",
-        width: 1800,
-        height: 1600,
+        url: "https://www.infrakeys.com/_next/static/media/banner-3.72569777.webp",
+        width: 800,
+        height: 600,
         alt: "Infrakeys",
       },
     ],
@@ -66,7 +66,7 @@ export default function RootLayout({ children }) {
         <GoogleAnalytics gaId="AW-11427244694" />
         <GoogleAnalyticss />
         <InteraktChatbot />
-        <Script id="gtag">
+        <Script id="gtag" strategy="worker">
           {`gtag("event", "conversion", {
             send_to: "AW-11427244694/lnYGCJrDgdsZEJbV98gq",
           })`}
