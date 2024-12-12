@@ -18,32 +18,32 @@ export default function OurPartners() {
         <div className="mt-10 bg-white">
           <div className="grid grid-cols-2 gap-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
             {[
-              "/partners/amns.png",
-              "/partners/apollo.png",
-              "/partners/asian.png",
-              "/partners/electro.png",
-              "/partners/galant.png",
-              "/partners/goel.png",
-              "/partners/jindal-panther.jpg",
-              "/partners/jsw-neo.jpeg",
-              "/partners/jsw-steel.png",
-              "/partners/kamdhenu.png",
-              "/partners/posco.png",
-              "/partners/prompt.png",
-              "/partners/rathi.png",
-              "/partners/sail.png",
-              "/partners/srb.png",
-              "/partners/surya.jpg",
-              "/partners/tata.png",
-              "/partners/vizag.png",
+              "/partners/amns.webp",
+              "/partners/apollo.webp",
+              "/partners/asian.webp",
+              "/partners/electro.webp",
+              "/partners/galant.webp",
+              "/partners/goel.webp",
+              "/partners/jindal-panther.web",
+              "/partners/jsw-neo.webp",
+              "/partners/jsw-steel.webp",
+              "/partners/kamdhenu.webp",
+              "/partners/posco.webp",
+              "/partners/prompt.webp",
+              "/partners/rathi.webp",
+              "/partners/sail.webp",
+              "/partners/srb.webp",
+              "/partners/surya.web",
+              "/partners/tata.webp",
+              "/partners/vizag.webp",
             ].map((image, key) => (
               <figure key={key} className="rounded-lg bg-primary/5 p-8 py-4">
                 <Image
                   src={image}
-                  width={500}
-                  height={500}
+                  width={100}
+                  height={100}
                   alt={image}
-                  className="aspect-video object-contain mix-blend-multiply"
+                  className="mx-auto aspect-video object-contain mix-blend-multiply"
                 />
               </figure>
             ))}

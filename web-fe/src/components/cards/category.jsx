@@ -36,10 +36,11 @@ export default function CategoryCard({ slug, image, name, subCategories }) {
           <div>
             <figure className="relative h-32 w-full">
               <Image
-                fill
                 src={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/${image}`}
                 alt={name}
                 className="aspect-video rounded object-contain bg-blend-screen transition-transform"
+                width={200}
+                height={200}
               />
             </figure>
           </div>

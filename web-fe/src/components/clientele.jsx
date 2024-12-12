@@ -31,20 +31,20 @@ export function Clientele() {
         <div>
           <div className="mt-2 grid grid-cols-2 gap-4 rounded-lg md:grid-cols-3">
             {[
-              "/clientele/Ahulwalia_Contracts.png",
-              "/clientele/Interarch_logo.png",
-              "/clientele/KALPATPOWR.NS_logo.png",
-              "/clientele/Kirby.png",
-              "/clientele/L&T.png",
-              "/clientele/Navayuga.png",
-              "/clientele/NCRTC_LOGO.png",
-              "/clientele/Shapoorji_Pallonji.png",
-              "/clientele/Tata_Projects_Logo.png",
+              "/clientele/Ahulwalia_Contracts.webp",
+              "/clientele/Interarch_logo.webp",
+              "/clientele/KALPATPOWR.NS_logo.webp",
+              "/clientele/Kirby.webp",
+              "/clientele/L&T.webp",
+              "/clientele/Navayuga.webp",
+              "/clientele/NCRTC_LOGO.webp",
+              "/clientele/Shapoorji_Pallonji.webp",
+              "/clientele/Tata_Projects_Logo.webp",
             ].map((item, key) => (
               <div key={key} className="rounded-2xl bg-gray-50 p-4">
                 <Image
-                  width={1000}
-                  height={1000}
+                  width={150}
+                  height={150}
                   src={item}
                   alt={item
                     .replace("/", "")
@@ -52,7 +52,7 @@ export function Clientele() {
                     .replace(".", "")
                     .split("_")
                     .join(" ")}
-                  className="mix-blend-multiply"
+                  className="mx-auto mix-blend-multiply"
                 />
               </div>
             ))}

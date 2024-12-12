@@ -8,7 +8,6 @@ import {
   FaLinkedinIn,
   FaYoutube,
 } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
 import { Mail, MapPin, PhoneCall } from "lucide-react";
 
 export default function Footer() {
@@ -17,7 +16,7 @@ export default function Footer() {
       <div className="container space-y-4 py-10">
         <div className="flex flex-col items-center justify-center">
           <figure className="inline-block rounded-lg p-2">
-            <Image src={"/logo.webp"} width={120} height={120} alt="logo" />
+            <Image src={"/logo.webp"} width={100} height={100} alt="logo" />
           </figure>
         </div>
 

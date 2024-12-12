@@ -5,16 +5,15 @@ import { useFetchFeaturedSubCategories } from "@/hooks/useFetchFeaturedSubCat";
 import SearchBox from "./Search";
 import { FlipWords } from "./ui/flip-words";
 import { ImagesSlider } from "./Image-slider";
-import banner1 from "../../public/banner-1.jpg";
-import banner2 from "../../public/banner-2.jpg";
-import banner3 from "../../public/banner-3.jpg";
+import banner1 from "../../public/banner-1.webp";
+import banner2 from "../../public/banner-2.webp";
+import banner3 from "../../public/banner-3.webp";
 
 export default function Hero() {
   const banners = [banner1, banner2, banner3];
   const { data: subCategories, isLoading: isSubCatLoading } =
     useFetchFeaturedSubCategories();
   const imageDomain = process.env.NEXT_PUBLIC_IMAGE_DOMAIN;
-  console.log({ subCategories });
 
   return (
     <section
