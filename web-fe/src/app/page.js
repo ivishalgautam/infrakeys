@@ -76,7 +76,6 @@ export default function Home() {
       <div className="fixed -right-12 top-2/3 z-50 -rotate-90">
         <ApplyForCredit />
       </div>
-      {/* <InteraktChatbot /> */}
     </div>
   );
 }

@@ -27,8 +27,7 @@ const createQuery = async (data) => {
 
 export default function QueryForm({ type, enquirytype = "buy", productId }) {
   const { user } = useContext(MainContext);
-  const { data: products } = useFetchProducts();
-
+  // const { data: products } = useFetchProducts();
   const {
     register,
     control,
@@ -80,20 +79,20 @@ export default function QueryForm({ type, enquirytype = "buy", productId }) {
     createMutation.mutate(data);
   };
 
-  useEffect(() => {
-    if (watch("product_id")) {
-      const types = products?.find(
-        (prd) => prd.id === watch("product_id"),
-      ).quantity_types;
+  // useEffect(() => {
+  //   if (watch("product_id")) {
+  //     const types = products?.find(
+  //       (prd) => prd.id === watch("product_id"),
+  //     ).quantity_types;
 
-      if (typeof types === "object") {
-        setQuantityTypes(types);
-        setValue("quantity_type", types[0]);
-      } else {
-        setQuantityTypes(JSON.parse(types));
-      }
-    }
-  }, [watch("product_id"), products]);
+  //     if (typeof types === "object") {
+  //       setQuantityTypes(types);
+  //       setValue("quantity_type", types[0]);
+  //     } else {
+  //       setQuantityTypes(JSON.parse(types));
+  //     }
+  //   }
+  // }, [watch("product_id"), products]);
 
   useEffect(() => {
     if (user) {
@@ -103,11 +102,11 @@ export default function QueryForm({ type, enquirytype = "buy", productId }) {
     }
   }, [user]);
 
-  useEffect(() => {
-    if (products && productId) {
-      setValue("product_id", productId);
-    }
-  }, [products, productId]);
+  // useEffect(() => {
+  //   if (products && productId) {
+  //     setValue("product_id", productId);
+  //   }
+  // }, [products, productId]);
 
   return (
     <div
