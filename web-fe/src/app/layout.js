@@ -66,7 +66,7 @@ export default function RootLayout({ children }) {
         <GoogleAnalytics gaId="AW-11427244694" />
         <GoogleAnalyticss />
         <InteraktChatbot />
-        <Script id="gtag" strategy="worker">
+        <Script id="gtag" strategy="afterInteractive">
           {`gtag("event", "conversion", {
             send_to: "AW-11427244694/lnYGCJrDgdsZEJbV98gq",
           })`}
