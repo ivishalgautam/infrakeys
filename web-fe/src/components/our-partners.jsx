@@ -24,7 +24,7 @@ export default function OurPartners() {
               "/partners/electro.webp",
               "/partners/galant.webp",
               "/partners/goel.webp",
-              "/partners/jindal-panther.web",
+              "/partners/jindal-panther.webp",
               "/partners/jsw-neo.webp",
               "/partners/jsw-steel.webp",
               "/partners/kamdhenu.webp",
@@ -33,7 +33,7 @@ export default function OurPartners() {
               "/partners/rathi.webp",
               "/partners/sail.webp",
               "/partners/srb.webp",
-              "/partners/surya.web",
+              "/partners/surya.webp",
               "/partners/tata.webp",
               "/partners/vizag.webp",
             ].map((image, key) => (
