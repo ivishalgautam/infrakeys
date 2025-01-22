@@ -46,7 +46,7 @@ export default function Page() {
           <div className="col-span-4 flex items-center justify-center md:col-span-2 md:justify-start">
             <H2 className={"text-center md:text-start"}>
               <span className="text-5xl font-bold">
-                GET Credit upto <span className="text-primary">5CR</span>
+                GET Credit upto <span className="text-primary">10CR</span>
               </span>
               <br />
               <span className="text-gray-700">
