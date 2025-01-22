@@ -96,7 +96,7 @@ export default function ApplyForCreditForm() {
                     <SelectItem value="1-5cr">1-5 CR</SelectItem>
                     <SelectItem value="5-15cr">5-15 CR</SelectItem>
                     <SelectItem value="15-50cr">15-50 CR</SelectItem>
-                    <SelectItem value="above 1000cr">Above 1000 CR</SelectItem>
+                    <SelectItem value="above 100cr">Above 100 CR</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>

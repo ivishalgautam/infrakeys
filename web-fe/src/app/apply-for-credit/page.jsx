@@ -15,19 +15,19 @@ const benefits = [
     content: "Enjoy the lowest interest rates in the market, guaranteed.",
     icon: "/interest.svg",
   },
-  {
-    title: "No Processing Fees",
-    content: "Save more with zero processing fees on your loan.",
-    icon: "/processing_fee.svg",
-  },
+  // {
+  //   title: "No Processing Fees",
+  //   content: "Save more with zero processing fees on your loan.",
+  //   icon: "/processing_fee.svg",
+  // },
   {
     title: "Hassle-Free Procurement",
     content: "Experience a smooth and hassle-free loan procurement process.",
     icon: "/procurement.svg",
   },
   {
-    title: "Avail Up to 5 Crore Funds",
-    content: "Access up to 5 crore in funds to support your business needs.",
+    title: "Avail Up to 10 Crore Funds",
+    content: "Access up to 10 crore in funds to support your business needs.",
     icon: "/funds.svg",
   },
   {
