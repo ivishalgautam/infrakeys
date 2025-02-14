@@ -69,10 +69,16 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "blink-animation": {
+          to: {
+            visibility: "hidden",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        blink: "blink-animation 1s steps(5, start) infinite",
       },
     },
   },
