@@ -20,11 +20,11 @@ export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL),
   title: {
     default:
-      "InfraKeys: Stainless Steel l Wire Mesh & Scaffolding Manufacturer in India",
+      "InfraKeys: Stainless Steel Wire Mesh & Scaffolding Manufacturer in India",
     // template: "%s | Infrakeys",
   },
   description:
-    "Infrakeys, the best steel manufacturers in India, offered a wide range of steel, wire mesh & binding wire, scaffolding, doors & windows, nails & industrial products at reasonable prices.",
+    "Powering Infrastructure with Smart Solutions We simplify infrastructure with end-to-end material supply, precision manufacturing, and smart financing solutions. From steel and PEB structures to scaffolding and crash barriers, we deliver quality, speed, and cost-efficiency. Our tech-driven platform ensures real-time tracking, seamless procurement, and flexible financing – empowering businesses to build faster and smarter. Building Tomorrow, Financing Today.",
   keywords:
     "Steel Manufacturers in india, steel fabricators near me,industrial steel in faridabad, Steel supplier in India, scaffolding manufacturer in faridabad, TMT suppliers in faridabad, PEB manufacturers in India, PEB manufacturers, steel supplier in faridabad, steel manufacturers,india, industrial steel in india, scaffolding manufacturer in India, TMT suppliers in India, steel manufacturers india",
   alternates: {
@@ -34,7 +34,7 @@ export const metadata = {
     title:
       "InfraKeys: Stainless Steel l Wire Mesh & Scaffolding Manufacturer in India",
     description:
-      "Infrakeys, the best steel manufacturers in India, offered a wide range of steel, wire mesh & binding wire, scaffolding, doors & windows, nails & industrial products at reasonable prices.",
+      "Steel Manufacturers in india, steel fabricators near me,industrial steel in faridabad, Steel supplier in India, scaffolding manufacturer in faridabad, TMT suppliers in faridabad, PEB manufacturers in India, PEB manufacturers, steel supplier in faridabad, steel manufacturers,india, industrial steel in india, scaffolding manufacturer in India, TMT suppliers in India, steel manufacturers india",
     images: [
       {
         url: "https://www.infrakeys.com/_next/static/media/banner-1.d4ebdb1b.webp",
