@@ -19,8 +19,7 @@ import GoogleAnalyticss from "./GoogleAnalytics";
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL),
   title: {
-    default:
-      "InfraKeys: Stainless Steel Wire Mesh & Scaffolding Manufacturer in India",
+    default: "Infrakeys: Mild steel, PEB & Scaffolding",
     // template: "%s | Infrakeys",
   },
   description:
