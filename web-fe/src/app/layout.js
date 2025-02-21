@@ -30,10 +30,9 @@ export const metadata = {
     canonical: `/`,
   },
   openGraph: {
-    title:
-      "InfraKeys: Stainless Steel l Wire Mesh & Scaffolding Manufacturer in India",
+    title: "Infrakeys: Mild steel, PEB & Scaffolding",
     description:
-      "Steel Manufacturers in india, steel fabricators near me,industrial steel in faridabad, Steel supplier in India, scaffolding manufacturer in faridabad, TMT suppliers in faridabad, PEB manufacturers in India, PEB manufacturers, steel supplier in faridabad, steel manufacturers,india, industrial steel in india, scaffolding manufacturer in India, TMT suppliers in India, steel manufacturers india",
+      "Powering Infrastructure with Smart Solutions We simplify infrastructure with end-to-end material supply, precision manufacturing, and smart financing solutions. From steel and PEB structures to scaffolding and crash barriers, we deliver quality, speed, and cost-efficiency. Our tech-driven platform ensures real-time tracking, seamless procurement, and flexible financing – empowering businesses to build faster and smarter. Building Tomorrow, Financing Today.",
     images: [
       {
         url: "https://www.infrakeys.com/_next/static/media/banner-1.d4ebdb1b.webp",
