@@ -38,7 +38,7 @@ export default function Customers() {
   const deleteMutation = useMutation(deleteUser, {
     onSuccess: () => {
       toast.success("User deleted.");
-      queryClient.invalidateQueries("users");
+      queryClient.invalidateQueries(["users"]);
       closeModal();
     },
     onError: (error) => {
