@@ -310,7 +310,8 @@ export function ProductTable({ products, user }) {
               <Button
                 size="icon"
                 className="bg-[#00a884] text-white hover:bg-[#00a884]"
-                onClick={(e) =>
+                onClick={(e) => {
+                  e.stopPropagation();
                   // handleWhatsAppEnq(
                   //   e,
                   //   product._id,
@@ -320,8 +321,8 @@ export function ProductTable({ products, user }) {
                     user.name,
                     product.title,
                     watch(`products.${key}.item_type`),
-                  )
-                }
+                  );
+                }}
               >
                 <FaWhatsapp size={20} />
               </Button>
