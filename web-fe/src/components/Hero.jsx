@@ -33,7 +33,7 @@ export default function Hero() {
               <br />
               {/* Extensive range of{" "} */}
               <span className="text-4xl font-bold text-primary">
-                Row to Remarkable
+                Raw to Remarkable
                 {/* <FlipWords
                   words={[
                     "Steel",
