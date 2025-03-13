@@ -46,6 +46,10 @@ const OurPartners = dynamic(() => import("@/components/our-partners"), {
 });
 import Spinner from "@/components/Spinner";
 import dynamic from "next/dynamic";
+const WhatsAppWidget = dynamic(() => import("@/components/whatsapp-chatbot"), {
+  ssr: false,
+  loading: () => <Spinner />,
+});
 
 export default function Home() {
   return (
@@ -64,9 +68,10 @@ export default function Home() {
           <TellUsRequirement type={"horizontal"} />
         </div>
       </div>
-      <div className="animate-blink fixed -right-12 top-2/3 z-50 -rotate-90 transition-all">
+      <div className="fixed -right-12 top-2/3 z-50 -rotate-90 animate-blink transition-all">
         <ApplyForCredit />
       </div>
+      <WhatsAppWidget />
     </div>
   );
 }

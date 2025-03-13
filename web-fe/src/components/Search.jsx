@@ -19,6 +19,7 @@ import { endpoints } from "@/utils/endpoints";
 import Modal from "./Modal";
 import RequirementForm from "./forms/requirement";
 import { MainContext } from "@/store/context";
+import { handleWhatsAppEnq } from "@/lib/handle-whatsapp-enq";
 
 async function createDocs(data) {
   return http().post(endpoints.requirements.getAll, data);
@@ -195,7 +196,7 @@ export default function SearchBox() {
           </form>
           {inputVal && isResultsVisible && searchResults?.length > 0 && (
             <div className="absolute left-0 top-full z-10 max-h-48 w-full overflow-y-scroll rounded-bl-lg rounded-br-lg shadow-md">
-              <ProductTable products={searchResults} />
+              <ProductTable products={searchResults} user={user} />
             </div>
           )}
         </div>
@@ -211,12 +212,19 @@ export default function SearchBox() {
   );
 }
 
-export function ProductTable({ products }) {
+export function ProductTable({ products, user }) {
   const { watch, control, getValues, setValue } = useForm({
     defaultValues: { products: [] },
   });
   const router = useRouter();
   const { fields } = useFieldArray({ control, name: "products" });
+
+  // export const handleWhatsAppEnq = (
+  //   customer_name,
+  //   product_name,
+  //   enqFor,
+  //   filters,
+  // ){}
 
   const sendWhatsAppEnq = async (data) => {
     return await http().post(
@@ -235,11 +243,11 @@ export function ProductTable({ products }) {
     },
   });
 
-  const handleWhatsAppEnq = (e, id, enqFor) => {
-    e.stopPropagation();
-    if (!enqFor) return toast.warning("Please select enquiry for.");
-    whatsAppEnqMutation.mutate({ id, enqFor });
-  };
+  // const handleWhatsAppEnq = (e, id, enqFor) => {
+  //   e.stopPropagation();
+  //   if (!enqFor) return toast.warning("Please select enquiry for.");
+  //   whatsAppEnqMutation.mutate({ id, enqFor });
+  // };
 
   useEffect(() => {
     setValue(
@@ -303,9 +311,14 @@ export function ProductTable({ products }) {
                 size="icon"
                 className="bg-[#00a884] text-white hover:bg-[#00a884]"
                 onClick={(e) =>
+                  // handleWhatsAppEnq(
+                  //   e,
+                  //   product._id,
+                  //   watch(`products.${key}.item_type`),
+                  // )
                   handleWhatsAppEnq(
-                    e,
-                    product._id,
+                    user.name,
+                    product.title,
                     watch(`products.${key}.item_type`),
                   )
                 }

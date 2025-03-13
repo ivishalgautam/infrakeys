@@ -41,7 +41,10 @@ const benefits = [
 export default function Page() {
   return (
     <div className="min-h-screen">
-      <div className="container py-8">
+      <div className="container space-y-4 py-8">
+        <div>
+          <CreditBenefits benefits={benefits} />
+        </div>
         <div className="grid grid-cols-4 gap-4 ">
           <div className="col-span-4 flex items-center justify-center md:col-span-2 md:justify-start">
             <H2 className={"text-center md:text-start"}>
@@ -58,9 +61,6 @@ export default function Page() {
           <div className="col-span-4 rounded-lg bg-white p-8 md:col-span-2">
             <ApplyForCreditForm />
           </div>
-        </div>
-        <div className="mt-4">
-          <CreditBenefits benefits={benefits} />
         </div>
       </div>
     </div>

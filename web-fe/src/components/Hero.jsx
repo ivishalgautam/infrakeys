@@ -8,6 +8,7 @@ import { ImagesSlider } from "./Image-slider";
 import banner1 from "../../public/banner-1.webp";
 import banner2 from "../../public/banner-2.webp";
 import banner3 from "../../public/banner-3.webp";
+import ApplyForCredit from "./apply-for-credit";
 
 export default function Hero() {
   const banners = [banner1, banner2, banner3];
@@ -27,11 +28,13 @@ export default function Hero() {
               India&apos;s largest
               <br />{" "}
               <span className="text-4xl font-extrabold">
-                B2B construction raw materials platform.
+                B2B construction materials platform.
               </span>
-              <br /> Extensive range of{" "}
-              <span className="text-4xl font-bold">
-                <FlipWords
+              <br />
+              {/* Extensive range of{" "} */}
+              <span className="text-4xl font-bold text-primary">
+                Row to Remarkable
+                {/* <FlipWords
                   words={[
                     "Steel",
                     "PEB Products",
@@ -41,7 +44,7 @@ export default function Hero() {
                     "Doors & Windows",
                     "Nails & Fasteners",
                   ]}
-                />
+                /> */}
               </span>
             </h1>
             <div className="space-x-2">
@@ -79,7 +82,10 @@ export default function Hero() {
         </ImagesSlider>
       </div>
 
-      <div className="-mt-8">
+      <div className="relative -mt-8">
+        <div className="absolute -top-16 left-1/2 z-10 -translate-x-1/2 text-center">
+          <ApplyForCredit />
+        </div>
         <div className="mx-auto max-w-[700px] px-4">
           <SearchBox />
         </div>

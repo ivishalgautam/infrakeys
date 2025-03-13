@@ -13,7 +13,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 import Script from "next/script";
-import InteraktChatbot from "@/components/interakt-chatbot";
+import InteraktChatbot from "@/components/whatsapp-chatbot";
 import GoogleAnalyticss from "./GoogleAnalytics";
 
 export const metadata = {
