@@ -58,6 +58,7 @@ export function CustomerForm({
       email: data.email,
       username: data.username,
       password: data.password,
+      company_name: data.company_name,
     };
 
     if (type === "create") {
@@ -82,6 +83,7 @@ export function CustomerForm({
         data && setValue("phone", data?.phone);
         data && setValue("email", data?.email);
         data && setValue("username", data?.username);
+        data && setValue("company_name", data?.company_name);
       } catch (error) {
         console.error(error);
       } finally {
@@ -193,6 +195,22 @@ export function CustomerForm({
                   />
                   {errors.email && (
                     <span className="text-red-600">{errors.email.message}</span>
+                  )}
+                </div>
+
+                {/* company name */}
+                <div>
+                  <Label htmlFor="company_name">Company name</Label>
+                  <Input
+                    type="text"
+                    disabled={type === "view" || type === "delete"}
+                    placeholder="Enter company name"
+                    {...register("company_name")}
+                  />
+                  {errors.company_name && (
+                    <span className="text-red-600">
+                      {errors.company_name.message}
+                    </span>
                   )}
                 </div>
 
