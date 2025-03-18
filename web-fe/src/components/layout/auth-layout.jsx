@@ -1,12 +1,11 @@
-import Image from "next/image";
+import { cn } from "@/lib/utils";
 
-export default function AuthLayout({ children }) {
+export default function AuthLayout({ children, className }) {
   return (
-    <section className="bg-gray-200 py-16">
-      <div className="container">
-        <div className="mx-auto grid w-full grid-cols-1 overflow-hidden rounded-lg bg-white shadow-lg lg:max-w-[40%]">
-          {/* left */}
-          {/* <div className="flex h-auto flex-1 items-center justify-center bg-secondary py-0 lg:py-16">
+    <section className={cn("bg-gray-200 py-16", className)}>
+      <div className="mx-auto w-full max-w-xl overflow-hidden rounded-lg border bg-white">
+        {/* left */}
+        {/* <div className="flex h-auto flex-1 items-center justify-center bg-secondary py-0 lg:py-16">
             <figure>
               <Image
                 src={"/jcb-login-side.png"}
@@ -17,11 +16,8 @@ export default function AuthLayout({ children }) {
             </figure>
           </div> */}
 
-          {/* right */}
-          <div className="flex flex-1 items-center justify-start pb-8">
-            {children}
-          </div>
-        </div>
+        {/* right */}
+        <div className="w-full pb-8">{children}</div>
       </div>
     </section>
   );

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import styles from "./WhatsAppWidget.module.css";
+import { Muted } from "./ui/typography";
 
 const WhatsAppWidget = () => {
   const [isActive, setIsActive] = useState(false);
@@ -17,7 +18,7 @@ const WhatsAppWidget = () => {
               width={20}
               height={20}
             />
-            <h6>Infrabuddy</h6>
+            <h6>Infra Buddy</h6>
             <p>
               Hi There 👋
               <br />
@@ -46,15 +47,24 @@ const WhatsAppWidget = () => {
         </div>
       </div>
       <div
-        className={`${styles.whatsappStickyBtn} rounded-full bg-[#00a884] p-4`}
+        className={`${styles.whatsappStickyBtn}`}
         onClick={() => setIsActive(!isActive)}
       >
-        <Image
-          src="/whatsapp/whatsapp.svg"
-          alt="WhatsApp Icon"
-          width={40}
-          height={40}
-        />
+        <Muted
+          className={
+            "absolute -left-[84px] top-1/2 -z-10 -translate-y-1/2 text-nowrap rounded-s-full bg-black px-4 py-1 pl-3 text-xs text-white"
+          }
+        >
+          Infra Buddy
+        </Muted>
+        <div className="relative z-10 rounded-full bg-[#00a884] p-4">
+          <Image
+            src="/whatsapp/whatsapp.svg"
+            alt="WhatsApp Icon"
+            width={40}
+            height={40}
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   InputOTP,
   InputOTPGroup,
@@ -13,6 +13,8 @@ import http from "@/utils/http";
 import { endpoints } from "@/utils/endpoints";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { LoginDialogContext } from "@/store/login-dialog-context";
+import { MainContext } from "@/store/context";
 
 const sendOtp = async (data) => {
   return await http().post(endpoints.otp.send, data);
@@ -32,7 +34,8 @@ export default function OTPForm({ phone }) {
   const [isResendDisabled, setIsResendDisabled] = useState(false);
   const [remainingTime, setRemainingTime] = useState(0);
   const [minute] = useState(5);
-
+  const { setUser } = useContext(MainContext);
+  const { setOpen } = useContext(LoginDialogContext);
   const sendMutation = useMutation(sendOtp, {
     onSuccess: (data) => {
       toast.success(data.message);
@@ -59,8 +62,11 @@ export default function OTPForm({ phone }) {
       localStorage.setItem("user", JSON.stringify(response.user_data));
       localStorage.setItem("token", response.token);
       localStorage.setItem("refreshToken", response.refresh_token);
-      router.push("/");
+      setUser(response.user_data);
+      setOpen(false);
       toast.success("Logged in.");
+      router.push("/");
+
       return response;
     } catch (error) {
       // console.log(error);

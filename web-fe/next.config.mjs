@@ -5,7 +5,7 @@ const nextConfig = {
       {
         protocol: "http",
         hostname: "localhost",
-        port: "3001",
+        port: "3002",
       },
       {
         protocol: "https",

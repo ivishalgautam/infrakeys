@@ -15,6 +15,7 @@ import "swiper/css/autoplay";
 import Script from "next/script";
 import InteraktChatbot from "@/components/whatsapp-chatbot";
 import GoogleAnalyticss from "./GoogleAnalytics";
+import LoginDialogProvider from "@/store/login-dialog-context";
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL),
@@ -99,12 +100,14 @@ export default function RootLayout({ children }) {
         className={`${GeistSans.className} overflow-x-hidden`}
         suppressHydrationWarning={true}
       >
-        <Context>
-          <Toaster richColors />
-          <QueryProvider>
-            <Layout>{children}</Layout>
-          </QueryProvider>
-        </Context>
+        <QueryProvider>
+          <Context>
+            <LoginDialogProvider>
+              <Toaster richColors />
+              <Layout>{children}</Layout>
+            </LoginDialogProvider>
+          </Context>
+        </QueryProvider>
       </body>
     </html>
   );
