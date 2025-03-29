@@ -30,7 +30,7 @@ const WhatsAppWidget = () => {
         <div className={styles.chatBtnBox}>
           <div className={styles.chatBtn}>
             <a
-              href="https://wa.me/+919266415151?text=Hello%20I%20Want%20To%20Know%20About%20Your%20Services"
+              href="https://wa.me/+918130376622?text=Hello%20I%20Want%20To%20Know%20About%20Your%20Services"
               target="_blank"
               rel="noopener noreferrer"
             >
