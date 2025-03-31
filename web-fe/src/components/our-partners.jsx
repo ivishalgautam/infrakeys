@@ -18,18 +18,19 @@ export default function OurPartners() {
         <div className="mt-10 bg-white">
           <div className="grid grid-cols-2 gap-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
             {[
+              "/partners/jsw-neo.webp",
               "/partners/amns.webp",
+              "/partners/jsw-steel.webp",
               "/partners/apollo.webp",
               "/partners/asian.webp",
+              "/partners/kamdhenu.webp",
+              "/partners/posco.webp",
+              "/partners/prompt.webp",
+
               "/partners/electro.webp",
               "/partners/galant.webp",
               "/partners/goel.webp",
               "/partners/jindal-panther.webp",
-              "/partners/jsw-neo.webp",
-              "/partners/jsw-steel.webp",
-              "/partners/kamdhenu.webp",
-              "/partners/posco.webp",
-              "/partners/prompt.webp",
               "/partners/rathi.webp",
               "/partners/sail.webp",
               "/partners/srb.webp",
