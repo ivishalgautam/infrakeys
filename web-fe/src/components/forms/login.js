@@ -81,7 +81,7 @@ export default function LoginForm({ setIsOtpSent, setPhone }) {
             <P className={"text-center text-sm font-medium tracking-wide"}>
               Do not have an account?{" "}
               <Link href={"/auth/signup"} className="text-primary">
-                Create one
+                Sign up
               </Link>
             </P>
           </div>
