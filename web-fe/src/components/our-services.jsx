@@ -60,7 +60,10 @@ export default function OurServices() {
 
 export function Card({ item, ind }) {
   return (
-    <Link href={item.link} className="h-full rounded-lg hover:shadow-lg">
+    <Link
+      href={item.link}
+      className="relative h-full rounded-lg hover:shadow-lg"
+    >
       {item.ribbon && (
         <span className="absolute left-0 top-2 z-10 rounded-br rounded-tr bg-primary px-2 py-1 text-xs text-white">
           {item.ribbon}
