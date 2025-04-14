@@ -363,7 +363,7 @@ function NewsCard({ article }) {
         </CardContent>
         <CardFooter className="flex items-center justify-between pt-0">
           <div className="text-xs text-gray-500">
-            By Admin • {moment(article.date).fromNow()}
+            By Admin • {moment(article.created_at).fromNow()}
           </div>
           <Button variant="ghost" size="sm">
             Read
