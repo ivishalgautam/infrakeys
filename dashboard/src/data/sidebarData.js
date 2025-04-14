@@ -249,4 +249,40 @@ export const AllRoutes = [
     icon: IndianRupee,
     roles: [ROLES.ADMIN],
   },
+  {
+    label: "News",
+    link: "/news",
+    icon: IndianRupee,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "News create",
+    link: "/news/create",
+    icon: IndianRupee,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "News edit",
+    link: "/news/edit/[id]",
+    icon: IndianRupee,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "News Categories",
+    link: "/news-categories",
+    icon: IndianRupee,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "News Categories create",
+    link: "/news-categories/create",
+    icon: IndianRupee,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "News Categories Edit",
+    link: "/news-categories/[id]/edit",
+    icon: IndianRupee,
+    roles: [ROLES.ADMIN],
+  },
 ];

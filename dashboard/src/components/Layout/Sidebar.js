@@ -38,7 +38,7 @@ export default function Sidebar() {
     if (link === "/") {
       return pathname === "/";
     }
-    return pathname.includes(link);
+    return pathname === link;
   };
 
   return (

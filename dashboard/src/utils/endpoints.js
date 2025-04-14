@@ -20,6 +20,9 @@ export const endpoints = {
     getAll: "/categories",
     variant: "/category-variant",
   },
+  newsCategories: {
+    getAll: "/news-categories",
+  },
   sub_categories: {
     getAll: "/sub-categories",
   },
@@ -31,6 +34,9 @@ export const endpoints = {
   },
   blogs: {
     getAll: "/blogs",
+  },
+  news: {
+    getAll: "/news",
   },
   brands: {
     getAll: "/brands",
