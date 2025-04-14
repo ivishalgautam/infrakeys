@@ -60,9 +60,7 @@ export default function LoginForm({ setIsOtpSent, setPhone }) {
           <div>
             <Label>Phone</Label>
             <Input
-              {...register("phone", {
-                required: "required",
-              })}
+              {...register("phone", { required: "required" })}
               placeholder="Enter your phone"
               className="mt-2 rounded-full bg-gray-100 px-4 py-6"
             />

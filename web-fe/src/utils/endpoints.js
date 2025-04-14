@@ -41,6 +41,10 @@ export const endpoints = {
   blogs: {
     getAll: "/blogs",
   },
+  news: {
+    getAll: "/news",
+    categories: "/news-categories",
+  },
   files: {
     upload: "/upload/files",
     getFiles: "/upload",
