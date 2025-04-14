@@ -1,6 +1,4 @@
-import Blogs from "@/components/blogs";
-import News from "@/components/news";
-import NewsShow from "@/components/news-1";
+import NewsWithTabs from "@/components/news-with-tabs";
 import Spinner from "@/components/Spinner";
 import { H1 } from "@/components/ui/typography";
 import { Suspense } from "react";
@@ -22,7 +20,7 @@ export default function Page({ searchParams: { category } }) {
     <div className="container py-4">
       <H1 className={"my-8 text-center"}>Our news</H1>
       <Suspense fallback={<Spinner />}>
-        <NewsShow category={category} />
+        <NewsWithTabs category={category} />
       </Suspense>
     </div>
   );

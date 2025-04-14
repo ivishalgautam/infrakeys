@@ -223,7 +223,7 @@ const featuredArticle = {
 async function fetchNews(searchParams) {
   return await http().get(`${endpoints.news.getAll}?${searchParams}`);
 }
-export default function NewsShow({}) {
+export default function NewsWithTabs({}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchParamsStr = searchParams.toString();
@@ -253,10 +253,10 @@ export default function NewsShow({}) {
         <section>
           <Tabs defaultValue={selectedCategory ?? "all"} className="w-full">
             <div className="border-b">
-              <TabsList className="h-12">
+              <TabsList className="">
                 <TabsTrigger
                   value={"all"}
-                  className="px-4 py-2 data-[state=active]:border-b-2 data-[state=active]:border-gray-900"
+                  className="h-8 px-4 py-2 data-[state=active]:border-b-2 data-[state=active]:border-gray-900"
                   onClick={() =>
                     router.push(`?category=all`, {
                       scroll: false,

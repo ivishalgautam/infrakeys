@@ -44,8 +44,8 @@ const getRelatedNews = async (id) => {
 
 export default async function Page({ params: { slug } }) {
   const news = await getNews(slug);
+  console.log({ news });
   const relatedNews = await getRelatedNews(news?.id);
-
   return (
     <div className="container p-4">
       <div className="mx-auto space-y-4">
@@ -74,7 +74,7 @@ export default async function Page({ params: { slug } }) {
             {/* blog content */}
             <div className="w-full">
               <div
-                className="prose prose-slate prose-orange w-full rounded-lg lg:prose-lg prose-h1:mb-0 prose-h1:mt-5 prose-h2:mb-0 prose-h2:mt-5 prose-h3:mb-0 prose-h3:mt-5  prose-h4:mb-0 prose-h4:mt-5 prose-h5:mb-0 prose-h5:mt-5 prose-h6:mb-0 prose-h6:mt-5 prose-p:m-0 prose-img:rounded-xl"
+                className="prose prose-lg prose-slate prose-orange w-full rounded-lg prose-h1:mb-0 prose-h1:mt-5 prose-h2:mb-0 prose-h2:mt-5 prose-h3:mb-0 prose-h3:mt-5 prose-h4:mb-0 prose-h4:mt-5 prose-h5:mb-0 prose-h5:mt-5 prose-h6:mb-0 prose-h6:mt-5 prose-p:m-0 prose-img:rounded-xl"
                 dangerouslySetInnerHTML={{ __html: news?.content }}
               />
               <div className="mt-6 flex flex-col items-start justify-between gap-4 rounded border p-4 py-4 sm:flex-row sm:items-center">
