@@ -38,7 +38,7 @@ const getRelatedNews = async (id) => {
   const { data } = await axios.get(
     `${baseUrl}${endpoints.news.getAll}/getRelatedNews/${id}`,
   );
-
+  //
   return data;
 };
 
