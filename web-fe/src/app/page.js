@@ -44,6 +44,7 @@ const OurPartners = dynamic(() => import("@/components/our-partners"), {
   ssr: false,
   loading: () => <Spinner />,
 });
+import NewsSection from "@/components/news-section";
 import Spinner from "@/components/Spinner";
 import dynamic from "next/dynamic";
 const WhatsAppWidget = dynamic(() => import("@/components/whatsapp-chatbot"), {
@@ -57,6 +58,7 @@ export default function Home() {
       <Hero />
       <FeaturedCategories />
       <OurServices />
+      <NewsSection />
       <BlogsSlider />
       <WhyChooseUs />
       <Clientele />
