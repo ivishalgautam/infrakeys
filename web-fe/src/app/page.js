@@ -44,6 +44,7 @@ const OurPartners = dynamic(() => import("@/components/our-partners"), {
   ssr: false,
   loading: () => <Spinner />,
 });
+import InfraBuddy from "@/components/infra-buddy";
 import NewsSection from "@/components/news-section";
 import Spinner from "@/components/Spinner";
 import dynamic from "next/dynamic";
@@ -73,7 +74,7 @@ export default function Home() {
       <div className="fixed -right-12 top-2/3 z-50 -rotate-90 animate-blink transition-all">
         <ApplyForCredit />
       </div>
-      <WhatsAppWidget />
+      <InfraBuddy />
     </div>
   );
 }
