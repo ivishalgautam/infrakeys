@@ -222,6 +222,7 @@ export default function QueryForm({ type, enquirytype = "buy", productId }) {
               <div className="relative">
                 <Label>Phone</Label>
                 <Input
+                  type="number"
                   {...register("phone", {
                     required: "required*",
                   })}

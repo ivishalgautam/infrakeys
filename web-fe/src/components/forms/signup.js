@@ -67,6 +67,7 @@ export default function SignUpForm({ setIsOtpSent, setPhone }) {
           <div>
             <Label>Phone</Label>
             <Input
+              type="number"
               {...register("phone", {
                 required: "required",
               })}
