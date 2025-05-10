@@ -7,17 +7,38 @@ import { useState } from "react";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import Modal from "@/components/Modal";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "@/utils/http";
 import { endpoints } from "../../utils/endpoints.js";
 import { toast } from "sonner";
 import { CustomerForm } from "@/components/Forms/Customer";
 import { useFetchUsers } from "@/hooks/useFetchUsers";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { saveAs } from "file-saver";
+import Papa from "papaparse";
+import { parseAsString, useQueryState, useQueryStates } from "nuqs";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Download } from "lucide-react";
 
 async function deleteUser(data) {
   return http().delete(`${endpoints.users.getAll}/${data.id}`);
 }
+
+const fetchUsers = async (searchParams) => {
+  const { data } = await http().get(
+    `${endpoints.users.getAll}?${searchParams}`
+  );
+  return data;
+};
 
 export default function Customers() {
   const [type, setType] = useState(null);
@@ -25,8 +46,20 @@ export default function Customers() {
   const [customerId, setCustomerId] = useState(null);
   const queryClient = useQueryClient();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const { data, isLoading, isError, error } = useFetchUsers();
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["users", searchParams.toString()],
+    queryFn: () => fetchUsers(searchParams.toString()),
+  });
+
+  const [query, setQuery] = useQueryState(
+    "q",
+    parseAsString.withDefault("").withOptions({ throttleMs: "300" })
+  );
+
+  const [role, setRole] = useQueryState("role", parseAsString.withDefault(""));
+
   function openModal() {
     setIsModal(true);
   }
@@ -67,9 +100,18 @@ export default function Customers() {
     }
   }
 
-  if (isLoading) {
-    return <Spinner />;
+  function downloadCSV() {
+    const csvData = data.users;
+
+    const csvString = Papa.unparse(csvData);
+
+    const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, "results.csv");
   }
+
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
 
   if (isError) {
     return error?.message ?? "error";
@@ -85,16 +127,56 @@ export default function Customers() {
       </div>
 
       <div>
-        <DataTable
-          columns={columns(
-            setType,
-            openModal,
-            setCustomerId,
-            handleCustomerStatus,
-            handleNavigate
-          )}
-          data={data}
-        />
+        <div className="flex items-center py-4 gap-2">
+          <div className="grow-0">
+            <Input
+              placeholder="Filter users by name"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+            />
+          </div>
+          <Select
+            onValueChange={(value) => {
+              console.log({ value });
+              setRole(value);
+            }}
+            defaultValue={role}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select role" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Roles</SelectLabel>
+                <SelectItem value="all">All</SelectItem>
+                <SelectItem value="subadmin">Subadmin</SelectItem>
+                <SelectItem value="user">User</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+
+          <Button type="button" onClick={downloadCSV} variant="outline">
+            <Download size={15} className="mr-1" />
+            Export CSV
+          </Button>
+          <Button onClick={() => {}}>Reset</Button>
+        </div>
+
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <DataTable
+            columns={columns(
+              setType,
+              openModal,
+              setCustomerId,
+              handleCustomerStatus,
+              handleNavigate
+            )}
+            data={data?.users ?? []}
+            totalPage={data?.total_pages ?? 0}
+          />
+        )}
       </div>
 
       {isModal && (

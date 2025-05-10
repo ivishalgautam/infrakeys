@@ -32,8 +32,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useRouter, useSearchParams } from "next/navigation";
+import { parseAsString, useQueryState } from "nuqs";
 
-export function DataTable({ columns, data }) {
+export function DataTable({ columns, data, totalPage }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const page = parseInt(Math.max(1, searchParams.get("page")));
+  const limit = parseInt(Math.max(10, searchParams.get("limit")));
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const table = useReactTable({
@@ -49,46 +55,20 @@ export function DataTable({ columns, data }) {
       sorting,
       columnFilters,
     },
+    initialState: {
+      pagination: {
+        pageSize: limit,
+      },
+    },
   });
+
+  const [query, setQuery] = useQueryState(
+    "q",
+    parseAsString.withDefault("").withOptions({ throttleMs: "300" })
+  );
 
   return (
     <div>
-      <div className="flex items-center py-4 gap-2">
-        <Input
-          placeholder="Filter users by name"
-          value={table?.getColumn("name")?.getFilterValue() ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <Select
-          onValueChange={(value) =>
-            table.getColumn("role")?.setFilterValue(value)
-          }
-        >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select role" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Roles</SelectLabel>
-              <SelectItem value="subadmin">Subadmin</SelectItem>
-              <SelectItem value="user">User</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-
-        <Button
-          onClick={() => {
-            table.getColumn("name")?.setFilterValue("");
-            table.getColumn("role")?.setFilterValue("");
-          }}
-        >
-          Reset
-        </Button>
-      </div>
-
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -144,16 +124,20 @@ export function DataTable({ columns, data }) {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => table?.previousPage()}
-          disabled={!table?.getCanPreviousPage()}
+          // onClick={() => table?.previousPage()}
+          // disabled={!table?.getCanPreviousPage()}
+          onClick={() => router.push(`?page=${page - 1}&limit=${limit}`)}
+          disabled={page == 1}
         >
           Previous
         </Button>
         <Button
           variant="outline"
           size="sm"
-          onClick={() => table?.nextPage()}
-          disabled={!table?.getCanNextPage()}
+          // onClick={() => table?.nextPage()}
+          // disabled={!table?.getCanNextPage()}
+          onClick={() => router.push(`?page=${page + 1}&limit=${limit}`)}
+          disabled={page == totalPage}
         >
           Next
         </Button>
