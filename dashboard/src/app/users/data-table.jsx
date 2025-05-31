@@ -62,10 +62,7 @@ export function DataTable({ columns, data, totalPage }) {
     },
   });
 
-  const [query, setQuery] = useQueryState(
-    "q",
-    parseAsString.withDefault("").withOptions({ throttleMs: "300" })
-  );
+
 
   return (
     <div>

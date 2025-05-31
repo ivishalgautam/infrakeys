@@ -36,6 +36,7 @@ export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
       meta_title: "",
       meta_description: "",
       meta_keywords: "",
+      date: "",
     },
   });
   const { fields, append, remove } = useFieldArray({
@@ -75,6 +76,7 @@ export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
       meta_description: data.meta_description,
       meta_keywords: data.meta_keywords,
       faq: data.faq,
+      date: data.date,
     };
 
     if (type === "create") {
@@ -107,6 +109,7 @@ export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
         data && setValue("meta_keywords", data.meta_keywords);
         data && setValue("slug", data.slug);
         data && setValue("is_active", data.is_active);
+        data && setValue("date", data.date);
         data && data?.faq && setValue("faq", data.faq);
         // data?.faq?.map(({ question, answer }) => {
         //   append({ question, answer });
@@ -231,6 +234,22 @@ export default function BlogForm({ type, blogId, handleCreate, handleUpdate }) {
               onEditorChange={(content) => setText(content)}
               value={text}
             />
+          </div>
+
+          {/* date */}
+          <div className="col-span-3">
+            <Label htmlFor="date">Date</Label>
+            <Input
+              {...register("date", {
+                required: "required",
+              })}
+              type="date"
+              id="date"
+              placeholder="date"
+            />
+            {errors.date && (
+              <span className="text-red-600">{errors.date.message}</span>
+            )}
           </div>
 
           <div className="mt-6">
