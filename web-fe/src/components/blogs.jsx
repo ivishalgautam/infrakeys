@@ -7,7 +7,7 @@ import BlogCard from "./cards/blog";
 import Spinner from "./Spinner";
 
 async function fetchBlogs() {
-  return await http().get(`${endpoints.blogs.getAll}?featured=true`);
+  return await http().get(`${endpoints.blogs.getAll}`);
 }
 
 export default function Blogs() {

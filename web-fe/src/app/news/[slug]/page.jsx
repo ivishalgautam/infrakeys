@@ -43,6 +43,7 @@ const getRelatedNews = async (id) => {
 };
 
 export default async function Page({ params: { slug } }) {
+  console.log({ slug });
   const news = await getNews(slug);
   console.log({ news });
   const relatedNews = await getRelatedNews(news?.id);

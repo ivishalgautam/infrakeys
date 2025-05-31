@@ -24,7 +24,10 @@ export default function BlogCard({ blog }) {
         <div className="space-y-4 p-3">
           {/* date */}
           <div className="my-1 mb-3 flex items-center justify-start gap-1 text-xs font-medium text-gray-400">
-            <Clock size={18} /> {moment(blog.created_at).format("DD MMM, Y")}
+            <Clock size={18} />{" "}
+            {blog.date
+              ? moment(blog.date).format("DD MMM, Y")
+              : moment(blog.created_at).format("DD MMM, Y")}
           </div>
 
           {/* categories */}
