@@ -54,9 +54,10 @@ export const columns = (handleDelete, handleNavigate) => [
       return <Button variant="ghost">Created At</Button>;
     },
     cell: ({ row }) => {
-      return (
-        <div>{moment(row.getValue("created_at")).format("DD/MM/YYYY")}</div>
-      );
+      const date = row.getValue("date")
+        ? moment(row.getValue("date")).format("DD/MM/YYYY")
+        : moment(row.getValue("created_at")).format("DD/MM/YYYY");
+      return <div>{date}</div>;
     },
   },
   {
