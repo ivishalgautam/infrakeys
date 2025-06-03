@@ -68,10 +68,11 @@ export default function Page({ params: { id } }) {
   const [isLoading, setIsLoading] = useState(true);
   const { data: subAdmins, isLoading: isSubAdminLoading } =
     useFetchUsers("subadmin");
-  const formattedSubAdmins = subAdmins?.map(({ id, name, username }) => ({
-    value: id,
-    label: `${name} (@${username})`,
-  }));
+  const formattedSubAdmins =
+    subAdmins?.users?.map(({ id, name, username }) => ({
+      value: id,
+      label: `${name} (@${username})`,
+    })) ?? [];
 
   const updateMutation = useMutation(updateOrder, {
     onSuccess: (data) => {

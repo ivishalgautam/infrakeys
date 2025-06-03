@@ -69,11 +69,10 @@ export default function Page({ params: { id } }) {
     useFetchUsers("subadmin");
   const formattedSubAdmins = isSubAdminsLoading
     ? []
-    : subAdmins?.map(({ id, name, username }) => ({
+    : subAdmins?.users?.map(({ id, name, username }) => ({
         value: id,
         label: `${name} (@${username})`,
       }));
-
   const updateMutation = useMutation(updateEnquiry, {
     onSuccess: (data) => {
       toast.success(data.message);
