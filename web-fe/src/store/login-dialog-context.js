@@ -1,6 +1,5 @@
 "use client";
 
-import LoginForm from "@/components/forms/login";
 import Login from "@/components/login";
 import {
   Dialog,
@@ -12,12 +11,19 @@ import {
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { MainContext } from "./context";
 import { usePathname } from "next/navigation";
+import LoginForm from "@/components/forms/login";
+import OTPForm from "@/components/forms/otp";
 
 export const LoginDialogContext = createContext(null);
 
 function LoginDialogProvider({ children }) {
   const [open, setOpen] = useState(false);
   const { user, isUserLoading } = useContext(MainContext);
+
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [requestId, setRequestId] = useState(null);
+
   const pathname = usePathname();
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -45,7 +51,20 @@ function LoginDialogProvider({ children }) {
             <DialogDescription className="sr-only">Login.</DialogDescription>
           </DialogHeader>
           <div>
-            <Login className={"bg-white p-0"} />
+            {!isOtpSent ? (
+              <LoginForm
+                setIsOtpSent={setIsOtpSent}
+                setPhone={setPhone}
+                requestId={requestId}
+                setRequestId={setRequestId}
+              />
+            ) : (
+              <OTPForm
+                phone={phone}
+                requestId={requestId}
+                setRequestId={setRequestId}
+              />
+            )}
           </div>
         </DialogContent>
       </Dialog>

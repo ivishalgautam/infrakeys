@@ -8,12 +8,29 @@ import { useState } from "react";
 export default function Signin() {
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [phone, setPhone] = useState("");
+  const [name, setName] = useState(null);
+
+  const [requestId, setRequestId] = useState(null);
+
   return (
     <AuthLayout>
       {!isOtpSent ? (
-        <SignUpForm setIsOtpSent={setIsOtpSent} setPhone={setPhone} />
+        <SignUpForm
+          setIsOtpSent={setIsOtpSent}
+          setPhone={setPhone}
+          requestId={requestId}
+          setRequestId={setRequestId}
+          name={name}
+          setName={setName}
+        />
       ) : (
-        <OTPForm phone={phone} />
+        <OTPForm
+          phone={phone}
+          requestId={requestId}
+          setRequestId={setRequestId}
+          name={name}
+          setName={setName}
+        />
       )}
     </AuthLayout>
   );

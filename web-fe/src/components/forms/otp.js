@@ -20,7 +20,13 @@ const sendOtp = async (data) => {
   return await http().post(endpoints.otp.send, data);
 };
 
-export default function OTPForm({ phone }) {
+export default function OTPForm({
+  phone,
+  requestId,
+  setRequestId,
+  name = null,
+  setName,
+}) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const {
@@ -38,6 +44,7 @@ export default function OTPForm({ phone }) {
   const { setOpen } = useContext(LoginDialogContext);
   const sendMutation = useMutation(sendOtp, {
     onSuccess: (data) => {
+      setRequestId(data.request_id);
       toast.success(data.message);
       setIsResendDisabled(true);
       setRemainingTime(60 * minute);
@@ -55,9 +62,11 @@ export default function OTPForm({ phone }) {
   async function verifyOtp({ phone, otp }) {
     setLoading(true);
     try {
-      const response = await http().post(`${endpoints.auth.verifyOtp}`, {
+      const response = await http().post(`${endpoints.otp.verify}`, {
         phone,
         otp,
+        request_id: requestId,
+        ...(name ? { name: name } : {}),
       });
       localStorage.setItem("user", JSON.stringify(response.user_data));
       localStorage.setItem("token", response.token);

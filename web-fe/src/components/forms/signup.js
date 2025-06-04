@@ -12,7 +12,14 @@ import { endpoints } from "@/utils/endpoints";
 import { isObject } from "@/utils/object";
 import { toast } from "sonner";
 
-export default function SignUpForm({ setIsOtpSent, setPhone }) {
+export default function SignUpForm({
+  setIsOtpSent,
+  setPhone,
+  requestId,
+  setRequestId,
+  name,
+  setName,
+}) {
   const [loading, setLoading] = useState(false);
 
   const {
@@ -24,12 +31,9 @@ export default function SignUpForm({ setIsOtpSent, setPhone }) {
   async function signUp(credentials) {
     setLoading(true);
     try {
-      const response = await http().post(
-        `${endpoints.auth.signup}/customer`,
-        credentials,
-      );
+      const response = await http().post(`${endpoints.otp.send}`, credentials);
       setIsOtpSent(true);
-
+      setRequestId(response.request_id);
       return response.data;
     } catch (error) {
       // console.log(error);
@@ -41,6 +45,7 @@ export default function SignUpForm({ setIsOtpSent, setPhone }) {
 
   const onSubmit = async (data) => {
     setPhone(data.phone);
+    setName(data.name);
     await signUp(data);
   };
   return (

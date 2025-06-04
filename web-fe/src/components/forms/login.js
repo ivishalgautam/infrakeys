@@ -13,7 +13,12 @@ import { endpoints } from "@/utils/endpoints";
 import { isObject } from "@/utils/object";
 import { toast } from "sonner";
 
-export default function LoginForm({ setIsOtpSent, setPhone }) {
+export default function LoginForm({
+  setIsOtpSent,
+  setPhone,
+  requestId,
+  setRequestId,
+}) {
   const [loading, setLoading] = useState(false);
 
   const {
@@ -25,15 +30,10 @@ export default function LoginForm({ setIsOtpSent, setPhone }) {
   async function loginUser(credentials) {
     setLoading(true);
     try {
-      const response = await http().post(
-        `${endpoints.auth.login}/customer`,
-        credentials,
-      );
+      const response = await http().post(`${endpoints.otp.send}`, credentials);
       setIsOtpSent(true);
-
-      return response.data;
+      setRequestId(response.request_id);
     } catch (error) {
-      // console.log(error);
       if (isObject(error)) {
         return toast.error(error.message);
       } else {
