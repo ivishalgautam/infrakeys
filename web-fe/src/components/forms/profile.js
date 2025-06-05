@@ -95,7 +95,7 @@ export default function ProfileForm({
             <div>
               <Label>Email</Label>
               <Input
-                type="email"
+                type="text"
                 {...register("email", {
                   required: "required",
                   pattern: {
