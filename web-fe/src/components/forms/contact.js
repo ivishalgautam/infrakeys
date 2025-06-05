@@ -64,6 +64,10 @@ export default function ContactForm() {
             placeholder="Email"
             {...register("email", {
               required: "required",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Enter a valid email address",
+              },
             })}
             className={className}
           />

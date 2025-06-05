@@ -96,7 +96,13 @@ export default function ProfileForm({
               <Label>Email</Label>
               <Input
                 type="email"
-                {...register("email", { required: "required" })}
+                {...register("email", {
+                  required: "required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Enter a valid email address",
+                  },
+                })}
                 placeholder="Email"
               />
               {errors.email && (

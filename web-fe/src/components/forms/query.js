@@ -207,6 +207,10 @@ export default function QueryForm({ type, enquirytype = "buy", productId }) {
                 <Input
                   {...register("email", {
                     required: "required*",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Enter a valid email address",
+                    },
                   })}
                   placeholder="Email"
                   disabled={watch("email") && user}
