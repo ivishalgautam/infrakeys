@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useFetchProducts } from "@/hooks/useFetchProducts";
 
 import http from "@/utils/http";
@@ -25,8 +25,9 @@ import {
 } from "../ui/table";
 import { Plus, Trash } from "lucide-react";
 import ReactSelect from "react-select";
+import { useFetchProductPricings } from "@/hooks/useFetchProductPricing";
 
-export function ProductForm({
+export function ProductWithPriceForm({
   type,
   handleCreate,
   handleUpdate,
@@ -50,6 +51,7 @@ export function ProductForm({
   });
 
   const copyProduct = watch("copy_product");
+  const selectedMainProduct = watch("product_id");
 
   const {
     fields: customPropertiesFields,
@@ -60,21 +62,41 @@ export function ProductForm({
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const { data: products, isLoading: isProductsLoading } = useFetchProducts();
+  const { data: products, isLoading: isProductsLoading } =
+    useFetchProductPricings("");
 
-  const formattedProducts = products?.map(({ id: value, title: label }) => ({
-    value,
-    label,
-  }));
+  const { data: mainProducts, isLoading: isMainProductsLoading } =
+    useFetchProductPricings("main=1");
 
+  const formattedProducts = useMemo(
+    () =>
+      products?.map(({ id: value, title: label }) => ({
+        value,
+        label,
+      })),
+    [products]
+  );
+  const formattedMainProducts = useMemo(
+    () =>
+      mainProducts?.map(({ id: value, title: label }) => ({
+        value,
+        label,
+      })),
+    [mainProducts]
+  );
   const onSubmit = (data) => {
     if (type === "delete") {
       return handleDelete({ id: productId });
     }
 
     const payload = {
+      product_id: data?.product_id?.value ?? null,
       title: data.name,
       custom_properties: data.items,
+      price: data.price ? data.price : 0,
+      percentage: data.percentage,
+      place: data.place,
+      is_variant: data.product_id ? true : false,
       meta_title: data?.meta_title,
       meta_description: data?.meta_description,
       meta_keywords: data?.meta_keywords,
@@ -86,7 +108,7 @@ export function ProductForm({
       handleUpdate(payload);
     }
 
-    reset();
+    // reset();
   };
 
   useEffect(() => {
@@ -94,12 +116,22 @@ export function ProductForm({
       setIsLoading(true);
       try {
         const { data } = await http().get(
-          `${endpoints.products.getAll}/getById/${productId}`
+          `${endpoints.pricings.getAll}/getById/${productId}`
         );
-        data && setValue("name", data?.title);
+        data.product_id &&
+          setValue(
+            "product_id",
+            formattedMainProducts.find((so) => so.value === data.product_id)
+          );
+        data?.title && setValue("name", data?.title);
         data &&
           data.custom_properties &&
           setValue("items", data.custom_properties);
+        !data.product_id && data.price && setValue("price", data.price);
+        data.product_id &&
+          data.percentage &&
+          setValue("percentage", data.percentage);
+        data.place && setValue("place", data.place);
         data && setValue("meta_title", data?.meta_title);
         data && setValue("meta_description", data?.meta_description);
         data && setValue("meta_keywords", data?.meta_keywords);
@@ -117,17 +149,30 @@ export function ProductForm({
     ) {
       fetchData();
     }
-  }, [productId, type, isProductsLoading, setValue]);
+  }, [productId, type, isProductsLoading, setValue, formattedMainProducts]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data } = await http().get(
-          `${endpoints.products.getAll}/getById/${copyProduct.value}`
+          `${endpoints.pricings.getAll}/getById/${copyProduct.value}`
         );
+        // console.log({ data });
+        reset();
+        data.title && setValue("name", data.title);
+        data.product_id &&
+          setValue(
+            "product_id",
+            formattedMainProducts.find((so) => so.value === data.product_id)
+          );
         data &&
           data.custom_properties &&
           setValue("items", data.custom_properties);
+        !data.product_id && data.price && setValue("price", data.price);
+        data.product_id &&
+          data.percentage &&
+          setValue("percentage", data.percentage);
+        data.place && setValue("place", data.place);
         data && setValue("meta_title", data?.meta_title);
         data && setValue("meta_description", data?.meta_description);
         data && setValue("meta_keywords", data?.meta_keywords);
@@ -139,7 +184,7 @@ export function ProductForm({
     if (copyProduct) {
       fetchData();
     }
-  }, [copyProduct, setValue]);
+  }, [copyProduct, setValue, formattedMainProducts, reset]);
 
   const setFieldValues = (value, ind) => {
     if (!inputVal[`inputVal.${ind}`]) return toast.warning("Enter value");
@@ -220,6 +265,22 @@ export function ProductForm({
             <div className="space-y-4">
               <H4>Product Information</H4>
               <div className="grid grid-cols-3 gap-2">
+                <div>
+                  <Label>Product</Label>
+                  <Controller
+                    control={control}
+                    name="product_id"
+                    render={({ field: { value, onChange } }) => (
+                      <ReactSelect
+                        options={formattedMainProducts}
+                        onChange={onChange}
+                        defaultValue={value}
+                        value={value}
+                        isClearable
+                      />
+                    )}
+                  />
+                </div>
                 {/* product name */}
                 <div>
                   <Label htmlFor="name">Product name</Label>
@@ -232,12 +293,14 @@ export function ProductForm({
                     })}
                   />
                   {errors.name && (
-                    <span className="text-red-600">{errors.name.message}</span>
+                    <span className="text-red-600 text-sm">
+                      {errors.name.message}
+                    </span>
                   )}
                 </div>
 
                 {/* product name */}
-                {!copyProduct ? (
+                {!selectedMainProduct ? (
                   <div>
                     <Label htmlFor="price">Product price</Label>
                     <Input
@@ -249,14 +312,14 @@ export function ProductForm({
                       })}
                     />
                     {errors.price && (
-                      <span className="text-red-600">
+                      <span className="text-red-600 text-sm">
                         {errors.price.message}
                       </span>
                     )}
                   </div>
                 ) : (
                   <div>
-                    <Label htmlFor="name">Percentage</Label>
+                    <Label htmlFor="percentage">Percentage</Label>
                     <Input
                       type="number"
                       disabled={type === "view" || type === "delete"}
@@ -266,12 +329,30 @@ export function ProductForm({
                       })}
                     />
                     {errors.percentage && (
-                      <span className="text-red-600">
+                      <span className="text-red-600 text-sm">
                         {errors.percentage.message}
                       </span>
                     )}
                   </div>
                 )}
+
+                {/* place */}
+                <div>
+                  <Label htmlFor="place">Place name</Label>
+                  <Input
+                    type="text"
+                    disabled={type === "view" || type === "delete"}
+                    placeholder="Place Name"
+                    {...register("place", {
+                      required: "required",
+                    })}
+                  />
+                  {errors.place && (
+                    <span className="text-red-600 text-sm">
+                      {errors.place.message}
+                    </span>
+                  )}
+                </div>
 
                 {/* custom properties */}
                 <div className="col-span-3 mt-4">

@@ -16,6 +16,7 @@ export const endpoints = {
       term: "/product-attribute-terms",
     },
   },
+  pricings: { getAll: "/products-pricing" },
   categories: {
     getAll: "/categories",
     variant: "/category-variant",

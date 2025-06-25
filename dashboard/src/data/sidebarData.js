@@ -12,6 +12,7 @@ import {
   ListTodo,
   ShoppingCart,
 } from "lucide-react";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 // Define the roles for each user type
 const ROLES = {
@@ -49,6 +50,24 @@ export const AllRoutes = [
     label: "Products",
     link: "/products/[id]/view",
     icon: AiOutlineShop,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "Pricings",
+    link: "/pricings",
+    icon: FaIndianRupeeSign,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "Pricings",
+    link: "/pricings/create",
+    icon: FaIndianRupeeSign,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    label: "Pricings",
+    link: "/pricings/[id]/edit",
+    icon: FaIndianRupeeSign,
     roles: [ROLES.ADMIN],
   },
   {
