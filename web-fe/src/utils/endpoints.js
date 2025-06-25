@@ -11,6 +11,7 @@ export const endpoints = {
   users: { getAll: "/users" },
   products: {
     getAll: "/products",
+    pricing: "/products-pricing",
     admin: "/products/admin/getAll",
     attribute: {
       getAll: "/product-attributes",

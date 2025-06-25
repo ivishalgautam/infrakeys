@@ -1,6 +1,5 @@
 import { H2, H5, P } from "./ui/typography";
 import { cn } from "@/lib/utils";
-import { CardContainer } from "./ui/3d-card";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -19,6 +18,7 @@ const data = [
     image: "/raw_material.svg",
     ribbon: "Coming soon",
     link: "#",
+    // link: "/pricing",
   },
   {
     title: "Daily Raw Materials News",
