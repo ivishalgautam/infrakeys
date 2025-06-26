@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { columns } from "../columns";
 import { useEffect, useState } from "react";
 import { DeleteDialog } from "./delete-dialog";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "@/utils/http";
 import { endpoints } from "@/utils/endpoints";
 import { DataTableSkeleton } from "@/components/datatable/data-table-skeleton";
@@ -16,6 +16,7 @@ export default function Listing() {
   const [isModal, setIsModal] = useState(false);
   const searchParams = useSearchParams();
   const searchParamsStr = searchParams.toString();
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { data, isLoading, isFetching, isError, error } = useQuery({
     queryKey: [`product-pricings`],
@@ -33,6 +34,7 @@ export default function Listing() {
     onSuccess: () => {
       setIsModal(false);
       toast.success("Deleted successfully.");
+      queryClient.invalidateQueries([`product-pricings`]);
     },
     onError: (error) => toast.success("Something went wrong."),
   });
