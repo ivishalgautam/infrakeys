@@ -299,16 +299,17 @@ export function ProductWithPriceForm({
                   )}
                 </div>
 
-                {/* product name */}
+                {/* product price */}
                 {!selectedMainProduct ? (
                   <div>
                     <Label htmlFor="price">Product price</Label>
                     <Input
-                      type="text"
+                      type="number"
                       disabled={type === "view" || type === "delete"}
                       placeholder="Product price"
                       {...register("price", {
                         required: "Product price is required",
+                        valueAsNumber: true,
                       })}
                     />
                     {errors.price && (
@@ -326,6 +327,7 @@ export function ProductWithPriceForm({
                       placeholder="Percentage"
                       {...register("percentage", {
                         required: "required",
+                        valueAsNumber: true,
                       })}
                     />
                     {errors.percentage && (
