@@ -15,7 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { rupee } from "@/lib/Intl";
 
-export const columns = (openModal, setId) => [
+export const columns = (openModal, setId, handleNavigate) => [
   {
     accessorKey: "title",
     header: "TITLE",
@@ -64,10 +64,10 @@ export const columns = (openModal, setId) => [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Link href={`/pricings/${id}/edit`} className="w-full">
-                Edit
-              </Link>
+            <DropdownMenuItem
+              onClick={() => handleNavigate(`/pricings/${id}/edit`)}
+            >
+              Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem

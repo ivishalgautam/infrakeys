@@ -26,8 +26,6 @@ export default function Listing() {
     },
   });
 
-  console.log({ data });
-
   const openModal = () => setIsModal(true);
 
   useEffect(() => {
@@ -39,13 +37,15 @@ export default function Listing() {
     }
   }, [searchParamsStr, router]);
 
+  const handleNavigate = (link) => router.push(link);
+
   if (isLoading) return <DataTableSkeleton columnCount={4} rowCount={10} />;
   if (isError) return error?.message ?? "error";
 
   return (
     <div className="w-full rounded-lg border-input">
       <DataTable
-        columns={columns(openModal, setId)}
+        columns={columns(openModal, setId, handleNavigate)}
         data={data?.pricings ?? []}
         totalItems={data?.total ?? 0}
       />
