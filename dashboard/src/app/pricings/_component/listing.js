@@ -30,7 +30,10 @@ export default function Listing() {
   const deleteMutation = useMutation({
     mutationFn: async ({ id }) =>
       await http().delete(`${endpoints.pricings.getAll}/${id}`),
-    onSuccess: () => toast.success("Deleted successfully."),
+    onSuccess: () => {
+      setIsModal(false);
+      toast.success("Deleted successfully.");
+    },
     onError: (error) => toast.success("Something went wrong."),
   });
 
