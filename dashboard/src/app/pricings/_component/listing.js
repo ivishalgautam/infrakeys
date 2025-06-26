@@ -4,11 +4,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { columns } from "../columns";
 import { useEffect, useState } from "react";
 import { DeleteDialog } from "./delete-dialog";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import http from "@/utils/http";
 import { endpoints } from "@/utils/endpoints";
 import { DataTableSkeleton } from "@/components/datatable/data-table-skeleton";
 import { DataTable } from "@/components/datatable/data-table";
+import toast from "react-hot-toast";
 
 export default function Listing() {
   const [id, setId] = useState(null);
@@ -24,6 +25,13 @@ export default function Listing() {
       );
       return data ?? [];
     },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async ({ id }) =>
+      await http().delete(`${endpoints.pricings.getAll}/${id}`),
+    onSuccess: () => toast.success("Deleted successfully."),
+    onError: (error) => toast.success("Something went wrong."),
   });
 
   const openModal = () => setIsModal(true);
@@ -49,12 +57,12 @@ export default function Listing() {
         data={data?.pricings ?? []}
         totalItems={data?.total ?? 0}
       />
-      {/* <DeleteDialog
+      <DeleteDialog
         deleteMutation={deleteMutation}
         isOpen={isModal}
         setIsOpen={setIsModal}
         id={id}
-      /> */}
+      />
     </div>
   );
 }
