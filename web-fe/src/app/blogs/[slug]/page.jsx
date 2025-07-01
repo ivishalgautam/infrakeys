@@ -65,7 +65,10 @@ export default async function Page({ params: { slug } }) {
           <div className="col-span-4 space-y-4 rounded-lg bg-white p-8 lg:col-span-3">
             {/* date */}
             <div className="flex items-center justify-start gap-1 text-xs font-medium text-gray-400">
-              <Clock size={18} /> {moment(blog.created_at).format("DD MMM, Y")}
+              <Clock size={18} />{" "}
+              {blog.date
+                ? moment(blog.date).format("DD MMM, Y")
+                : moment(blog.created_at).format("DD MMM, Y")}
             </div>
 
             {/* title */}
