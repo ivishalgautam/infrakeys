@@ -81,13 +81,13 @@ export function ProductWithPriceForm({
   const formattedMainProducts = useMemo(
     () =>
       mainProducts?.map((item) => {
-        const customValues = item.custom_properties.flatMap(
-          ({ values }) => values
-        );
+        // const customValues = item.custom_properties.flatMap(
+        //   ({ values }) => values
+        // );
 
         return {
           value: item.id,
-          label: `${item.title} - ${customValues.join(", ")}`,
+          label: item.title,
         };
       }),
     [mainProducts]
