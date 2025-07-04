@@ -76,6 +76,7 @@ export function ProductWithPriceForm({
       })),
     [products]
   );
+
   const formattedMainProducts = useMemo(
     () =>
       mainProducts?.map(({ id: value, title: label }) => ({
@@ -222,6 +223,8 @@ export function ProductWithPriceForm({
     setInputVal((prev) => ({ ...prev, [`inputVal.${ind}`]: "" }));
   };
 
+  console.log({ errors });
+
   if (isLoading || isProductsLoading) return <Spinner />;
 
   return (
@@ -281,6 +284,7 @@ export function ProductWithPriceForm({
                     )}
                   />
                 </div>
+
                 {/* product name */}
                 <div>
                   <Label htmlFor="name">Product name</Label>
@@ -323,6 +327,7 @@ export function ProductWithPriceForm({
                     <Label htmlFor="percentage">Percentage</Label>
                     <Input
                       type="number"
+                      step="0.01"
                       disabled={type === "view" || type === "delete"}
                       placeholder="Percentage"
                       {...register("percentage", {
