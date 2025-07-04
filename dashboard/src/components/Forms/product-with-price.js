@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { useFetchProducts } from "@/hooks/useFetchProducts";
 
 import http from "@/utils/http";
 import { endpoints } from "@/utils/endpoints";
@@ -70,19 +69,27 @@ export function ProductWithPriceForm({
 
   const formattedProducts = useMemo(
     () =>
-      products?.map(({ id: value, title: label }) => ({
-        value,
-        label,
-      })),
+      products?.map((item) => {
+        return {
+          value: item.id,
+          label: item.title,
+        };
+      }),
     [products]
   );
 
   const formattedMainProducts = useMemo(
     () =>
-      mainProducts?.map(({ id: value, title: label }) => ({
-        value,
-        label,
-      })),
+      mainProducts?.map((item) => {
+        const customValues = item.custom_properties.flatMap(
+          ({ values }) => values
+        );
+
+        return {
+          value: item.id,
+          label: `${item.title} - ${customValues.join(", ")}`,
+        };
+      }),
     [mainProducts]
   );
   const onSubmit = (data) => {
@@ -159,7 +166,7 @@ export function ProductWithPriceForm({
           `${endpoints.pricings.getAll}/getById/${copyProduct.value}`
         );
         // console.log({ data });
-        reset();
+        // reset();
         data.title && setValue("name", data.title);
         data.product_id &&
           setValue(
@@ -223,8 +230,6 @@ export function ProductWithPriceForm({
     setInputVal((prev) => ({ ...prev, [`inputVal.${ind}`]: "" }));
   };
 
-  console.log({ errors });
-
   if (isLoading || isProductsLoading) return <Spinner />;
 
   return (
@@ -268,6 +273,7 @@ export function ProductWithPriceForm({
             <div className="space-y-4">
               <H4>Product Information</H4>
               <div className="grid grid-cols-3 gap-2">
+                {/* parent product id */}
                 <div>
                   <Label>Product</Label>
                   <Controller
