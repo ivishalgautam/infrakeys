@@ -16,7 +16,7 @@ import OTPForm from "@/components/forms/otp";
 
 export const LoginDialogContext = createContext(null);
 
-function LoginDialogProvider({ children }) {
+function LoginDialogProvider({ children, isActive = true }) {
   const [open, setOpen] = useState(false);
   const { user, isUserLoading } = useContext(MainContext);
 
@@ -26,6 +26,7 @@ function LoginDialogProvider({ children }) {
 
   const pathname = usePathname();
   useEffect(() => {
+    if (!isActive) return;
     const timeout = setTimeout(() => {
       if (
         !isUserLoading &&
@@ -39,7 +40,9 @@ function LoginDialogProvider({ children }) {
     }, 5000);
 
     return () => clearTimeout(timeout);
-  }, [user, isUserLoading, pathname]);
+  }, [user, isUserLoading, pathname, isActive]);
+
+  if (!isActive) return children;
 
   return (
     <LoginDialogContext.Provider value={{ open, setOpen }}>

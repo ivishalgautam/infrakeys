@@ -21,6 +21,9 @@ export default function Layout({ children }) {
         )
       : true,
   );
+
+  return children;
+
   return (
     <React.Fragment>
       <AlertDialog open={open}>

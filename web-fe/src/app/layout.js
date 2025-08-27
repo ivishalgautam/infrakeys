@@ -102,7 +102,7 @@ export default function RootLayout({ children }) {
       >
         <QueryProvider>
           <Context>
-            <LoginDialogProvider>
+            <LoginDialogProvider isActive={false}>
               <Toaster richColors />
               <Layout>{children}</Layout>
             </LoginDialogProvider>
