@@ -42,7 +42,7 @@ function LoginDialogProvider({ children, isActive = true }) {
     return () => clearTimeout(timeout);
   }, [user, isUserLoading, pathname, isActive]);
 
-  if (!isActive) return children;
+  // if (!isActive) return children;
 
   return (
     <LoginDialogContext.Provider value={{ open, setOpen }}>
