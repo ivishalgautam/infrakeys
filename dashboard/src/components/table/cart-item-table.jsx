@@ -42,6 +42,8 @@ export default function CartItemTable({
     ({ id: value, requirement_id: label }) => ({ value, label })
   );
 
+  console.log({ customers });
+
   return (
     <div>
       {fields?.length > 0 && (
@@ -61,7 +63,7 @@ export default function CartItemTable({
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      {customers?.map(({ id, name, phone }) => (
+                      {customers?.users?.map(({ id, name, phone }) => (
                         <SelectItem key={id} value={id} className="uppercase">
                           {`${name} (${phone})`}
                         </SelectItem>
